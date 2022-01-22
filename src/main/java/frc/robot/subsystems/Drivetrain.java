@@ -45,6 +45,7 @@ public class Drivetrain extends SubsystemBase {
     driveSlaveL.follow(driveMasterL);
     driveSlaveR.follow(driveMasterR);
     setIdleModes(IdleMode.kCoast);
+    setPIDConstants();
   }
 
   public CANSparkMax getDriveSlaveL () {

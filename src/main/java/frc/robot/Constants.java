@@ -18,6 +18,14 @@ public final class Constants {
     public static final int masterLeftMotor = 14; 
     public static final int slaveLeftMotor = 15; 
     public static final int turretPort = 9;
+    
+    public static final double wheelDiameter = 0.1016;
+    public static final double driveTrain_width = .4699;
+    public static final double driveGearingRatio = 18;
+
+    //Drive Constants
+    public static final double drivekP = .0312;
+    public static final double drivekI = .000000000001;
 
     // Turret Constants
     public static final double turretkP = .007;
