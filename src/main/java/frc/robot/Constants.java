@@ -17,4 +17,10 @@ public final class Constants {
     public static final int slaveRightMotor = 17; 
     public static final int masterLeftMotor = 14; 
     public static final int slaveLeftMotor = 15; 
-}
+    public static final int turretPort = 9;
+
+    // Turret Constants
+    public static final double turretkP = .007;
+    public static final double turretkI = .00000000000001;
+    public static final double turretkD = 0;
+    public static final double turretClimbEncoderPos = 80000;}
