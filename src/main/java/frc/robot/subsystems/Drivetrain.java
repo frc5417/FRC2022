@@ -11,9 +11,16 @@ import com.revrobotics.CANSparkMax.IdleMode;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.RobotController;
-
+import com.revrobotics.RelativeEncoder;
+import edu.wpi.first.wpilibj.SerialPort.Port;
 import java.lang.Math;
+import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.kinematics.DifferentialDriveOdometry;
+import edu.wpi.first.math.kinematics.DifferentialDriveWheelSpeeds;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import com.kauailabs.navx.frc.AHRS;
+
 
 public class Drivetrain extends SubsystemBase {
   /** Creates a new Drivetrain. */
@@ -22,6 +29,13 @@ public class Drivetrain extends SubsystemBase {
   private CANSparkMax driveSlaveR = new CANSparkMax(Constants.slaveRightMotor, MotorType.kBrushless);
   private CANSparkMax driveMasterL = new CANSparkMax(Constants.masterLeftMotor, MotorType.kBrushless);
   private DifferentialDrive drive = new DifferentialDrive(driveMasterL, driveMasterR);
+
+  private RelativeEncoder neoEncoderL = driveMasterL.getEncoder();
+  private RelativeEncoder neoEncoderR = driveMasterR.getEncoder();
+  private RelativeEncoder neoEncoderL2 = driveSlaveL.getEncoder();
+  private RelativeEncoder neoEncoderR2 = driveSlaveR.getEncoder();
+  private DifferentialDriveOdometry driveOdom = new DifferentialDriveOdometry(Rotation2d.fromDegrees(getHeading()));
+  private AHRS gyro = new AHRS(Port.kUSB);
 
   private void setIdleModes(IdleMode mode) {
     driveMasterL.setIdleMode(mode);
@@ -46,6 +60,20 @@ public class Drivetrain extends SubsystemBase {
     driveSlaveR.follow(driveMasterR);
     setIdleModes(IdleMode.kCoast);
     setPIDConstants();
+  }
+
+  
+  public void setPower(double leftPower, double rightPower){
+    if(Math.abs(leftPower) > .15){
+      driveMasterL.set(-leftPower);
+    } else {
+      driveMasterL.set(0);
+    }
+    if(Math.abs(rightPower) > .15){
+      driveMasterR.set(rightPower);
+    } else {
+      driveMasterR.set(0);
+    }
   }
 
   public CANSparkMax getDriveSlaveL () {
@@ -77,10 +105,6 @@ public class Drivetrain extends SubsystemBase {
     driveMasterR.set(rightPower);
   }
 
-  public void setPower(double leftPower, double rightPower){
-    rawMotorPower(-Math.pow(leftPower, 3), Math.pow(rightPower, 3));
-  }
-
   public void tankDriveVolts(double leftVolts, double rightVolts){
     rawMotorPower(leftVolts / RobotController.getBatteryVoltage(), -rightVolts / RobotController.getBatteryVoltage());
     drive.feed();
@@ -104,5 +128,49 @@ public class Drivetrain extends SubsystemBase {
     driveMasterL.setClosedLoopRampRate(leftRampRate);
     driveSlaveR.setClosedLoopRampRate(rightRampRate);
     driveSlaveL.setClosedLoopRampRate(leftRampRate);
+  }
+
+  public DifferentialDriveWheelSpeeds getWheelSpeeds() {
+    return new DifferentialDriveWheelSpeeds(neoEncoderL.getVelocity(), -neoEncoderR.getVelocity());
+  }
+  public Pose2d getPose() {
+    return driveOdom.getPoseMeters();
+  }
+  public double getHeading() {
+    return Math.IEEEremainder(gyro.getAngle(), 360);
+  }
+  public boolean resetOdometry(Pose2d pose) {
+    encoderReset();
+    gyro.zeroYaw();
+    driveOdom.resetPosition(pose, Rotation2d.fromDegrees(getHeading()));
+    return true;
+  }
+  
+  private void encoderReset() {
+    neoEncoderL.setPosition(0);
+    neoEncoderR.setPosition(0);
+    neoEncoderL2.setPosition(0);
+    neoEncoderR2.setPosition(0);
+  }
+  
+  public double getAverageEncoderDistance(){
+    return(neoEncoderL.getPosition() + neoEncoderR.getPosition()) / 2.0;
+  }
+  public double getLeftDistance(){
+    return neoEncoderL.getPosition();
+  }
+  public double getRightDistance(){
+    return neoEncoderR.getPosition();
+  }
+  public RelativeEncoder getLeftNeoEncoder(){
+    return neoEncoderL;
+  }
+  public RelativeEncoder getRightNeoEncoder(){
+    return neoEncoderR;
+  }
+
+  @Override
+  public void periodic() {
+    driveOdom.update(Rotation2d.fromDegrees(getHeading()), neoEncoderL.getPosition(), -neoEncoderR.getPosition());
   }
 }
