@@ -31,6 +31,7 @@ public final class Constants {
     public static final double kSAuto = .126; //.12; 
     public static final double kVAuto = 7.12; //4.69;
     public static final double kAAuto = .997; //.179;
+    public static final double kPAuto = 1.276;
 
     public static final double kCosAuto = 0;
     public static final double rSquaredAuto = .998;
@@ -45,8 +46,6 @@ public final class Constants {
     // public static final double kVolts = .461;
     // public static final double kVSPM = 1.21; // volt seconds per meter
     // public static final double kVSSPM = .425; // volt second squared per meter
-
-    // public static final double kPAuto = 1.27;
 
     // public static final double kDAuto = 0;
 

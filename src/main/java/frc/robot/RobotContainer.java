@@ -67,7 +67,6 @@ public class RobotContainer {
    * @return the command to run in autonomous
    */
   public Command getAutonomousCommand() {
-
-    return m_autoCommand;
+    return new Auton(driveSubsystem).getRamseteCommand();
   }
 }
