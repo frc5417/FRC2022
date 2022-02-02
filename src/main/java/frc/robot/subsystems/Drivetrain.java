@@ -35,7 +35,7 @@ public class Drivetrain extends SubsystemBase {
   private RelativeEncoder neoEncoderL2 = driveSlaveL.getEncoder();
   private RelativeEncoder neoEncoderR2 = driveSlaveR.getEncoder();
   private DifferentialDriveOdometry driveOdom = new DifferentialDriveOdometry(Rotation2d.fromDegrees(getHeading()));
-  private AHRS gyro = new AHRS(Port.kUSB);
+  public AHRS gyro = new AHRS(Port.kUSB);
 
   private void setIdleModes(IdleMode mode) {
     driveMasterL.setIdleMode(mode);
@@ -74,6 +74,10 @@ public class Drivetrain extends SubsystemBase {
     } else {
       driveMasterR.set(0);
     }
+  }
+
+  public AHRS getGyro () {
+    return gyro;
   }
 
   public CANSparkMax getDriveSlaveL () {
@@ -137,7 +141,7 @@ public class Drivetrain extends SubsystemBase {
     return driveOdom.getPoseMeters();
   }
   public double getHeading() {
-    return Math.IEEEremainder(gyro.getAngle(), 360);
+    return gyro.getAngle();
   }
   public boolean resetOdometry(Pose2d pose) {
     encoderReset();

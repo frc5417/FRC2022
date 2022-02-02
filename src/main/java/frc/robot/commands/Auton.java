@@ -65,7 +65,6 @@ public class Auton extends SequentialCommandGroup{
       new PIDController(Constants.kPAuto, 0, 0), 
       drive::tankDriveVolts, 
       drive);
-    
   }
 
   public Command getRamseteCommand (){
