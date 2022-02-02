@@ -41,7 +41,7 @@ public final class Constants {
     public static final double maxVoltage = 10;
 
     public static final double maxSpeed = 3; // m/s
-    public static final double maxAcceleration = 3; // m/s^2
+    public static final double maxAcceleration =  3;//m/s^2
 
     // public static final double kVolts = .461;
     // public static final double kVSPM = 1.21; // volt seconds per meter
