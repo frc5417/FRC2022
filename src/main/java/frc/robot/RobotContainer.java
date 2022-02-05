@@ -12,6 +12,8 @@ import frc.robot.commands.Auton;
 import frc.robot.subsystems.ExampleSubsystem;
 import frc.robot.subsystems.Drivetrain;
 import edu.wpi.first.wpilibj2.command.Command;
+import frc.robot.commands.*;
+import frc.robot.subsystems.*;
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -27,7 +29,7 @@ public class RobotContainer {
   private final Auton m_autoCommand;
   // private final TankDrive tankDrive;
 
-  public Joystick driverPad;
+  public static Joystick driverPad;
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
@@ -49,9 +51,9 @@ public class RobotContainer {
     driverPad = new Joystick(0);
   }
 
-  public void makeItDrive(){
-    driveSubsystem.setPower(driverPad);
-  }
+  // public void makeItDrive(){
+  //   driveSubsystem.setPower(driverPad);
+  // }
   /**
    * Use this to pass the autonomous command to the main {@link Robot} class.
    *
