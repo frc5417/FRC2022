@@ -16,6 +16,7 @@ import edu.wpi.first.wpilibj2.command.CommandScheduler;
  * project.
  */
 public class Robot extends TimedRobot {
+
   private Command m_autonomousCommand;
 
   private RobotContainer m_robotContainer;
@@ -80,6 +81,8 @@ public class Robot extends TimedRobot {
     // continue until interrupted by another command, remove
     // this line or comment it out.
 
+    m_robotContainer.tankDrive.schedule();
+
     if (m_autonomousCommand != null) {
       m_autonomousCommand.cancel();
     }
@@ -88,7 +91,7 @@ public class Robot extends TimedRobot {
   /** This function is called periodically during operator control. */
   @Override
   public void teleopPeriodic() {
-    m_robotContainer.makeItDrive();
+    // m_robotContainer.makeItDrive();
   }
 
   @Override
