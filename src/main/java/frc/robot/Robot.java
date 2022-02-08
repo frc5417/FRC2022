@@ -81,7 +81,7 @@ public class Robot extends TimedRobot {
     // continue until interrupted by another command, remove
     // this line or comment it out.
 
-    m_robotContainer.tankDrive.schedule();
+    m_robotContainer.makeItDrive();
 
     if (m_autonomousCommand != null) {
       m_autonomousCommand.cancel();
