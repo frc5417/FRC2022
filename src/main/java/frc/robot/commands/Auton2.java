@@ -12,14 +12,7 @@ import com.pathplanner.lib.PathPlanner;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.controller.RamseteController;
 import edu.wpi.first.math.controller.SimpleMotorFeedforward;
-import edu.wpi.first.math.geometry.Pose2d;
-import edu.wpi.first.math.geometry.Rotation2d;
-import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.trajectory.Trajectory;
-import edu.wpi.first.math.trajectory.TrajectoryConfig;
-import edu.wpi.first.math.trajectory.TrajectoryGenerator;
-import edu.wpi.first.math.trajectory.constraint.DifferentialDriveVoltageConstraint;
-import edu.wpi.first.math.trajectory.constraint.TrajectoryConstraint;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.RamseteCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
@@ -34,7 +27,7 @@ public class Auton2 extends SequentialCommandGroup{
     this.drive = drive;
     SimpleMotorFeedforward motorFF = new SimpleMotorFeedforward(Constants.kSAuto, Constants.kVAuto, Constants.kAAuto);
 
-    Trajectory tragic = PathPlanner.loadPath("New Path", 3, 3);
+    Trajectory tragic = PathPlanner.loadPath("New Path", Constants.maxSpeed, Constants.maxAcceleration);
 
     drive.resetOdometry(tragic.getInitialPose());
 
@@ -57,18 +50,5 @@ public class Auton2 extends SequentialCommandGroup{
   public Command getRamseteCommand (){
     return ramseteCommand.andThen(() -> drive.tankDriveVolts(0, 0));
   }
-
-//   @Override
-//   public double getMaxVelocityMetersPerSecond(Pose2d poseMeters, double curvatureRadPerMeter,
-//                                             double velocityMetersPerSecond) {
-//   return 10;
-// }
-
-//   @Override
-//   public MinMax getMinMaxAccelerationMetersPerSecondSq(Pose2d poseMeters,
-//                                                      double curvatureRadPerMeter,
-//                                                      double velocityMetersPerSecond) {
-//   return new MinMax(0, 3);
-// }
 
 }
