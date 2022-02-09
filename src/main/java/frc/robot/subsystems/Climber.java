@@ -5,6 +5,7 @@
 package frc.robot.subsystems;
 
 import frc.robot.Constants;
+import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.PowerDistribution.ModuleType;
@@ -29,6 +30,9 @@ public class Climber extends SubsystemBase {
 
   private Solenoid sol1 = new Solenoid(PneumaticsModuleType.CTREPCM, Constants.passiveSolenoid);
   private Solenoid sol2 = new Solenoid(PneumaticsModuleType.CTREPCM, Constants.activeSolenoid);
+
+  public DigitalInput leftLimitSwitch = new DigitalInput(Constants.climbLeftLimitSwitch);
+  public DigitalInput rightLimitSwitch = new DigitalInput(Constants.climbRightLimitSwitch);
 
   public Climber() {
     climbL2.follow(climbL1);
