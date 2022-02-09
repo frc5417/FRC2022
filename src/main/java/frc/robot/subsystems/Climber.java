@@ -65,4 +65,9 @@ public class Climber extends SubsystemBase {
     activeSol.set(deploy);
   }
 
+  public void setPosition(double position){
+    climbL1.getPIDController().setReference(position, ControlType.kPosition);
+    climbR1.getPIDController().setReference(position, ControlType.kPosition);
+  }
+
 }
