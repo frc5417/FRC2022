@@ -33,6 +33,8 @@ public class Climber extends SubsystemBase {
 
   public DigitalInput leftLimitSwitch = new DigitalInput(Constants.climbLeftLimitSwitch);
   public DigitalInput rightLimitSwitch = new DigitalInput(Constants.climbRightLimitSwitch);
+  public DigitalInput leftBottomLimitSwitch = new DigitalInput(Constants.climbBottomLeftLimitSwitch);
+  public DigitalInput rightBottomLimitSwitch = new DigitalInput(Constants.climbBottomRightLimitSwitch);
 
   public Climber() {
     climbL2.follow(climbL1);
@@ -80,6 +82,10 @@ public class Climber extends SubsystemBase {
 
   public Solenoid getAnchorSolenoid() {
     return this.passiveSol;
+  }
+
+  public Solenoid getActiveSolenoid() {
+    return this.activeSol;
   }
 
 }
