@@ -11,6 +11,7 @@ import edu.wpi.first.wpilibj.PowerDistribution.ModuleType;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.RelativeEncoder;
+import com.revrobotics.CANSparkMax.ControlType;
 import com.revrobotics.CANSparkMax.IdleMode;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
@@ -23,7 +24,7 @@ public class Climber extends SubsystemBase {
 
   private RelativeEncoder climbL1Encoder = climbL1.getEncoder();
   private RelativeEncoder climbL2Encoder = climbL2.getEncoder();
-  private RelativeEncoder climbLR1Encoder = climbR1.getEncoder();
+  private RelativeEncoder climbR1Encoder = climbR1.getEncoder();
   private RelativeEncoder climbR2Encoder = climbR2.getEncoder();
 
   private Solenoid sol1 = new Solenoid(PneumaticsModuleType.CTREPCM, Constants.passiveSolenoid);
@@ -32,10 +33,24 @@ public class Climber extends SubsystemBase {
   public Climber() {
     climbL2.follow(climbL1);
     climbR2.follow(climbR1);
+
+    climbL1.getPIDController().setP(Constants.climberkP);
+    climbR1.getPIDController().setP(Constants.climberkP);
+
+    climbL1Encoder.setPosition(0);
+    climbR1Encoder.setPosition(0);
   }
 
   public void extendUp(){
-    
+    int extendPos = Constants.climberExtendPos;
+    climbL1.getPIDController().setReference(extendPos, ControlType.kPosition);
+    climbR1.getPIDController().setReference(extendPos, ControlType.kPosition);
+  }
+
+  public void retract(){
+    int retractPos = Constants.climberRetractPos;
+    climbL1.getPIDController().setReference(retractPos, ControlType.kPosition);
+    climbR1.getPIDController().setReference(retractPos, ControlType.kPosition);
   }
 
 }
