@@ -70,4 +70,16 @@ public class Climber extends SubsystemBase {
     climbR1.getPIDController().setReference(position, ControlType.kPosition);
   }
 
+  public RelativeEncoder getLeftMotorEncoder() {
+    return this.climbL1Encoder;
+  }
+
+  public RelativeEncoder getRightMotorEncoder() {
+    return this.climbR1Encoder;
+  }
+
+  public Solenoid getAnchorSolenoid() {
+    return this.passiveSol;
+  }
+
 }

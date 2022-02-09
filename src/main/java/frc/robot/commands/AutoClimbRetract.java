@@ -4,17 +4,20 @@
 
 package frc.robot.commands;
 
+import com.revrobotics.RelativeEncoder;
+
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants;
 import frc.robot.subsystems.Climber;
 
-public class AutoClimb extends CommandBase {
+public class AutoClimbRetract extends CommandBase {
   private final Climber climber;
   private boolean isEnabled = false;
-  private int howLongPushedDownFor = 0;
+  private RelativeEncoder leftEncoder;
+  private RelativeEncoder rightEncoder;
 
   /** Creates a new AutoClimb. */
-  public AutoClimb(Climber climber) {
+  public AutoClimbRetract(Climber climber) {
     this.climber = climber;
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(this.climber);
@@ -22,21 +25,18 @@ public class AutoClimb extends CommandBase {
 
   // Called when the command is initially scheduled.
   @Override
-  public void initialize() {}
+  public void initialize() {
+    this.isEnabled = false;
+    this.leftEncoder = this.climber.getLeftMotorEncoder();
+    this.rightEncoder = this.climber.getRightMotorEncoder();
+  }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
     if(!this.isEnabled) {
       this.isEnabled = true;
-      this.climber.extendUp();
-      return;
-    }
-
-    if(this.climber.leftLimitSwitch.get() && this.climber.rightLimitSwitch.get()) {
-      this.howLongPushedDownFor++;
-    } else {
-      this.howLongPushedDownFor = 0;
+      this.climber.retract();
     }
   }
 
@@ -47,9 +47,7 @@ public class AutoClimb extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    if(this.howLongPushedDownFor > (Constants.howLongClimbHasToBePushedDown / 20)) {
-      this.howLongPushedDownFor = 0;
-      this.isEnabled = false;
+    if(this.leftEncoder.getPosition() <= Constants.climberRetractPos && this.rightEncoder.getPosition() <= Constants.climberRetractPos) {
       return true;
     }
     return false;
