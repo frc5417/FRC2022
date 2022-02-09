@@ -27,8 +27,8 @@ public class Climber extends SubsystemBase {
   private RelativeEncoder climbR1Encoder = climbR1.getEncoder();
   private RelativeEncoder climbR2Encoder = climbR2.getEncoder();
 
-  private Solenoid sol1 = new Solenoid(PneumaticsModuleType.CTREPCM, Constants.passiveSolenoid);
-  private Solenoid sol2 = new Solenoid(PneumaticsModuleType.CTREPCM, Constants.activeSolenoid);
+  private Solenoid passiveSol = new Solenoid(PneumaticsModuleType.CTREPCM, Constants.passiveSolenoid);
+  private Solenoid activeSol = new Solenoid(PneumaticsModuleType.CTREPCM, Constants.activeSolenoid);
 
   public Climber() {
     climbL2.follow(climbL1);
@@ -51,6 +51,14 @@ public class Climber extends SubsystemBase {
     int retractPos = Constants.climberRetractPos;
     climbL1.getPIDController().setReference(retractPos, ControlType.kPosition);
     climbR1.getPIDController().setReference(retractPos, ControlType.kPosition);
+  }
+
+  public void setPassiveClamp(boolean deploy){
+    passiveSol.set(deploy);
+  }
+
+  public void setActiveClamp(boolean deploy){
+    activeSol.set(deploy);
   }
 
 }
