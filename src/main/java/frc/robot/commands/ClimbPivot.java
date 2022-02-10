@@ -10,16 +10,18 @@ import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants;
 import frc.robot.subsystems.Climber;
+import frc.robot.RobotContainer;
 
 public class ClimbPivot extends CommandBase {
   private final Climber climber;
   private Solenoid active;
   private boolean isEnabled = false;
-  private int howLongPushedDownFor = 0;
+  private RobotContainer robotContainer;
 
-  public ClimbPivot(Climber climber) {
+  public ClimbPivot(Climber climber, RobotContainer container) {
     this.climber = climber;
     this.active = this.climber.getActiveSolenoid();
+    this.robotContainer = container;
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(this.climber);
   }
@@ -28,7 +30,6 @@ public class ClimbPivot extends CommandBase {
   @Override
   public void initialize() {
     this.isEnabled = false;
-    this.howLongPushedDownFor = 0;
   }
 
   // Called every time the scheduler runs while the command is scheduled.
@@ -37,12 +38,6 @@ public class ClimbPivot extends CommandBase {
     if(!this.isEnabled) {
       this.active.toggle();
       this.isEnabled = true;
-    } else {
-      if(this.climber.leftBottomLimitSwitch.get() && this.climber.rightBottomLimitSwitch.get()) {
-        this.howLongPushedDownFor++;
-      } else {
-        this.howLongPushedDownFor = 0;
-      }
     }
   }
 
@@ -53,11 +48,14 @@ public class ClimbPivot extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    if(this.howLongPushedDownFor > (Constants.howLongClimbHasToBePushedDown / 20)) {
+    //Commented for regional competition - dash want to use limit switches for state or irving
+    /*if(this.howLongPushedDownFor > (Constants.howLongClimbHasToBePushedDown / 20)) {
       this.howLongPushedDownFor = 0;
       this.isEnabled = false;
       return true;
     }
     return false;
+    **/
+    return this.robotContainer.getButtonB();
   }
 }

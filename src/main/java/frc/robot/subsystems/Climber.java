@@ -31,8 +31,6 @@ public class Climber extends SubsystemBase {
   private Solenoid passiveSol = new Solenoid(PneumaticsModuleType.CTREPCM, Constants.passiveSolenoid);
   private Solenoid activeSol = new Solenoid(PneumaticsModuleType.CTREPCM, Constants.activeSolenoid);
 
-  public DigitalInput leftLimitSwitch = new DigitalInput(Constants.climbLeftLimitSwitch);
-  public DigitalInput rightLimitSwitch = new DigitalInput(Constants.climbRightLimitSwitch);
   public DigitalInput leftBottomLimitSwitch = new DigitalInput(Constants.climbBottomLeftLimitSwitch);
   public DigitalInput rightBottomLimitSwitch = new DigitalInput(Constants.climbBottomRightLimitSwitch);
 
