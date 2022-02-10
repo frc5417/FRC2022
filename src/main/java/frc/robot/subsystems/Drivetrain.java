@@ -21,7 +21,6 @@ import edu.wpi.first.math.kinematics.DifferentialDriveWheelSpeeds;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import com.kauailabs.navx.frc.AHRS;
 
-
 public class Drivetrain extends SubsystemBase {
   /** Creates a new Drivetrain. */
   private CANSparkMax driveSlaveL = new CANSparkMax(Constants.slaveLeftMotor, MotorType.kBrushless);
@@ -34,8 +33,17 @@ public class Drivetrain extends SubsystemBase {
   private RelativeEncoder neoEncoderR = driveMasterR.getEncoder();
   private RelativeEncoder neoEncoderL2 = driveSlaveL.getEncoder();
   private RelativeEncoder neoEncoderR2 = driveSlaveR.getEncoder();
-  private DifferentialDriveOdometry driveOdom = new DifferentialDriveOdometry(Rotation2d.fromDegrees(getHeading()));
-  public AHRS gyro = new AHRS(Port.kUSB);
+  private DifferentialDriveOdometry driveOdom;
+  public AHRS gyro;
+
+  public Drivetrain() {
+    driveSlaveL.follow(driveMasterL);
+    driveSlaveR.follow(driveMasterR);
+    setIdleModes(IdleMode.kCoast);
+    setPIDConstants();
+    gyro = new AHRS(Port.kUSB);
+    driveOdom  = new DifferentialDriveOdometry(Rotation2d.fromDegrees(getHeading()));
+  }
 
   private void setIdleModes(IdleMode mode) {
     driveMasterL.setIdleMode(mode);
@@ -53,13 +61,6 @@ public class Drivetrain extends SubsystemBase {
     driveMasterR.getPIDController().setI(Constants.drivekI);
     driveSlaveL.getPIDController().setI(Constants.drivekI);
     driveSlaveR.getPIDController().setI(Constants.drivekI);
-  }
-
-  public Drivetrain() {
-    driveSlaveL.follow(driveMasterL);
-    driveSlaveR.follow(driveMasterR);
-    setIdleModes(IdleMode.kCoast);
-    setPIDConstants();
   }
 
   
@@ -141,7 +142,7 @@ public class Drivetrain extends SubsystemBase {
     return driveOdom.getPoseMeters();
   }
   public double getHeading() {
-    return gyro.getAngle();
+    return Math.IEEEremainder(gyro.getYaw(), 360);
   }
   public boolean resetOdometry(Pose2d pose) {
     encoderReset();

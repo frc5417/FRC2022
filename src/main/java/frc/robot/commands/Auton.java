@@ -17,11 +17,12 @@ import edu.wpi.first.math.trajectory.Trajectory;
 import edu.wpi.first.math.trajectory.TrajectoryConfig;
 import edu.wpi.first.math.trajectory.TrajectoryGenerator;
 import edu.wpi.first.math.trajectory.constraint.DifferentialDriveVoltageConstraint;
+import edu.wpi.first.math.trajectory.constraint.TrajectoryConstraint;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.RamseteCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.subsystems.Drivetrain;
-
+import edu.wpi.first.math.trajectory.constraint.TrajectoryConstraint;
 /** An example command that uses an example subsystem. */
 public class Auton extends SequentialCommandGroup{
 
@@ -30,9 +31,10 @@ public class Auton extends SequentialCommandGroup{
 
   public Auton(Drivetrain drive) {
     this.drive = drive;
+    SimpleMotorFeedforward motorFF = new SimpleMotorFeedforward(Constants.kSAuto, Constants.kVAuto, Constants.kAAuto);
     var autoVoltageConstraint = 
       new DifferentialDriveVoltageConstraint(
-        new SimpleMotorFeedforward(Constants.kSAuto, Constants.kVAuto, Constants.kAAuto), 
+        motorFF, 
         Constants.kinematics, Constants.maxVoltage);
 
     TrajectoryConfig config = 
@@ -52,8 +54,6 @@ public class Auton extends SequentialCommandGroup{
 
     RamseteController ramseteControl = new RamseteController();
 
-    SimpleMotorFeedforward motorFF = new SimpleMotorFeedforward(Constants.kSAuto, Constants.kVAuto, Constants.kAAuto);
-
     ramseteCommand = new RamseteCommand(
       tragic, 
       drive::getPose,
@@ -70,5 +70,18 @@ public class Auton extends SequentialCommandGroup{
   public Command getRamseteCommand (){
     return ramseteCommand.andThen(() -> drive.tankDriveVolts(0, 0));
   }
+
+//   @Override
+//   public double getMaxVelocityMetersPerSecond(Pose2d poseMeters, double curvatureRadPerMeter,
+//                                             double velocityMetersPerSecond) {
+//   return 10;
+// }
+
+//   @Override
+//   public MinMax getMinMaxAccelerationMetersPerSecondSq(Pose2d poseMeters,
+//                                                      double curvatureRadPerMeter,
+//                                                      double velocityMetersPerSecond) {
+//   return new MinMax(0, 3);
+// }
 
 }
