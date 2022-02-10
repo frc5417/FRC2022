@@ -20,29 +20,40 @@ import edu.wpi.first.math.kinematics.DifferentialDriveOdometry;
 import edu.wpi.first.math.kinematics.DifferentialDriveWheelSpeeds;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import com.kauailabs.navx.frc.AHRS;
+import edu.wpi.first.wpilibj.Joystick;
 
 public class Drivetrain extends SubsystemBase {
   /** Creates a new Drivetrain. */
-  private CANSparkMax driveSlaveL = new CANSparkMax(Constants.slaveLeftMotor, MotorType.kBrushless);
-  private CANSparkMax driveMasterR = new CANSparkMax(Constants.masterRightMotor, MotorType.kBrushless);
-  private CANSparkMax driveSlaveR = new CANSparkMax(Constants.slaveRightMotor, MotorType.kBrushless);
-  private CANSparkMax driveMasterL = new CANSparkMax(Constants.masterLeftMotor, MotorType.kBrushless);
-  private DifferentialDrive drive = new DifferentialDrive(driveMasterL, driveMasterR);
-
-  private RelativeEncoder neoEncoderL = driveMasterL.getEncoder();
-  private RelativeEncoder neoEncoderR = driveMasterR.getEncoder();
-  private RelativeEncoder neoEncoderL2 = driveSlaveL.getEncoder();
-  private RelativeEncoder neoEncoderR2 = driveSlaveR.getEncoder();
+  private CANSparkMax driveMasterR;
+  private CANSparkMax driveSlaveR;
+  private CANSparkMax driveMasterL;
+  private CANSparkMax driveSlaveL;
+  private DifferentialDrive drive;
+  private RelativeEncoder neoEncoderL;
+  private RelativeEncoder neoEncoderR;
+  private RelativeEncoder neoEncoderL2;
+  private RelativeEncoder neoEncoderR2;
   private DifferentialDriveOdometry driveOdom;
-  public AHRS gyro;
+  private AHRS gyro;
 
   public Drivetrain() {
+    driveMasterR = new CANSparkMax(Constants.masterRightMotor, MotorType.kBrushless);
+    driveSlaveR = new CANSparkMax(Constants.slaveRightMotor, MotorType.kBrushless);
+    driveMasterL = new CANSparkMax(Constants.masterLeftMotor, MotorType.kBrushless);
+    driveSlaveL = new CANSparkMax(Constants.slaveLeftMotor, MotorType.kBrushless);
+    
+    neoEncoderR = driveMasterR.getEncoder();
+    neoEncoderL = driveMasterL.getEncoder();
+    neoEncoderL2 = driveSlaveL.getEncoder();
+    neoEncoderR2 = driveSlaveR.getEncoder();
     driveSlaveL.follow(driveMasterL);
     driveSlaveR.follow(driveMasterR);
     setIdleModes(IdleMode.kCoast);
     setPIDConstants();
     gyro = new AHRS(Port.kUSB);
     driveOdom  = new DifferentialDriveOdometry(Rotation2d.fromDegrees(getHeading()));
+    drive  = new DifferentialDrive(driveMasterL, driveMasterR);
+    drive.setSafetyEnabled(false);
   }
 
   private void setIdleModes(IdleMode mode) {
@@ -63,19 +74,23 @@ public class Drivetrain extends SubsystemBase {
     driveSlaveR.getPIDController().setI(Constants.drivekI);
   }
 
-  
-  public void setPower(double leftPower, double rightPower){
-    if(Math.abs(leftPower) > .15){
-      driveMasterL.set(-leftPower);
-    } else {
-      driveMasterL.set(0);
-    }
-    if(Math.abs(rightPower) > .15){
-      driveMasterR.set(rightPower);
-    } else {
-      driveMasterR.set(0);
-    }
+  public void setPower(Joystick joystick){
+    driveMasterL.set(-joystick.getRawAxis(1));
+    driveMasterR.set(joystick.getRawAxis(5));
   }
+  
+  // public void setPower(double leftPower, double rightPower){
+  //   if(Math.abs(leftPower) > .15){
+  //     driveMasterL.set(-leftPower);
+  //   } else {
+  //     driveMasterL.set(0);
+  //   }
+  //   if(Math.abs(rightPower) > .15){
+  //     driveMasterR.set(rightPower);
+  //   } else {
+  //     driveMasterR.set(0);
+  //   }
+  // }
 
   public AHRS getGyro () {
     return gyro;

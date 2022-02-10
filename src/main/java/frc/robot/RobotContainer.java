@@ -7,8 +7,8 @@ package frc.robot;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
-import frc.robot.commands.Auton;
-import frc.robot.commands.TankDrive;
+import frc.robot.commands.*;
+// import frc.robot.commands.TankDrive;
 import frc.robot.subsystems.ExampleSubsystem;
 import frc.robot.subsystems.Drivetrain;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -21,21 +21,17 @@ import edu.wpi.first.wpilibj2.command.Command;
  */
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
-  private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
   private final Drivetrain driveSubsystem;
-  
-  private final Auton m_autoCommand;
-  private final TankDrive tankDrive;
 
-  public Joystick pad;
+  // private final TankDrive tankDrive;
+
+  public Joystick driverPad;
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
     // Configure the button bindings
     configureButtonBindings();
     driveSubsystem = new Drivetrain();
-    tankDrive = new TankDrive(this, driveSubsystem);
-    m_autoCommand = new Auton(driveSubsystem);
   }
 
   /**
@@ -46,20 +42,15 @@ public class RobotContainer {
    */
   private void configureButtonBindings() {
     //this initalizes the joystick
-    pad = new Joystick(0);
-  }
-  public double leftSpeed() {
-    //this gets the speed for the left motors by returning the value of the joystick's axis, specifically axis 1 on the Xbox controller
-    return pad.getRawAxis(1);
-  }
-  public double rightSpeed() {
-    //this gets the speed for the right motors by returning the value of the joystick's axis, specifically axis 5 on the Xbox controller
-    return pad.getRawAxis(5);
+    driverPad = new Joystick(0);
   }
 
-  public Drivetrain getDriveSubsystem() {
-    //this returns the drive subsystem in the robot container
-    return driveSubsystem;
+  public Joystick getDriverPad(){
+    return driverPad;
+  }
+
+  public void makeItDrive(){
+    driveSubsystem.setPower(driverPad);
   }
   /**
    * Use this to pass the autonomous command to the main {@link Robot} class.
@@ -67,6 +58,6 @@ public class RobotContainer {
    * @return the command to run in autonomous
    */
   public Command getAutonomousCommand() {
-    return new Auton(driveSubsystem).getRamseteCommand();
+    return new Auton2(driveSubsystem).getRamseteCommand();
   }
 }
