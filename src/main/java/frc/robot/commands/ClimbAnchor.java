@@ -9,17 +9,19 @@ import com.revrobotics.RelativeEncoder;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants;
+import frc.robot.RobotContainer;
 import frc.robot.subsystems.Climber;
 
 public class ClimbAnchor extends CommandBase {
   private final Climber climber;
+  private final RobotContainer robotContainer;
   private Solenoid anchor;
   private boolean isEnabled = false;
-  private int howLongPushedDownFor = 0;
 
   /** Creates a new AutoClimb. */
-  public ClimbAnchor(Climber climber) {
+  public ClimbAnchor(Climber climber, RobotContainer robotContainer) {
     this.climber = climber;
+    this.robotContainer = robotContainer;
     this.anchor = this.climber.getAnchorSolenoid();
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(this.climber);
@@ -29,7 +31,6 @@ public class ClimbAnchor extends CommandBase {
   @Override
   public void initialize() {
     this.isEnabled = false;
-    this.howLongPushedDownFor = 0;
   }
 
   // Called every time the scheduler runs while the command is scheduled.
@@ -38,12 +39,6 @@ public class ClimbAnchor extends CommandBase {
     if(!this.isEnabled) {
       this.anchor.toggle();
       this.isEnabled = true;
-    } else {
-      if(this.climber.leftLimitSwitch.get() && this.climber.rightLimitSwitch.get()) {
-        this.howLongPushedDownFor++;
-      } else {
-        this.howLongPushedDownFor = 0;
-      }
     }
   }
 
@@ -54,11 +49,16 @@ public class ClimbAnchor extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    if(this.howLongPushedDownFor > (Constants.howLongClimbHasToBePushedDown / 20)) {
-      this.howLongPushedDownFor = 0;
-      this.isEnabled = false;
-      return true;
-    }
-    return false;
+
+    return this.robotContainer.getButtonA();
+
+    // Commented for regional competition - want to use limit switches for state or irving
+    // if(this.howLongPushedDownFor > (Constants.howLongClimbHasToBePushedDown / 20)) {
+    //   this.howLongPushedDownFor = 0;
+    //   this.isEnabled = false;
+    //   return true;
+    // }
+    // 
+    // return false;
   }
 }
