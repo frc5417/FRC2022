@@ -15,10 +15,18 @@ public class AutoClimbExtend extends CommandBase {
   private boolean isEnabled = false;
   private RelativeEncoder leftEncoder;
   private RelativeEncoder rightEncoder;
+  private double position = -1.0;
 
   /** Creates a new AutoClimb. */
   public AutoClimbExtend(Climber climber) {
     this.climber = climber;
+    // Use addRequirements() here to declare subsystem dependencies.
+    addRequirements(this.climber);
+  }
+
+  public AutoClimbExtend(Climber climber, double position) {
+    this.climber = climber;
+    this.position = position;
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(this.climber);
   }
@@ -36,7 +44,11 @@ public class AutoClimbExtend extends CommandBase {
   public void execute() {
     if(!this.isEnabled) {
       this.isEnabled = true;
-      this.climber.extendUp();
+      if(position == -1.0) {
+        this.climber.extendUp();
+      } else {
+        this.climber.setPosition(position);
+      }
     }
   }
 
@@ -47,10 +59,21 @@ public class AutoClimbExtend extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    if(this.leftEncoder.getPosition() >= Constants.climberExtendPos && this.rightEncoder.getPosition() >= Constants.climberExtendPos) {
-      return true;
+    if(this.position == -1.0) {
+      if(this.leftEncoder.getPosition() >= Constants.climberExtendPos && this.rightEncoder.getPosition() >= Constants.climberExtendPos) {
+        return true;
+      }
+    } else {
+      if(this.leftEncoder.getPosition() >= this.position && this.rightEncoder.getPosition() >= this.position) {
+        return true;
+      }
     }
+
     return false;
+  }
+
+  public void setPosition(double position) {
+    this.position = position;
   }
 
 }

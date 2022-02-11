@@ -26,6 +26,9 @@ public final class Constants {
     public static int climberExtendPos = 0;
     public static int climberRetractPos = 0;
 
+    public static int climberExtendSlightlyPos = 0;
+    public static int climberRetractSlightlyPos = 0;
+
     public static double climberkP = 1;
 
     public static int passiveSolenoid = 0;
