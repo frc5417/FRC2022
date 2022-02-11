@@ -32,4 +32,9 @@ public final class Constants {
 
     public static int passiveSolenoid = 0;
     public static int activeSolenoid = 1;
+
+    public static int driveLMaster = 14;
+    public static int driveLSlave = 15;
+    public static int driveRMaster = 1;
+    public static int driveRSlave = 17;
 }
