@@ -41,16 +41,21 @@ public class Drivetrain extends SubsystemBase {
     driveSlaveR = new CANSparkMax(Constants.slaveRightMotor, MotorType.kBrushless);
     driveMasterL = new CANSparkMax(Constants.masterLeftMotor, MotorType.kBrushless);
     driveSlaveL = new CANSparkMax(Constants.slaveLeftMotor, MotorType.kBrushless);
-    
+    driveMasterL.setInverted(true);
+    driveSlaveL.setInverted(true);
     neoEncoderR = driveMasterR.getEncoder();
     neoEncoderL = driveMasterL.getEncoder();
     neoEncoderL2 = driveSlaveL.getEncoder();
     neoEncoderR2 = driveSlaveR.getEncoder();
+    neoEncoderR.setPositionConversionFactor(2*Math.PI*Constants.wheelDiameter / Constants.driveGearingRatio);
+    neoEncoderL.setPositionConversionFactor(2*Math.PI*Constants.wheelDiameter / Constants.driveGearingRatio);
+    neoEncoderR.setVelocityConversionFactor(2*Math.PI*Constants.wheelDiameter / Constants.driveGearingRatio);
+    neoEncoderL.setVelocityConversionFactor(2*Math.PI*Constants.wheelDiameter / Constants.driveGearingRatio);
     driveSlaveL.follow(driveMasterL);
     driveSlaveR.follow(driveMasterR);
     setIdleModes(IdleMode.kCoast);
     setPIDConstants();
-    gyro = new AHRS(Port.kUSB);
+    gyro = new AHRS(Port.kUSB); //big navx: kmxp
     driveOdom  = new DifferentialDriveOdometry(Rotation2d.fromDegrees(getHeading()));
     drive  = new DifferentialDrive(driveMasterL, driveMasterR);
     drive.setSafetyEnabled(false);
@@ -75,8 +80,10 @@ public class Drivetrain extends SubsystemBase {
   }
 
   public void setPower(Joystick joystick){
-    driveMasterL.set(-joystick.getRawAxis(1));
+    driveMasterL.set(joystick.getRawAxis(1));
     driveMasterR.set(joystick.getRawAxis(5));
+    System.out.println("left pos:" + neoEncoderL.getPosition());
+    System.out.println("right pos:" + neoEncoderR.getPosition());
   }
   
   // public void setPower(double leftPower, double rightPower){
@@ -126,11 +133,6 @@ public class Drivetrain extends SubsystemBase {
     drive.feed();
   }
 
-  public void tankDriveVoltsNerfed(double leftVolts, double rightVolts){
-    rawMotorPower(.5*leftVolts / RobotController.getBatteryVoltage(), -.5*rightVolts / RobotController.getBatteryVoltage());
-    drive.feed();
-  }
-
   public void autonPower(double driveMasterLPos, double driveMasterRPos, double driveSlaveLPos, double driveSlaveRPos) {
     setIdleModes(IdleMode.kBrake);
     driveMasterL.getPIDController().setReference(driveMasterLPos, CANSparkMax.ControlType.kPosition);
@@ -147,13 +149,13 @@ public class Drivetrain extends SubsystemBase {
   }
 
   public DifferentialDriveWheelSpeeds getWheelSpeeds() {
-    return new DifferentialDriveWheelSpeeds(neoEncoderL.getVelocity(), -neoEncoderR.getVelocity());
+    return new DifferentialDriveWheelSpeeds(neoEncoderL.getVelocity(), neoEncoderR.getVelocity());
   }
   public Pose2d getPose() {
     return driveOdom.getPoseMeters();
   }
   public double getHeading() {
-    return Math.IEEEremainder(gyro.getYaw(), 360);
+    return Math.IEEEremainder(gyro.getYaw(), 360); //default for navx: clockwise is positive
   }
   public boolean resetOdometry(Pose2d pose) {
     encoderReset();
@@ -187,6 +189,6 @@ public class Drivetrain extends SubsystemBase {
 
   @Override
   public void periodic() {
-    driveOdom.update(Rotation2d.fromDegrees(getHeading()), neoEncoderL.getPosition(), -neoEncoderR.getPosition());
+    driveOdom.update(Rotation2d.fromDegrees(getHeading()), neoEncoderL.getPosition(), neoEncoderR.getPosition());
   }
 }
