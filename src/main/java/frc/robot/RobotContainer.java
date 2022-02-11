@@ -8,6 +8,8 @@ import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
+import frc.robot.subsystems.*;
+import frc.robot.commands.*;
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -16,13 +18,29 @@ import edu.wpi.first.wpilibj2.command.Command;
  * subsystems, commands, and button mappings) should be declared here.
  */
 public class RobotContainer {
-  // The robot's subsystems and commands are defined here...
+  // Define joysticks
   private Joystick pad;
   private Joystick padManipulator;
 
+  // Define subsystems
+  private final Climber climber;
+
+  // Define commands
+  private final AutoClimbExtend autoClimbExtend;
+  private final AutoClimbRetract autoClimbRetract;
+  private final ClimbAnchor climbAnchor;
+  private final ClimbPivot climbPivot;
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
+    // init subsystems
+    this.climber = new Climber();
+
+    // init commands
+    this.autoClimbExtend = new AutoClimbExtend(this.climber);
+    this.autoClimbRetract = new AutoClimbRetract(this.climber);
+    this.climbAnchor = new ClimbAnchor(this.climber, this);
+    this.climbPivot = new ClimbPivot(this.climber, this);
 
     // Configure the button bindings
     configureButtonBindings();
@@ -50,13 +68,26 @@ public class RobotContainer {
     return this.pad.getRawButton(2);
   }
 
-  /**
-   * Use this to pass the autonomous command to the main {@link Robot} class.
-   *
-   * @return the command to run in autonomous
-   */
-  public Command getAutonomousCommand() {
-    // An ExampleCommand will run in autonomous
-    return null;
-  }
+  // Getters for subsystems:
+  public Climber getClimber() {
+		return this.climber;
+	}
+
+  // Getters for commands:
+	public AutoClimbExtend getAutoClimbExtend() {
+		return this.autoClimbExtend;
+	}
+
+	public AutoClimbRetract getAutoClimbRetract() {
+		return this.autoClimbRetract;
+	}
+
+	public ClimbAnchor getClimbAnchor() {
+		return this.climbAnchor;
+	}
+
+	public ClimbPivot getClimbPivot() {
+		return this.climbPivot;
+	}
+
 }

@@ -18,10 +18,8 @@ public final class Constants {
     public static int climbRight1 = 43;
     public static int climbRight2 = 44;
 
-    public static int climbLeftLimitSwitch = 0;
-    public static int climbRightLimitSwitch = 1;
-    public static int climbBottomLeftLimitSwitch = 2;
-    public static int climbBottomRightLimitSwitch = 3;
+    public static int climbBottomLeftLimitSwitch = 0;
+    public static int climbBottomRightLimitSwitch = 1;
 
     public static int howLongClimbHasToBePushedDown = 900; // In ms.
 
