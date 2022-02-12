@@ -16,16 +16,16 @@ import edu.wpi.first.wpilibj2.command.RamseteCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.subsystems.Drivetrain;
 
-public class Auton2 extends SequentialCommandGroup{
+public class Auton3 extends SequentialCommandGroup{
 
   RamseteCommand ramseteCommand;
   Drivetrain drive;
 
-  public Auton2(Drivetrain drive) {
+  public Auton3(Drivetrain drive) {
     this.drive = drive;
     SimpleMotorFeedforward motorFF = new SimpleMotorFeedforward(Constants.kSAuto, Constants.kVAuto, Constants.kAAuto);
 
-    Trajectory tragic = PathPlanner.loadPath("TurnTest", Constants.maxSpeed, Constants.maxAcceleration);
+    Trajectory tragic = PathPlanner.loadPath("BestPath", Constants.maxSpeed, Constants.maxAcceleration);
 
     drive.resetOdometry(tragic.getInitialPose());
 
