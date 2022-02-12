@@ -25,7 +25,7 @@ public class Auton3 extends SequentialCommandGroup{
     this.drive = drive;
     SimpleMotorFeedforward motorFF = new SimpleMotorFeedforward(Constants.kSAuto, Constants.kVAuto, Constants.kAAuto);
 
-    Trajectory tragic = PathPlanner.loadPath("BestPath", Constants.maxSpeed, Constants.maxAcceleration);
+    Trajectory tragic = PathPlanner.loadPath("TurnTest3", Constants.maxSpeed, Constants.maxAcceleration);
 
     drive.resetOdometry(tragic.getInitialPose());
 

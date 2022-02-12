@@ -59,10 +59,10 @@ public class RobotContainer {
    */
   public Command getAutonomousCommand() {
     //this runs two auton commands- Auton2 and Auton3 with their ramsete commands
-    //return new SequentialCommandGroup(new Auton2(driveSubsystem).getRamseteCommand(), new Auton3(driveSubsystem).getRamseteCommand());
+    return new SequentialCommandGroup(new Auton2(driveSubsystem).getRamseteCommand(), new Auton3(driveSubsystem).getRamseteCommand());
     
     //this just runs Auton2
-    return new SequentialCommandGroup(new Auton2(driveSubsystem).getRamseteCommand());
+    //return new SequentialCommandGroup(new Auton2(driveSubsystem).getRamseteCommand());
     //add shooting to sequential command
   }
 
