@@ -67,7 +67,7 @@ public final class Constants {
     // public static final double distance_adjust = .05;
     // public static final double ticksPerRev = 12.0; // Without Gear Reduction
     // public static final double maxVelocity = 9.0; // meters per sec
-    // public static final double wheelDiameter = 0.1016;
+     public static final double wheelDiameter = 0.1016;
     // public static final double driveTrain_width = .4699;
 
     // public static final double targetHeight = 89.75; //inches
