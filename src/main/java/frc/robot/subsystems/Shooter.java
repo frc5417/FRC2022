@@ -15,6 +15,7 @@ import frc.robot.Constants;
 public class Shooter extends SubsystemBase {
   private final CANSparkMax shooter1;
   private final CANSparkMax shooter2;
+
   /** Creates a new Shooter. */
   public Shooter() {
     this.shooter1 = new CANSparkMax(Constants.shooter1, MotorType.kBrushless);
@@ -33,7 +34,7 @@ public class Shooter extends SubsystemBase {
   }
 
   public void setVelocity() {
-    setVelocity(Constants.shootsetPointVariable*Constants.shootMaxRPM);
+    this.setVelocity(Constants.shootsetPointVariable*Constants.shootMaxRPM);
   }
 
   public void setVelocity(double velocity){
