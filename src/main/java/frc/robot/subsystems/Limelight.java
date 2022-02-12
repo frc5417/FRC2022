@@ -54,7 +54,7 @@ public class Limelight extends SubsystemBase {
   }
 
   public double estimateDistance(){
-    return (Constants.targetHeight - Constants.limelightHeight) / (Math.tan(Math.toRadians(Constants.limelightAngle) + Math.toRadians(y)));
+    return (Constants.targetHeight - Constants.limelightHeight) / (Math.tan(Math.toRadians(Constants.limelightAngle) + Math.toRadians(ty)));
   }
 
 }
