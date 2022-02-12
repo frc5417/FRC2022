@@ -133,7 +133,9 @@ public class Drivetrain extends SubsystemBase {
   }
 
   public void tankDriveVolts(double leftVolts, double rightVolts){
-    rawMotorPower(leftVolts / RobotController.getBatteryVoltage(), -rightVolts / RobotController.getBatteryVoltage());
+    leftVolts /= 20.0;
+    rightVolts /= 20.0;
+    rawMotorPower(leftVolts / RobotController.getBatteryVoltage(), rightVolts / RobotController.getBatteryVoltage());
     drive.feed();
   }
 
