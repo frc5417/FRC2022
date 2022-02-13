@@ -41,8 +41,8 @@ public class Drivetrain extends SubsystemBase {
     driveSlaveR = new CANSparkMax(Constants.slaveRightMotor, MotorType.kBrushless);
     driveMasterL = new CANSparkMax(Constants.masterLeftMotor, MotorType.kBrushless);
     driveSlaveL = new CANSparkMax(Constants.slaveLeftMotor, MotorType.kBrushless);
-    driveMasterL.setInverted(true);
-    driveSlaveL.setInverted(true);
+    driveMasterR.setInverted(true);
+    driveSlaveR.setInverted(true);
     neoEncoderR = driveMasterR.getEncoder();
     neoEncoderL = driveMasterL.getEncoder();
     neoEncoderL2 = driveSlaveL.getEncoder();
