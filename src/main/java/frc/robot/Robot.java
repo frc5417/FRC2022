@@ -77,6 +77,7 @@ public class Robot extends TimedRobot {
     this.autoClimbRetract = robotContainer.getAutoClimbRetract();
     this.climbAnchor = robotContainer.getClimbAnchor();
     this.climbPivot = robotContainer.getClimbPivot();
+
   }
 
   /** This function is called periodically during operator control. */

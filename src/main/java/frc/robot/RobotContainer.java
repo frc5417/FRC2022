@@ -24,6 +24,9 @@ public class RobotContainer {
   private final Climber climber;
   private final Intake intake;
   private final Drivetrain driveSubsystem;
+  private final Shooter shooterSubsystem;
+  private final Limelight limelightSubsystem;
+  private final Turret turretSubSystem;
 
   // Define joysticks & buttons
   private Joystick pad;
@@ -35,6 +38,8 @@ public class RobotContainer {
   private JoystickButton buttonB;
 
   // Define commands
+  private final AutoAlignTurret autoAlignTurretCommand;
+  private final AutoSetShooterSpeed autoSetShooterSpeedCommand;
   private final AutoClimbExtend autoClimbExtend;
   private final AutoClimbExtend autoClimbExtendSlightly;
   private final AutoClimbRetract autoClimbRetract;
@@ -56,6 +61,9 @@ public class RobotContainer {
     this.climber = new Climber();
     this.intake = new Intake();
     this.driveSubsystem = new Drivetrain();
+    this.shooterSubsystem = new Shooter();
+    this.limelightSubsystem = new Limelight();
+    this.turretSubSystem = new Turret();
 
     // init commands
     this.autoClimbExtend = new AutoClimbExtend(this.climber);
@@ -69,6 +77,8 @@ public class RobotContainer {
     this.deployIntakePistons = new DeployIntakePistons(this.intake);
     this.retractIntakePistons = new RetractIntakePistons(this.intake);
     this.internalPush = new InternalPush(this.intake);
+    this.autoAlignTurretCommand = new AutoAlignTurret(this.limelightSubsystem, this.turretSubSystem);
+    this.autoSetShooterSpeedCommand = new AutoSetShooterSpeed(this.limelightSubsystem, this.shooterSubsystem);
 
     this.climbCommands = new SequentialCommandGroup(
       this.autoClimbExtend,
@@ -93,7 +103,6 @@ public class RobotContainer {
       this.climbAnchor
     );
 
-    // Configure the button bindings
     configureButtonBindings();
   }
   
@@ -120,8 +129,8 @@ public class RobotContainer {
    * edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
   private void configureButtonBindings() {
-<<<<<<< HEAD
     this.pad = new Joystick(0);
+    this.padManipulator = new Joystick(1);
 
     this.buttonY = new JoystickButton(this.pad, 4);
     this.buttonY.whileHeld(this.runIntakeSystem);
@@ -134,6 +143,9 @@ public class RobotContainer {
     
     this.buttonB = new JoystickButton(this.pad, 2);
     this.buttonB.whileHeld(this.internalPush);
+
+    this.xButton  = new JoystickButton(this.pad, 3);
+    this.xButton.toggleWhenPressed(this.climbCommands);
   }
 
   public Joystick getDriverPad(){
@@ -155,16 +167,6 @@ public class RobotContainer {
     //this just runs Auton2
     return new SequentialCommandGroup(new Auton2(driveSubsystem).getRamseteCommand());
     //add shooting to sequential command
-  }
-
-=======
-    
-    // Init the joysticks
-    this.pad = new Joystick(0);
-    this.padManipulator = new Joystick(1);
-    this.xButton  = new JoystickButton(this.pad, 3); // Creates a new JoystickButton object for button 1
-
-    this.xButton.toggleWhenPressed(this.climbCommands);
   }
 
   public boolean getButtonA() {
@@ -197,5 +199,12 @@ public class RobotContainer {
 		return this.climbPivot;
 	}
 
->>>>>>> origin/climber
+  public Shooter getShooter() {
+    return this.shooterSubsystem;
+  }
+
+  public Limelight getLimelight() {
+    return this.limelightSubsystem;
+  }
+
 }
