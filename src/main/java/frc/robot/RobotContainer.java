@@ -49,8 +49,8 @@ public class RobotContainer {
     return driverPad;
   }
 
-  public void makeItDrive(){
-    driveSubsystem.setPower(driverPad);
+  public Drivetrain getDriveSub(){
+    return this.driveSubsystem;
   }
   /**
    * Use this to pass the autonomous command to the main {@link Robot} class.

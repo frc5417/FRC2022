@@ -78,26 +78,19 @@ public class Drivetrain extends SubsystemBase {
     driveSlaveL.getPIDController().setI(Constants.drivekI);
     driveSlaveR.getPIDController().setI(Constants.drivekI);
   }
-
-  public void setPower(Joystick joystick){
-    driveMasterL.set(joystick.getRawAxis(1));
-    driveMasterR.set(joystick.getRawAxis(5));
-    System.out.println("left pos:" + neoEncoderL.getPosition());
-    System.out.println("right pos:" + neoEncoderR.getPosition());
-  }
   
-  // public void setPower(double leftPower, double rightPower){
-  //   if(Math.abs(leftPower) > .15){
-  //     driveMasterL.set(-leftPower);
-  //   } else {
-  //     driveMasterL.set(0);
-  //   }
-  //   if(Math.abs(rightPower) > .15){
-  //     driveMasterR.set(rightPower);
-  //   } else {
-  //     driveMasterR.set(0);
-  //   }
-  // }
+  public void setPower(double leftPower, double rightPower){
+    if(Math.abs(leftPower) > .15){
+      driveMasterL.set(-leftPower);
+    } else {
+      driveMasterL.set(0);
+    }
+    if(Math.abs(rightPower) > .15){
+      driveMasterR.set(rightPower);
+    } else {
+      driveMasterR.set(0);
+    }
+  }
 
   public CANSparkMax getDriveSlaveL () {
     return driveSlaveL;
@@ -155,11 +148,13 @@ public class Drivetrain extends SubsystemBase {
     return driveOdom.getPoseMeters();
   }
   public double getHeading() {
-    return Math.IEEEremainder(gyro.getYaw(), 360); //default for navx: clockwise is positive
+    return Math.IEEEremainder(gyro.getRoll(), 360);
+    //return Math.IEEEremainder(gyro.getYaw(), 360); //default for navx: clockwise is positive
   }
   public boolean resetOdometry(Pose2d pose) {
     encoderReset();
-    gyro.zeroYaw();
+    //gyro.zeroYaw();
+    gyro.reset();
     driveOdom.resetPosition(pose, Rotation2d.fromDegrees(getHeading()));
     return true;
   }
@@ -189,6 +184,7 @@ public class Drivetrain extends SubsystemBase {
 
   @Override
   public void periodic() {
+    System.out.println("roll:" + getHeading());
     driveOdom.update(Rotation2d.fromDegrees(getHeading()), neoEncoderL.getPosition(), neoEncoderR.getPosition());
   }
 }
