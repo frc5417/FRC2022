@@ -10,6 +10,8 @@ import edu.wpi.first.wpilibj.XboxController;
 import frc.robot.commands.*;
 import frc.robot.subsystems.*;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
+import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 
 /**
@@ -28,6 +30,10 @@ public class RobotContainer {
   private final AutoAlignTurret autoAlignTurretCommand;
   private final AutoSetShooterSpeed autoSetShooterSpeedCommand;
 
+  // Joysticks:
+  private final Joystick pad;
+  private final JoystickButton buttonA;
+
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
     // Init Subsystems:
@@ -38,6 +44,10 @@ public class RobotContainer {
     // Init Commands:
     this.autoAlignTurretCommand = new AutoAlignTurret(this.limelightSubsystem, this.turretSubSystem);
     this.autoSetShooterSpeedCommand = new AutoSetShooterSpeed(this.limelightSubsystem, this.shooterSubsystem);
+
+    // Init Joysticks:
+    this.pad = new Joystick(0);
+    this.buttonA = new JoystickButton(this.pad, 1);
 
     // Configure the button bindings
     configureButtonBindings();
@@ -50,7 +60,10 @@ public class RobotContainer {
    * edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
   private void configureButtonBindings() {
-
+    buttonA.whileHeld(new SequentialCommandGroup(
+      this.autoAlignTurretCommand,
+      new InstantCommand(() -> System.out.println("aligned!!"))
+    ));
   }
 
   public Shooter getShooter() {

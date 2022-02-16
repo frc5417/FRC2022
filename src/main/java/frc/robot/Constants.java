@@ -14,21 +14,21 @@ package frc.robot;
  */
 public final class Constants {
 
-    public static int shooter1 = 2;
-    public static int shooter2 = 3;
-    public static int turret = 4;
+    public static final int shooter1 = 40;
+    public static final int shooter2 = 41;
+    public static final int turret = 10;
 
-    public static double kP = 1.0;
-    public static double minCommand = 0.1;
-    public static double limeLightErrorAllowed = .1;
+    public static final double kPturn = 1.0;
+    public static final double minCommand = 0.1;
+    public static final double limeLightErrorAllowed = 5;
 
     public static final double targetHeight = 104.75; //inches
     public static final double limelightAngle = 28.66; // degrees
     public static final double limelightHeight = 26; //inches
 
-    public static double shooterP = 0.2;
-    public static double shooterI = 0;
-    public static int shootsetPointVariable = -3100;
-    public static int shootMaxRPM = 5700;
+    public static final double shooterP = 0.2;
+    public static final double shooterI = 0;
+    public static final int shootsetPointVariable = -3100;
+    public static final int shootMaxRPM = 5700;
 
 }

@@ -32,18 +32,21 @@ public class AutoAlignTurret extends CommandBase {
   @Override
   public void execute() {
     double turretAdjust = 0;
-    double x = limelight.getX();
-    if(x > Constants.limeLightErrorAllowed) {
-      turretAdjust = Constants.kP*(-x) + Constants.minCommand;
-    } else if(x < Constants.limeLightErrorAllowed) {
-      turretAdjust = Constants.kP*(-x) - Constants.minCommand;
-    } else {
+    if(!this.limelight.getV()){
+      this.isAligned = false;
+      return;
+    }
+    double x = this.limelight.getX();
+    if(x > Constants.limeLightErrorAllowed){
+      turretAdjust = Constants.kPturn*(-x) + Constants.minCommand;
+      this.isAligned = false;
+    }else{
       this.isAligned = true;
     }
-
     if(!this.isAligned) {
       this.turret.setPower(turretAdjust);
     }
+    System.out.println("aligning...");
   }
 
   // Called once the command ends or is interrupted.

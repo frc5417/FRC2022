@@ -27,8 +27,7 @@ public class Turret extends SubsystemBase {
   }
 
   public void setPower(double power) {
-    turretMotor.setIdleMode(IdleMode.kCoast);
-
+    turretMotor.setIdleMode(IdleMode.kBrake);
     turretMotor.set(power);
   }
 }
