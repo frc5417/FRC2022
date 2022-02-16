@@ -16,13 +16,26 @@ import edu.wpi.first.math.kinematics.DifferentialDriveKinematics;
  */
 public final class Constants {
 
-    public static double intakeSpeed = .5;
-    public static double pusherSpeed = .5;
+    public static final double intakeSpeed = .5;
+    public static final double pusherSpeed = .5;
 
-    public static final int masterRightMotor = 1; 
-    public static final int slaveRightMotor = 17; 
-    public static final int masterLeftMotor = 14;
-    public static final int slaveLeftMotor = 15; 
+    public final static int driveMasterLeft = 11;
+    public final static int driveMasterRight = 14;
+    public final static int driveSlaveLeft1 = 12;
+    public final static int driveSlaveLeft2 = 13;
+    public final static int driveSlaveRight1 = 15;
+    public final static int driveSlaveRight2 = 16;
+    public final static int intake = 21;
+    public final static int intestineBottom = 31;
+    public final static int intestineKicker = 32;
+    public final static int shooter1 = 42;
+    public final static int shooter2 = 43;
+    public final static int turret = 51;
+    public final static int climbMasterLeft = 61;
+    public final static int climbMasterRight = 63;
+    public final static int climbSlaveLeft = 62;
+    public final static int climbSlaveRight = 64;
+    public final static int solenoid = 75;
 
     //Drive Constants
     public static final double drivekP = .0312;
@@ -49,46 +62,43 @@ public final class Constants {
 
     public static final double wheelDiameter = 0.1016;
     
-    public static int climbLeft1 = 41;
-    public static int climbLeft2 = 42;
-    public static int climbRight1 = 43;
-    public static int climbRight2 = 44;
+    public static final int climbLeft1 = 41;
+    public static final int climbLeft2 = 42;
+    public static final int climbRight1 = 43;
+    public static final int climbRight2 = 44;
 
-    public static int climbBottomLeftLimitSwitch = 0;
-    public static int climbBottomRightLimitSwitch = 1;
+    public static final int climbBottomLeftLimitSwitch = 0;
+    public static final int climbBottomRightLimitSwitch = 1;
 
-    public static int howLongClimbHasToBePushedDown = 900; // In ms.
+    public static final int howLongClimbHasToBePushedDown = 900; // In ms.
 
-    public static int climberExtendPos = 0;
-    public static int climberRetractPos = 0;
+    public static final int climberExtendPos = 0;
+    public static final int climberRetractPos = 0;
 
-    public static int climberExtendSlightlyPos = 0;
-    public static int climberRetractSlightlyPos = 0;
+    public static final int climberExtendSlightlyPos = 0;
+    public static final int climberRetractSlightlyPos = 0;
 
-    public static double climberkP = 1;
+    public static final double climberkP = 1;
 
-    public static int passiveSolenoid = 0;
-    public static int activeSolenoid = 1;
+    public static final int passiveSolenoid = 0;
+    public static final int activeSolenoid = 1;
 
-    public static int driveLMaster = 14;
-    public static int driveLSlave = 15;
-    public static int driveRMaster = 1;
-    public static int driveRSlave = 17;
-    public static int shooter1 = 2;
-    public static int shooter2 = 3;
-    public static int turret = 4;
+    public static final int driveLMaster = 14;
+    public static final int driveLSlave = 15;
+    public static final int driveRMaster = 1;
+    public static final int driveRSlave = 17;
 
-    public static double kP = 1.0;
-    public static double minCommand = 0.1;
-    public static double limeLightErrorAllowed = .1;
+    public static final double kP = 1.0;
+    public static final double minCommand = 0.1;
+    public static final double limeLightErrorAllowed = .1;
 
     public static final double targetHeight = 104.75; //inches
     public static final double limelightAngle = 28.66; // degrees
     public static final double limelightHeight = 26; //inches
 
-    public static double shooterP = 0.2;
-    public static double shooterI = 0;
-    public static int shootsetPointVariable = -3100;
-    public static int shootMaxRPM = 5700;
+    public static final double shooterP = 0.2;
+    public static final double shooterI = 0;
+    public static final int shootsetPointVariable = -3100;
+    public static final int shootMaxRPM = 5700;
 
 }
