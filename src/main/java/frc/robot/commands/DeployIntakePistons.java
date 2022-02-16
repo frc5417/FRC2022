@@ -12,15 +12,11 @@ public class DeployIntakePistons extends CommandBase {
   /** Creates a new DeployIntakePistons. */
   private final Intake i;
 
-
-
   public DeployIntakePistons(Intake subsystem) {
     // Use addRequirements() here to declare subsystem dependencies.
-    i = subsystem;
-    addRequirements(i);
+    this.i = subsystem;
+    addRequirements(this.i);
   }
-
-
 
   // Called when the command is initially scheduled.
   @Override
@@ -29,7 +25,7 @@ public class DeployIntakePistons extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    i.deployPistons();
+    this.i.deployPistons();
   }
 
   // Called once the command ends or is interrupted.

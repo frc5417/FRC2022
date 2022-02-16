@@ -7,13 +7,11 @@ package frc.robot;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
-import frc.robot.commands.RunIntakeSystem;
-import frc.robot.commands.DeployIntakePistons;
-import frc.robot.commands.RetractIntakePistons;
-import frc.robot.commands.InternalPush;
-import frc.robot.subsystems.Intake;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
+import frc.robot.commands.*;
+import frc.robot.subsystems.*;
+import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -24,6 +22,7 @@ import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
   private final Intake intake = new Intake();
+  private final Drivetrain driveSubsystem;
 
   private final Command runIntakeSystem = new RunIntakeSystem(this.intake);
   private final Command deployIntakePistons = new DeployIntakePistons(this.intake);
@@ -40,6 +39,7 @@ public class RobotContainer {
   public RobotContainer() {
     // Configure the button bindings
     configureButtonBindings();
+    driveSubsystem = new Drivetrain();
   }
   
   public boolean yButton(){
@@ -78,7 +78,27 @@ public class RobotContainer {
     
     this.buttonB = new JoystickButton(this.pad, 2);
     this.buttonB.whileHeld(this.internalPush);
+  }
 
+  public Joystick getDriverPad(){
+    return this.pad;
+  }
+
+  public void makeItDrive(){
+    driveSubsystem.setPower(this.pad);
+  }
+  /**
+   * Use this to pass the autonomous command to the main {@link Robot} class.
+   *
+   * @return the command to run in autonomous
+   */
+  public Command getAutonomousCommand() {
+    //this runs two auton commands- Auton2 and Auton3 with their ramsete commands
+    //return new SequentialCommandGroup(new Auton2(driveSubsystem).getRamseteCommand(), new Auton3(driveSubsystem).getRamseteCommand());
+    
+    //this just runs Auton2
+    return new SequentialCommandGroup(new Auton2(driveSubsystem).getRamseteCommand());
+    //add shooting to sequential command
   }
 
 }
