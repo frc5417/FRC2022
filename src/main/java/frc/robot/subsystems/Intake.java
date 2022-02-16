@@ -8,28 +8,26 @@ import frc.robot.Constants;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMax.IdleMode;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
+
+import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
  
 public class Intake extends SubsystemBase {
 
-
-  private CANSparkMax rollerBar;
-  private CANSparkMax internalPusher;
-  private Solenoid intakeSolenoid;
+  private final CANSparkMax rollerBar;
+  private final CANSparkMax internalPusher;
+  private final Solenoid intakeSolenoid;
 
   /** Creates a new Intake. */
   public Intake() {
-    CANSparkMax rollerBar = new CANSparkMax(4, MotorType.kBrushless);
-    CANSparkMax internalPusher = new CANSparkMax(5, MotorType.kBrushless);
-
+    this.rollerBar = new CANSparkMax(4, MotorType.kBrushless);
+    this.internalPusher = new CANSparkMax(5, MotorType.kBrushless);
+    this.intakeSolenoid = new Solenoid(PneumaticsModuleType.CTREPCM, 1);
 
     rollerBar.setIdleMode(IdleMode.kCoast);
     internalPusher.setIdleMode(IdleMode.kCoast);
-    
-
-
   }
 
   public void runIntake(){

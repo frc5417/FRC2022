@@ -7,12 +7,10 @@ package frc.robot;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
-import frc.robot.commands.ExampleCommand;
 import frc.robot.commands.RunIntakeSystem;
 import frc.robot.commands.DeployIntakePistons;
 import frc.robot.commands.RetractIntakePistons;
 import frc.robot.commands.InternalPush;
-import frc.robot.subsystems.ExampleSubsystem;
 import frc.robot.subsystems.Intake;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
@@ -25,25 +23,18 @@ import edu.wpi.first.wpilibj2.command.button.JoystickButton;
  */
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
-  private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
   private final Intake intake = new Intake();
 
-  private final ExampleCommand m_autoCommand = new ExampleCommand(m_exampleSubsystem);
   private final Command runIntakeSystem = new RunIntakeSystem(this.intake);
   private final Command deployIntakePistons = new DeployIntakePistons(this.intake);
   private final Command retractIntakePistons = new RetractIntakePistons(this.intake);
   private final Command internalPush = new InternalPush(this.intake);
-
-
 
   private Joystick pad;
   private JoystickButton buttonY;
   private JoystickButton buttonX;
   private JoystickButton buttonA;
   private JoystickButton buttonB;
-
-
-
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
@@ -88,16 +79,6 @@ public class RobotContainer {
     this.buttonB = new JoystickButton(this.pad, 2);
     this.buttonB.whileHeld(this.internalPush);
 
-    
   }
 
-  /**
-   * Use this to pass the autonomous command to the main {@link Robot} class.
-   *
-   * @return the command to run in autonomous
-   */
-  public Command getAutonomousCommand() {
-    // An ExampleCommand will run in autonomous
-    return m_autoCommand;
-  }
 }
