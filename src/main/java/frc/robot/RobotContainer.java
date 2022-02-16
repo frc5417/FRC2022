@@ -8,10 +8,10 @@ import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.button.JoystickButton;
-import frc.robot.commands.*;
-import frc.robot.subsystems.*;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import edu.wpi.first.wpilibj2.command.button.JoystickButton;
+import frc.robot.subsystems.*;
+import frc.robot.commands.*;
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -20,26 +20,81 @@ import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
  * subsystems, commands, and button mappings) should be declared here.
  */
 public class RobotContainer {
-  // The robot's subsystems and commands are defined here...
-  private final Intake intake = new Intake();
+  // Define subsystems
+  private final Climber climber;
+  private final Intake intake;
   private final Drivetrain driveSubsystem;
 
-  private final Command runIntakeSystem = new RunIntakeSystem(this.intake);
-  private final Command deployIntakePistons = new DeployIntakePistons(this.intake);
-  private final Command retractIntakePistons = new RetractIntakePistons(this.intake);
-  private final Command internalPush = new InternalPush(this.intake);
-
+  // Define joysticks & buttons
   private Joystick pad;
+  private Joystick padManipulator;
+  private JoystickButton xButton;
   private JoystickButton buttonY;
   private JoystickButton buttonX;
   private JoystickButton buttonA;
   private JoystickButton buttonB;
 
+  // Define commands
+  private final AutoClimbExtend autoClimbExtend;
+  private final AutoClimbExtend autoClimbExtendSlightly;
+  private final AutoClimbRetract autoClimbRetract;
+  private final AutoClimbRetract autoClimbRetractSlightly;
+  private final ClimbAnchor climbAnchor;
+  private final ClimbPivot climbPivot;
+  private final AutoTankDrive autoTankDrive;
+  private final Command runIntakeSystem;
+  private final Command deployIntakePistons;
+  private final Command retractIntakePistons;
+  private final Command internalPush;
+
+  // Command Groups:
+  private final SequentialCommandGroup climbCommands;
+
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
+    // init subsystems
+    this.climber = new Climber();
+    this.intake = new Intake();
+    this.driveSubsystem = new Drivetrain();
+
+    // init commands
+    this.autoClimbExtend = new AutoClimbExtend(this.climber);
+    this.autoClimbExtendSlightly = new AutoClimbExtend(this.climber, Constants.climberExtendSlightlyPos);
+    this.autoClimbRetract = new AutoClimbRetract(this.climber);
+    this.autoClimbRetractSlightly = new AutoClimbRetract(this.climber, Constants.climberRetractSlightlyPos);
+    this.climbAnchor = new ClimbAnchor(this.climber, this);
+    this.climbPivot = new ClimbPivot(this.climber, this);
+    this.autoTankDrive = new AutoTankDrive(this.driveSubsystem, this);
+    this.runIntakeSystem = new RunIntakeSystem(this.intake);
+    this.deployIntakePistons = new DeployIntakePistons(this.intake);
+    this.retractIntakePistons = new RetractIntakePistons(this.intake);
+    this.internalPush = new InternalPush(this.intake);
+
+    this.climbCommands = new SequentialCommandGroup(
+      this.autoClimbExtend,
+      this.autoTankDrive,
+      this.autoClimbRetract,
+      this.climbAnchor,
+      this.autoClimbExtendSlightly,
+      this.climbPivot,
+      this.autoClimbExtend,
+      this.climbPivot,
+      this.autoClimbRetractSlightly,
+      this.climbAnchor,
+      this.autoClimbRetract,
+      this.climbAnchor,
+      this.autoClimbExtendSlightly,
+      this.climbPivot,
+      this.autoClimbExtend,
+      this.climbPivot,
+      this.autoClimbRetractSlightly,
+      this.climbAnchor,
+      this.autoClimbRetract,
+      this.climbAnchor
+    );
+
     // Configure the button bindings
     configureButtonBindings();
-    driveSubsystem = new Drivetrain();
   }
   
   public boolean yButton(){
@@ -65,6 +120,7 @@ public class RobotContainer {
    * edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
   private void configureButtonBindings() {
+<<<<<<< HEAD
     this.pad = new Joystick(0);
 
     this.buttonY = new JoystickButton(this.pad, 4);
@@ -101,4 +157,45 @@ public class RobotContainer {
     //add shooting to sequential command
   }
 
+=======
+    
+    // Init the joysticks
+    this.pad = new Joystick(0);
+    this.padManipulator = new Joystick(1);
+    this.xButton  = new JoystickButton(this.pad, 3); // Creates a new JoystickButton object for button 1
+
+    this.xButton.toggleWhenPressed(this.climbCommands);
+  }
+
+  public boolean getButtonA() {
+    return this.pad.getRawButton(1);
+  }
+
+  public boolean getButtonB() {
+    return this.pad.getRawButton(2);
+  }
+
+  // Getters for subsystems:
+  public Climber getClimber() {
+		return this.climber;
+	}
+
+  // Getters for commands:
+	public AutoClimbExtend getAutoClimbExtend() {
+		return this.autoClimbExtend;
+	}
+
+	public AutoClimbRetract getAutoClimbRetract() {
+		return this.autoClimbRetract;
+	}
+
+	public ClimbAnchor getClimbAnchor() {
+		return this.climbAnchor;
+	}
+
+	public ClimbPivot getClimbPivot() {
+		return this.climbPivot;
+	}
+
+>>>>>>> origin/climber
 }

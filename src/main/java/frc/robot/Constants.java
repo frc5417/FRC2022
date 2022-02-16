@@ -49,3 +49,29 @@ public final class Constants {
 
     public static final double wheelDiameter = 0.1016;
 }
+    public static int climbLeft1 = 41;
+    public static int climbLeft2 = 42;
+    public static int climbRight1 = 43;
+    public static int climbRight2 = 44;
+
+    public static int climbBottomLeftLimitSwitch = 0;
+    public static int climbBottomRightLimitSwitch = 1;
+
+    public static int howLongClimbHasToBePushedDown = 900; // In ms.
+
+    public static int climberExtendPos = 0;
+    public static int climberRetractPos = 0;
+
+    public static int climberExtendSlightlyPos = 0;
+    public static int climberRetractSlightlyPos = 0;
+
+    public static double climberkP = 1;
+
+    public static int passiveSolenoid = 0;
+    public static int activeSolenoid = 1;
+
+    public static int driveLMaster = 14;
+    public static int driveLSlave = 15;
+    public static int driveRMaster = 1;
+    public static int driveRSlave = 17;
+}

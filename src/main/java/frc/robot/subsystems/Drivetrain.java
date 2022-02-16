@@ -86,18 +86,10 @@ public class Drivetrain extends SubsystemBase {
     System.out.println("right pos:" + neoEncoderR.getPosition());
   }
   
-  // public void setPower(double leftPower, double rightPower){
-  //   if(Math.abs(leftPower) > .15){
-  //     driveMasterL.set(-leftPower);
-  //   } else {
-  //     driveMasterL.set(0);
-  //   }
-  //   if(Math.abs(rightPower) > .15){
-  //     driveMasterR.set(rightPower);
-  //   } else {
-  //     driveMasterR.set(0);
-  //   }
-  // }
+  public void setPower(double leftPower, double rightPower){
+    driveMasterL.set(-leftPower);
+    driveMasterR.set(rightPower);
+  }
 
   public AHRS getGyro () {
     return gyro;
