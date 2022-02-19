@@ -54,6 +54,14 @@ public class RobotContainer {
   private boolean dpadDownManipulator;
 
   private Joystick buttonBoard;
+  private JoystickButton buttonB2;
+  private JoystickButton buttonB4;
+  private JoystickButton buttonB6;
+  private JoystickButton buttonB8;
+  private JoystickButton buttonB10;
+  private JoystickButton buttonB12;
+  private JoystickButton buttonB14;
+  private JoystickButton buttonB16;
 
   // Define commands
   private final AutoAlignTurret autoAlignTurret;
@@ -159,6 +167,15 @@ public class RobotContainer {
     this.dpadUpManipulator = this.padManipulator.getPOV() == 0;
     this.dpadLeftManipulator = this.padManipulator.getPOV() == 270;
     this.dpadRightManipulator = this.padManipulator.getPOV() == 90;
+
+    this.buttonB2 = new JoystickButton(this.buttonBoard, 2);
+    this.buttonB4 = new JoystickButton(this.buttonBoard, 4);
+    this.buttonB6 = new JoystickButton(this.buttonBoard, 6);
+    this.buttonB8 = new JoystickButton(this.buttonBoard, 8);
+    this.buttonB10 = new JoystickButton(this.buttonBoard, 10);
+    this.buttonB12 = new JoystickButton(this.buttonBoard, 12);
+    this.buttonB14 = new JoystickButton(this.buttonBoard, 14);
+    this.buttonB16 = new JoystickButton(this.buttonBoard, 16);
   }
 
 
