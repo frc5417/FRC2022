@@ -4,11 +4,16 @@
 
 package frc.robot;
 
+import java.util.function.BooleanSupplier;
+
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.ConditionalCommand;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import edu.wpi.first.wpilibj2.command.StartEndCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.subsystems.*;
 import frc.robot.commands.*;
@@ -34,12 +39,16 @@ public class RobotContainer {
   private JoystickButton buttonX;
   private JoystickButton buttonA;
   private JoystickButton buttonB;
-  private JoystickButton bumperR;
-  private JoystickButton bumperL;
+  private JoystickButton bumperRight;
+  private JoystickButton bumperLeft;
+  private JoystickButton triggerRight;
+  private JoystickButton triggerLeft;
   private boolean dpadRight;
   private boolean dpadLeft;
   private boolean dpadUp;
   private boolean dpadDown;
+
+  
 
   private Joystick padManipulator;
   private JoystickButton buttonXManipulator;
@@ -78,6 +87,8 @@ public class RobotContainer {
   private final DeployIntakePistons deployIntakePistons;
   private final RetractIntakePistons retractIntakePistons;
   private final ManualAlignTurret manualAlignTurret;
+  private final Shoot shoot;
+  private final StopClimb stopClimb;
   private final TankDrive tankDrive;
 
   // Command Groups:
@@ -113,6 +124,8 @@ public class RobotContainer {
     this.autoAlignTurret = new AutoAlignTurret(this.limelight, this.turret);
     this.autoSetShooterSpeed = new AutoSetShooterSpeed(this.limelight, this.shooter, this.intake);
     this.manualAlignTurret = new ManualAlignTurret(this, this.turret);
+    this.shoot = new Shoot(this.shooter);
+    this.stopClimb = new StopClimb(this.climber);
     this.tankDrive = new TankDrive(this, this.drive);
 
     this.climbCommands = new SequentialCommandGroup(
@@ -150,8 +163,8 @@ public class RobotContainer {
     this.buttonB = new JoystickButton(this.pad, 2);
     this.buttonA = new JoystickButton(this.pad, 1);
     this.buttonX = new JoystickButton(this.pad, 3);
-    this.bumperL = new JoystickButton(this.pad, 5);
-    this.bumperR = new JoystickButton(this.pad, 6);
+    this.bumperLeft = new JoystickButton(this.pad, 5);
+    this.bumperRight = new JoystickButton(this.pad, 6);
     this.dpadDown = this.pad.getPOV() == 180;
     this.dpadUp = this.pad.getPOV() == 0;
     this.dpadLeft = this.pad.getPOV() == 270;
@@ -188,9 +201,22 @@ public class RobotContainer {
    */
   public void configureButtonBindings() {
     this.tankDrive.schedule();
+    this.manualAlignTurret.schedule();
 
-    this.buttonYManipulator  = new JoystickButton(this.padManipulator, 4);
     this.buttonYManipulator.whileHeld(this.autoSetShooterSpeed);
+    this.buttonA.whileHeld(this.autoAlignTurret);
+    this.buttonBManipulator.toggleWhenPressed(this.deployIntakePistons);
+    this.buttonYManipulator.whileHeld(this.shoot);
+    this.bumperLManipulator.whileHeld(this.runIntakeSystemForward);
+    this.bumperRManipulator.whileHeld(this.runIntakeSystemBackward);
+
+    this.buttonB2.whenPressed(this.climbCommands);
+    this.buttonB4.whenPressed(this.stopClimb);
+    this.buttonB10.whenPressed(this.autoClimbExtend);
+    this.buttonB8.whenPressed(this.climbAnchor);
+    this.buttonB12.whenPressed(this.autoClimbRetract);
+    this.buttonB14.whenPressed(this.climbPivot);
+
   }
 
   public Joystick getDriverPad(){
@@ -302,31 +328,6 @@ public class RobotContainer {
 
   public boolean getMDpadLeft() {
     return this.dpadLeftManipulator;
-  }
-
-  public boolean buttonB2(){
-      return buttonBoard.getRawButton(2);
-  }
-  public boolean buttonB4(){
-      return buttonBoard.getRawButton(4);
-  }
-  public boolean buttonB6(){
-      return buttonBoard.getRawButton(6);
-  }
-  public boolean buttonB8(){
-      return buttonBoard.getRawButton(8);
-  }
-  public boolean buttonB10(){
-      return buttonBoard.getRawButton(10);
-  }
-  public boolean buttonB12(){
-      return buttonBoard.getRawButton(12);
-  }
-  public boolean buttonB14(){
-      return buttonBoard.getRawButton(14);
-  }
-  public boolean buttonB16(){
-      return buttonBoard.getRawButton(16);
   }
 
   // Getters for subsystems:

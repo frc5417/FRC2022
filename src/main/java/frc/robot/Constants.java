@@ -91,9 +91,11 @@ public final class Constants {
 
     //turret constants
     public static final double kPturn = 1.0;
+    public static final double kPturnCenter = 1.0;
     public static final double minCommand = 0.1;
     public static final double limeLightErrorAllowed = 5;
     public static final double turretSpeed = 0.2;
+    public static final double maxTurretTurn = 1.0; // change this (revolutions)
 
     //limelight constants
     public static final double targetHeight = 104.75; //inches

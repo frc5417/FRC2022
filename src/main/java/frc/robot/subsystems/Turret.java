@@ -7,6 +7,7 @@ package frc.robot.subsystems;
 import frc.robot.Constants;
 
 import com.revrobotics.CANSparkMax;
+import com.revrobotics.CANSparkMax.ControlType;
 import com.revrobotics.CANSparkMax.IdleMode;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
@@ -19,6 +20,9 @@ public class Turret extends SubsystemBase {
   /** Creates a new Turret. */
   public Turret() {
     this.turretMotor = new CANSparkMax(Constants.turret, MotorType.kBrushless);
+    this.turretMotor.getEncoder().setPosition(0);
+    this.turretMotor.getPIDController().setP(Constants.kPturn);
+    turretMotor.setIdleMode(IdleMode.kBrake);
   }
 
   @Override
@@ -26,10 +30,17 @@ public class Turret extends SubsystemBase {
     // This method will be called once per scheduler run
   }
 
-  public void setPower(double power) {
-    turretMotor.setIdleMode(IdleMode.kCoast);
+  public void center(){
+    double turretAdjust = Constants.kPturnCenter * this.turretMotor.getEncoder().getPosition();
+    setPower(turretAdjust);
+  }
 
-    turretMotor.set(power);
+  public void setPower(double power) {
+    if(Math.abs(this.turretMotor.getEncoder().getPosition()) < Constants.maxTurretTurn){
+      turretMotor.set(power);
+    }else{
+      turretMotor.set(0);
+    }
   }
 
   public boolean autoTurretAlign(double x){

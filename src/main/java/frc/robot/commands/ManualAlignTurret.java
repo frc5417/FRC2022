@@ -27,6 +27,9 @@ public class ManualAlignTurret extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
+    if(this.robotContainer.getDpadUp()){
+      this.turret.center();
+    }
     this.turret.manualTurretAlign(robotContainer.getDpadRight(), robotContainer.getDpadLeft());
   }
 

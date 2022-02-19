@@ -5,45 +5,35 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.subsystems.*;
+import frc.robot.subsystems.Climber;
 
+public class StopClimb extends CommandBase {
+  private final Climber climber;
 
-public class RetractIntakePistons extends CommandBase {
-  /** Creates a new RetractPistons. */
-  private final Intake intake;
-  private boolean isRunning = false;
+  /** Creates a new AutoSetShooterSpeed. */
+  public StopClimb(Climber climber) {
+    this.climber = climber;
 
-  public RetractIntakePistons(Intake intake) {
-    // Use addRequirements() here to declare subsystem dependencies.
-    this.intake = intake;
-    addRequirements(this.intake);
+    addRequirements(climber);
   }
 
   // Called when the command is initially scheduled.
   @Override
-  public void initialize() {
-    isRunning = true;
-  }
+  public void initialize() {}
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    this.intake.retractPistons();
+    this.climber.stopClimb();
   }
 
   // Called once the command ends or is interrupted.
   @Override
-  public void end(boolean interrupted) {
-    isRunning = false;
-  }
+  public void end(boolean interrupted) {}
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
     return false;
-  }
-
-  public boolean isRunning() {
-    return isRunning;
   }
 }

@@ -57,6 +57,13 @@ public class Climber extends SubsystemBase {
     climbR1.getPIDController().setReference(retractPos, ControlType.kPosition);
   }
 
+  public void stopClimb() {
+    this.climbL1.set(0);
+    this.climbL2.set(0);
+    this.climbR1.set(0);
+    this.climbR2.set(0);
+  }
+
   public void setPassiveClamp(boolean deploy){
     passiveSol.set(deploy);
   }
