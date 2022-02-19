@@ -39,7 +39,7 @@ public class AutoSetShooterSpeed extends CommandBase {
 
     if((shooter.getShooter1().getEncoder().getVelocity() <= 4000+500) && (shooter.getShooter1().getEncoder().getVelocity() >= 4000-500)){
       this.intake.runIntake();
-      this.intake.intestine();
+      this.intake.runIntestine();
     }
   }
 

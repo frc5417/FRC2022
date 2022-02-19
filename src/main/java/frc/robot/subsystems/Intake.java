@@ -45,7 +45,7 @@ public class Intake extends SubsystemBase {
     intakeSolenoid.set(false);
   }
 
-  public void intestine(){
+  public void runIntestine(){
     intestinePusher.set(Constants.pusherSpeed);
     intestineKicker.set(-Constants.pusherSpeed);
   }
