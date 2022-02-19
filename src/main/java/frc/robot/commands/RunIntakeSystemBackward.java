@@ -8,14 +8,14 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.*;
 
 
-public class DeployIntakePistons extends CommandBase {
-  /** Creates a new DeployIntakePistons. */
+public class RunIntakeSystemBackward extends CommandBase {
+  /** Creates a new RunIntakeSystem. */
   private final Intake intake;
 
-  public DeployIntakePistons(Intake intake) {
-    // Use addRequirements() here to declare subsystem dependencies.
+  public RunIntakeSystemBackward(Intake intake) {
     this.intake = intake;
     addRequirements(this.intake);
+    // Use addRequirements() here to declare subsystem dependencies.
   }
 
   // Called when the command is initially scheduled.
@@ -25,12 +25,16 @@ public class DeployIntakePistons extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    this.intake.deployPistons();
+    this.intake.runIntake(2);
+    this.intake.runIntestine(2);
   }
 
   // Called once the command ends or is interrupted.
   @Override
-  public void end(boolean interrupted) {}
+  public void end(boolean interrupted) {
+    this.intake.runIntake(0);
+    this.intake.runIntestine(0);
+  }
 
   // Returns true when the command should end.
   @Override

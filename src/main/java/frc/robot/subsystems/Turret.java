@@ -31,4 +31,28 @@ public class Turret extends SubsystemBase {
 
     turretMotor.set(power);
   }
+
+  public boolean autoTurretAlign(double x){
+    double turretAdjust = 0;
+    if(x > Constants.limeLightErrorAllowed){
+      turretAdjust = Constants.kPturn*(-x) + Constants.minCommand;
+    }else{
+      return true;
+    }
+    setPower(turretAdjust);
+    return false;
+  }
+
+  public void manualTurretAlign(boolean right, boolean left){
+    if(right){
+      setPower(Constants.turretSpeed);
+    }
+    else if(left){
+      setPower(-Constants.turretSpeed);
+    }
+    else{
+      setPower(0);
+    }
+    
+  }
 }

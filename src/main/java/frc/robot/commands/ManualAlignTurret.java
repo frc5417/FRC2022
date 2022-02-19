@@ -5,17 +5,19 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.subsystems.*;
+import frc.robot.RobotContainer;
+import frc.robot.subsystems.Turret;
 
+public class ManualAlignTurret extends CommandBase {
+  /** Creates a new ManualAlignTurret. */
+  private final Turret turret;
+  private final RobotContainer robotContainer;
 
-public class InternalPush extends CommandBase {
-  /** Creates a new InternalPush. */
-  private final Intake i;
-
-  public InternalPush(Intake subsystem) {
+  public ManualAlignTurret(RobotContainer robotContainer, Turret turret) {
     // Use addRequirements() here to declare subsystem dependencies.
-    i = subsystem;
-    addRequirements(i);
+    this.turret = turret;
+    this.robotContainer = robotContainer;
+    addRequirements(this.turret);
   }
 
   // Called when the command is initially scheduled.
@@ -25,7 +27,7 @@ public class InternalPush extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    i.runIntestine();
+    this.turret.manualTurretAlign(robotContainer.getDpadRight(), robotContainer.getDpadLeft());
   }
 
   // Called once the command ends or is interrupted.

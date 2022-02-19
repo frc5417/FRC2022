@@ -5,7 +5,6 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.Constants;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Limelight;
 import frc.robot.subsystems.Shooter;
@@ -38,8 +37,12 @@ public class AutoSetShooterSpeed extends CommandBase {
     this.shooter.setVelocity(4000);
 
     if((shooter.getShooter1().getEncoder().getVelocity() <= 4000+500) && (shooter.getShooter1().getEncoder().getVelocity() >= 4000-500)){
-      this.intake.runIntake();
-      this.intake.runIntestine();
+      this.intake.runIntake(1);
+      this.intake.runIntestine(1);
+    }
+    else{
+      this.intake.runIntake(0);
+      this.intake.runIntestine(0);
     }
   }
 

@@ -5,14 +5,14 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.Constants;
 import frc.robot.subsystems.*;
 
 public class AutoAlignTurret extends CommandBase {
 
   private final Limelight limelight;
   private final Turret turret;
-  private boolean isAligned = false;
+  private boolean isAligned;
+
 
   /** Creates a new AutoAlignTurret. */
   public AutoAlignTurret(Limelight limelight, Turret turret) {
@@ -31,19 +31,11 @@ public class AutoAlignTurret extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    double turretAdjust = 0;
-    double x = limelight.getX();
-    if(x > Constants.limeLightErrorAllowed) {
-      turretAdjust = Constants.kP*(-x) + Constants.minCommand;
-    } else if(x < Constants.limeLightErrorAllowed) {
-      turretAdjust = Constants.kP*(-x) - Constants.minCommand;
-    } else {
-      this.isAligned = true;
+    if(!this.limelight.getV()){
+      this.isAligned = false;
+      return;
     }
-
-    if(!this.isAligned) {
-      this.turret.setPower(turretAdjust);
-    }
+    this.isAligned = this.turret.autoTurretAlign(this.limelight.getX());
   }
 
   // Called once the command ends or is interrupted.

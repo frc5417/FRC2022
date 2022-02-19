@@ -23,10 +23,10 @@ public class RobotContainer {
   // Define subsystems
   private final Climber climber;
   private final Intake intake;
-  private final Drivetrain driveSubsystem;
-  private final Shooter shooterSubsystem;
-  private final Limelight limelightSubsystem;
-  private final Turret turretSubSystem;
+  private final Drive drive;
+  private final Shooter shooter;
+  private final Limelight limelight;
+  private final Turret turret;
 
   // Define joysticks & buttons
   private Joystick pad;
@@ -54,8 +54,8 @@ public class RobotContainer {
   private boolean dpadDownManipulator;
 
   // Define commands
-  private final AutoAlignTurret autoAlignTurretCommand;
-  private final AutoSetShooterSpeed autoSetShooterSpeedCommand;
+  private final AutoAlignTurret autoAlignTurret;
+  private final AutoSetShooterSpeed autoSetShooterSpeed;
   private final AutoClimbExtend autoClimbExtend;
   private final AutoClimbExtend autoClimbExtendSlightly;
   private final AutoClimbRetract autoClimbRetract;
@@ -63,10 +63,12 @@ public class RobotContainer {
   private final ClimbAnchor climbAnchor;
   private final ClimbPivot climbPivot;
   private final AutoTankDrive autoTankDrive;
-  private final Command runIntakeSystem;
-  private final Command deployIntakePistons;
-  private final Command retractIntakePistons;
-  private final Command internalPush;
+  private final RunIntakeSystemForward runIntakeSystemForward;
+  private final RunIntakeSystemBackward runIntakeSystemBackward;
+  private final DeployIntakePistons deployIntakePistons;
+  private final RetractIntakePistons retractIntakePistons;
+  private final ManualAlignTurret manualAlignTurret;
+  private final TankDrive tankDrive;
 
   // Command Groups:
   private final SequentialCommandGroup climbCommands;
@@ -80,10 +82,10 @@ public class RobotContainer {
     // init subsystems
     this.climber = new Climber();
     this.intake = new Intake();
-    this.driveSubsystem = new Drivetrain();
-    this.shooterSubsystem = new Shooter();
-    this.limelightSubsystem = new Limelight();
-    this.turretSubSystem = new Turret();
+    this.drive = new Drive();
+    this.shooter = new Shooter();
+    this.limelight = new Limelight();
+    this.turret = new Turret();
 
     // init commands
     this.autoClimbExtend = new AutoClimbExtend(this.climber);
@@ -92,13 +94,15 @@ public class RobotContainer {
     this.autoClimbRetractSlightly = new AutoClimbRetract(this.climber, Constants.climberRetractSlightlyPos);
     this.climbAnchor = new ClimbAnchor(this.climber, this);
     this.climbPivot = new ClimbPivot(this.climber, this);
-    this.autoTankDrive = new AutoTankDrive(this.driveSubsystem, this);
-    this.runIntakeSystem = new RunIntakeSystem(this.intake);
+    this.autoTankDrive = new AutoTankDrive(this.drive, this);
+    this.runIntakeSystemForward = new RunIntakeSystemForward(this.intake);
+    this.runIntakeSystemBackward = new RunIntakeSystemBackward(this.intake);
     this.deployIntakePistons = new DeployIntakePistons(this.intake);
     this.retractIntakePistons = new RetractIntakePistons(this.intake);
-    this.internalPush = new InternalPush(this.intake);
-    this.autoAlignTurretCommand = new AutoAlignTurret(this.limelightSubsystem, this.turretSubSystem);
-    this.autoSetShooterSpeedCommand = new AutoSetShooterSpeed(this.limelightSubsystem, this.shooterSubsystem, this.intake);
+    this.autoAlignTurret = new AutoAlignTurret(this.limelight, this.turret);
+    this.autoSetShooterSpeed = new AutoSetShooterSpeed(this.limelight, this.shooter, this.intake);
+    this.manualAlignTurret = new ManualAlignTurret(this, this.turret);
+    this.tankDrive = new TankDrive(this, this.drive);
 
     this.climbCommands = new SequentialCommandGroup(
       this.autoClimbExtend,
@@ -129,6 +133,8 @@ public class RobotContainer {
   
 
   public void initializeButtons() {
+
+
     this.buttonY = new JoystickButton(this.pad, 4);
     this.buttonB = new JoystickButton(this.pad, 2);
     this.buttonA = new JoystickButton(this.pad, 1);
@@ -161,23 +167,10 @@ public class RobotContainer {
    * edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
   public void configureButtonBindings() {
-    // this.buttonY = new JoystickButton(this.pad, 4);
-    // this.buttonY.whileHeld(this.runIntakeSystem);
-
-    // this.buttonX = new JoystickButton(this.pad, 3);
-    // this.buttonX.whenPressed(this.deployIntakePistons);
-
-    // this.buttonA = new JoystickButton(this.pad, 1);
-    // this.buttonA.whenPressed(this.retractIntakePistons);
-    
-    // this.buttonB = new JoystickButton(this.pad, 2);
-    // this.buttonB.whileHeld(this.internalPush);
-
-    // this.buttonXManipulator  = new JoystickButton(this.padManipulator, 3);
-    // this.buttonXManipulator.toggleWhenPressed(this.climbCommands);
+    this.tankDrive.schedule();
 
     this.buttonYManipulator  = new JoystickButton(this.padManipulator, 4);
-    this.buttonYManipulator.whileHeld(this.autoSetShooterSpeedCommand);
+    this.buttonYManipulator.whileHeld(this.autoSetShooterSpeed);
   }
 
   public Joystick getDriverPad(){
@@ -188,9 +181,6 @@ public class RobotContainer {
     return this.padManipulator;
   }
 
-  public void makeItDrive(){
-    driveSubsystem.setPower(this.pad);
-  }
   /**
    * Use this to pass the autonomous command to the main {@link Robot} class.
    *
@@ -201,8 +191,16 @@ public class RobotContainer {
     //return new SequentialCommandGroup(new Auton2(driveSubsystem).getRamseteCommand(), new Auton3(driveSubsystem).getRamseteCommand());
     
     //this just runs Auton2
-    return new SequentialCommandGroup(new Auton2(driveSubsystem).getRamseteCommand());
+    return new SequentialCommandGroup(new Auton2(drive).getRamseteCommand());
     //add shooting to sequential command
+  }
+
+  public double getDriverLeftJoystick(){
+    return this.pad.getRawAxis(1);
+  }
+
+  public double getDriverRightJoystick(){
+    return this.pad.getRawAxis(5);
   }
 
   public boolean getButtonA() {
@@ -291,29 +289,23 @@ public class RobotContainer {
 		return this.climber;
 	}
 
-  // Getters for commands:
-	public AutoClimbExtend getAutoClimbExtend() {
-		return this.autoClimbExtend;
-	}
-
-	public AutoClimbRetract getAutoClimbRetract() {
-		return this.autoClimbRetract;
-	}
-
-	public ClimbAnchor getClimbAnchor() {
-		return this.climbAnchor;
-	}
-
-	public ClimbPivot getClimbPivot() {
-		return this.climbPivot;
-	}
-
   public Shooter getShooter() {
-    return this.shooterSubsystem;
+    return this.shooter;
   }
 
   public Limelight getLimelight() {
-    return this.limelightSubsystem;
+    return this.limelight;
   }
 
+  public Drive getDrive(){
+    return this.drive;
+  }
+
+  public Intake getIntake(){
+    return this.intake;
+  }
+
+  public Turret getTurret(){
+    return this.turret;
+  }
 }

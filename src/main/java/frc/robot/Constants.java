@@ -28,6 +28,7 @@ public final class Constants {
     public final static int intake = 21;
     public final static int intestineBottom = 31;
     public final static int intestineKicker = 32;
+    public final static int intestineBeamBreak = 1;
     public final static int shooter1 = 42;
     public final static int shooter2 = 43;
     public final static int turret = 51;
@@ -88,14 +89,18 @@ public final class Constants {
     public static final int driveRMaster = 1;
     public static final int driveRSlave = 17;
 
-    public static final double kP = 1.0;
+    //turret constants
+    public static final double kPturn = 1.0;
     public static final double minCommand = 0.1;
-    public static final double limeLightErrorAllowed = .1;
+    public static final double limeLightErrorAllowed = 5;
+    public static final double turretSpeed = 0.2;
 
+    //limelight constants
     public static final double targetHeight = 104.75; //inches
     public static final double limelightAngle = 28.66; // degrees
     public static final double limelightHeight = 26; //inches
 
+    //shooter constants
     public static final double shooterP = 0.2;
     public static final double shooterI = 0;
     public static final int shootsetPointConst = -3100;

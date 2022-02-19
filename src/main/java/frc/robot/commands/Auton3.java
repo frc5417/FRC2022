@@ -14,14 +14,14 @@ import edu.wpi.first.math.trajectory.Trajectory;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.RamseteCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
-import frc.robot.subsystems.Drivetrain;
+import frc.robot.subsystems.Drive;
 
 public class Auton3 extends SequentialCommandGroup{
 
   RamseteCommand ramseteCommand;
-  Drivetrain drive;
+  Drive drive;
 
-  public Auton3(Drivetrain drive) {
+  public Auton3(Drive drive) {
     this.drive = drive;
     SimpleMotorFeedforward motorFF = new SimpleMotorFeedforward(Constants.kSAuto, Constants.kVAuto, Constants.kAAuto);
 

@@ -10,16 +10,16 @@ import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants;
 import frc.robot.subsystems.Climber;
-import frc.robot.subsystems.Drivetrain;
+import frc.robot.subsystems.Drive;
 import frc.robot.RobotContainer;
 
 public class AutoTankDrive extends CommandBase {
-  private final Drivetrain drive;
+  private final Drive drive;
   private boolean isEnabled = false;
   private RobotContainer robotContainer;
   private int howLongActiveFor = 0;
 
-  public AutoTankDrive(Drivetrain drive, RobotContainer container) {
+  public AutoTankDrive(Drive drive, RobotContainer container) {
     this.drive = drive;
     this.robotContainer = container;
     // Use addRequirements() here to declare subsystem dependencies.

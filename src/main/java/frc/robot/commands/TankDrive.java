@@ -9,15 +9,15 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.RobotContainer;
-import frc.robot.subsystems.Drivetrain;
+import frc.robot.subsystems.Drive;
 
 public class TankDrive extends CommandBase {
-  private final Drivetrain drive;
+  private final Drive drive;
   private final RobotContainer robotContainer;
   /**
    * Creates a new TankDrive
    */
-  public TankDrive(RobotContainer container, Drivetrain subsystem) {
+  public TankDrive(RobotContainer container, Drive subsystem) {
     drive = subsystem;
     robotContainer = container;
     addRequirements(drive);
@@ -31,7 +31,7 @@ public class TankDrive extends CommandBase {
   @Override
   public void execute() {
     //this sets the power of the motors to whatever is indicated by leftSpeed() and rightSpeed() from the robotContainer object
-    drive.setPower(robotContainer.getDriverPad().getRawAxis(1), robotContainer.getDriverPad().getRawAxis(5));
+    drive.setPower(robotContainer.getDriverLeftJoystick(), robotContainer.getDriverRightJoystick());
   }
 
   // Called once the command ends or is interrupted.

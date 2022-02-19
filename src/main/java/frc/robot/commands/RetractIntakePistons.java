@@ -10,12 +10,12 @@ import frc.robot.subsystems.*;
 
 public class RetractIntakePistons extends CommandBase {
   /** Creates a new RetractPistons. */
-  private final Intake i;
+  private final Intake intake;
 
-  public RetractIntakePistons(Intake subsystem) {
+  public RetractIntakePistons(Intake intake) {
     // Use addRequirements() here to declare subsystem dependencies.
-    i = subsystem;
-    addRequirements(i);
+    this.intake = intake;
+    addRequirements(this.intake);
   }
 
   // Called when the command is initially scheduled.
@@ -25,7 +25,7 @@ public class RetractIntakePistons extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    i.retractPistons();
+    this.intake.retractPistons();
   }
 
   // Called once the command ends or is interrupted.

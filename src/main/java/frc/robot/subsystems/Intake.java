@@ -9,6 +9,7 @@ import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMax.IdleMode;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
+import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -20,6 +21,7 @@ public class Intake extends SubsystemBase {
   private final CANSparkMax intestinePusher;
   private final CANSparkMax intestineKicker;
   private final Solenoid intakeSolenoid;
+  private final DigitalInput intestineBeamBreak;
 
   /** Creates a new Intake. */
   public Intake() {
@@ -27,26 +29,52 @@ public class Intake extends SubsystemBase {
     this.intestinePusher = new CANSparkMax(Constants.intestineBottom, MotorType.kBrushless);
     this.intestineKicker = new CANSparkMax(Constants.intestineKicker, MotorType.kBrushless);
     this.intakeSolenoid = new Solenoid(PneumaticsModuleType.CTREPCM, 1);
+    this.intestineBeamBreak = new DigitalInput(Constants.intestineBeamBreak);
 
-    rollerBar.setIdleMode(IdleMode.kCoast);
-    intestinePusher.setIdleMode(IdleMode.kCoast);
-    intestineKicker.setIdleMode(IdleMode.kCoast);
+    this.rollerBar.setIdleMode(IdleMode.kCoast);
+    this.intestinePusher.setIdleMode(IdleMode.kCoast);
+    this.intestineKicker.setIdleMode(IdleMode.kCoast);
   }
 
-  public void runIntake(){
-    rollerBar.set(Constants.intakeSpeed);
+  // State controls the intake direction and power
+  // 0 --> Off; 1 --> Forward; 2 --> Backward
+  public void runIntake(int state){
+    if(state == 0){
+      this.rollerBar.set(0);
+    }
+    else if(state == 1){
+      this.rollerBar.set(Constants.intakeSpeed);
+    }
+    else if(state == 2){
+      this.rollerBar.set(-Constants.intakeSpeed);
+    }
+  }
+
+  public void runIntestine(int state){
+    if(state == 0){
+      this.intestinePusher.set(0);
+      this.intestineKicker.set(0);
+    }
+    else if(state == 1){
+      this.intestinePusher.set(Constants.pusherSpeed);
+      this.intestineKicker.set(-Constants.pusherSpeed);
+    }
+    else if(state == 2){
+      this.intestinePusher.set(-Constants.pusherSpeed);
+      this.intestineKicker.set(Constants.pusherSpeed);
+    }
   }
 
   public void deployPistons(){
-    intakeSolenoid.set(true);
+    this.intakeSolenoid.set(true);
   }
 
   public void retractPistons(){
-    intakeSolenoid.set(false);
+    this.intakeSolenoid.set(false);
   }
 
-  public void runIntestine(){
-    intestinePusher.set(Constants.pusherSpeed);
-    intestineKicker.set(-Constants.pusherSpeed);
+  public boolean getIntestineBeamBreak(){
+    return this.intestineBeamBreak.get();
   }
+
 }

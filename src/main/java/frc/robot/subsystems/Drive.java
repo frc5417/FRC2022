@@ -22,7 +22,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import com.kauailabs.navx.frc.AHRS;
 import edu.wpi.first.wpilibj.Joystick;
 
-public class Drivetrain extends SubsystemBase {
+public class Drive extends SubsystemBase {
   /** Creates a new Drivetrain. */
 private CANSparkMax driveMasterL;
   private CANSparkMax driveSlaveL1;
@@ -42,7 +42,7 @@ private CANSparkMax driveMasterL;
   private AHRS gyro;
 
 
-  public Drivetrain() {
+  public Drive() {
     driveMasterL = new CANSparkMax(Constants.driveMasterLeft, MotorType.kBrushless);
     driveSlaveL1 = new CANSparkMax(Constants.driveSlaveLeft1, MotorType.kBrushless);
     driveSlaveL2 = new CANSparkMax(Constants.driveSlaveLeft2, MotorType.kBrushless);
