@@ -87,6 +87,7 @@ public class Robot extends TimedRobot {
   @Override
   public void teleopPeriodic() {
     this.tankDrive.schedule();
+    robotContainer.configureButtonBindings();
   }
 
   @Override

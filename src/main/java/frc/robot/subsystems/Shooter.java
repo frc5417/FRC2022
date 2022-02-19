@@ -9,6 +9,7 @@ import com.revrobotics.CANSparkMax.ControlType;
 import com.revrobotics.CANSparkMax.IdleMode;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
+import edu.wpi.first.wpilibj.CAN;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
@@ -20,6 +21,7 @@ public class Shooter extends SubsystemBase {
   public Shooter() {
     this.shooter1 = new CANSparkMax(Constants.shooter1, MotorType.kBrushless);
     this.shooter2 = new CANSparkMax(Constants.shooter2, MotorType.kBrushless);
+    this.shooter2.setInverted(true);
 
     this.shooter1.getPIDController().setP(Constants.shooterP);
     this.shooter2.getPIDController().setP(Constants.shooterP);
@@ -33,8 +35,8 @@ public class Shooter extends SubsystemBase {
     // This method will be called once per scheduler run
   }
 
-  public void setVelocity() {
-    this.setVelocity(Constants.shootsetPointVariable*Constants.shootMaxRPM);
+  public void setAutoVelocity() {
+    this.setVelocity(Constants.shootsetPointConst*Constants.shootMaxRPM);
   }
 
   public void setVelocity(double velocity){
@@ -43,5 +45,13 @@ public class Shooter extends SubsystemBase {
 
     this.shooter1.getPIDController().setReference(velocity, ControlType.kVelocity);
     this.shooter2.getPIDController().setReference(velocity, ControlType.kVelocity);
+  }
+
+  public CANSparkMax getShooter1(){
+    return shooter1;
+  }
+
+  public CANSparkMax getShooter2(){
+    return shooter2;
   }
 }

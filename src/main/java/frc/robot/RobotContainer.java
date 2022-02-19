@@ -30,12 +30,28 @@ public class RobotContainer {
 
   // Define joysticks & buttons
   private Joystick pad;
-  private Joystick padManipulator;
-  private JoystickButton xButton;
   private JoystickButton buttonY;
   private JoystickButton buttonX;
   private JoystickButton buttonA;
   private JoystickButton buttonB;
+  private JoystickButton bumperR;
+  private JoystickButton bumperL;
+  private boolean dpadRight;
+  private boolean dpadLeft;
+  private boolean dpadUp;
+  private boolean dpadDown;
+
+  private Joystick padManipulator;
+  private JoystickButton buttonXManipulator;
+  private JoystickButton buttonYManipulator;
+  private JoystickButton buttonAManipulator;
+  private JoystickButton buttonBManipulator;
+  private JoystickButton bumperRManipulator;
+  private JoystickButton bumperLManipulator;
+  private boolean dpadRightManipulator;
+  private boolean dpadLeftManipulator;
+  private boolean dpadUpManipulator;
+  private boolean dpadDownManipulator;
 
   // Define commands
   private final AutoAlignTurret autoAlignTurretCommand;
@@ -57,6 +73,10 @@ public class RobotContainer {
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
+    // init joysticks
+    this.pad = new Joystick(0);
+    this.padManipulator = new Joystick(1);
+
     // init subsystems
     this.climber = new Climber();
     this.intake = new Intake();
@@ -78,7 +98,7 @@ public class RobotContainer {
     this.retractIntakePistons = new RetractIntakePistons(this.intake);
     this.internalPush = new InternalPush(this.intake);
     this.autoAlignTurretCommand = new AutoAlignTurret(this.limelightSubsystem, this.turretSubSystem);
-    this.autoSetShooterSpeedCommand = new AutoSetShooterSpeed(this.limelightSubsystem, this.shooterSubsystem);
+    this.autoSetShooterSpeedCommand = new AutoSetShooterSpeed(this.limelightSubsystem, this.shooterSubsystem, this.intake);
 
     this.climbCommands = new SequentialCommandGroup(
       this.autoClimbExtend,
@@ -103,24 +123,36 @@ public class RobotContainer {
       this.climbAnchor
     );
 
+    initializeButtons();
     configureButtonBindings();
   }
   
-  public boolean yButton(){
-    return pad.getRawButton(4);
+
+  public void initializeButtons() {
+    this.buttonY = new JoystickButton(this.pad, 4);
+    this.buttonB = new JoystickButton(this.pad, 2);
+    this.buttonA = new JoystickButton(this.pad, 1);
+    this.buttonX = new JoystickButton(this.pad, 3);
+    this.bumperL = new JoystickButton(this.pad, 5);
+    this.bumperR = new JoystickButton(this.pad, 6);
+    this.dpadDown = this.pad.getPOV() == 180;
+    this.dpadUp = this.pad.getPOV() == 0;
+    this.dpadLeft = this.pad.getPOV() == 270;
+    this.dpadRight = this.pad.getPOV() == 90;
+
+    this.buttonYManipulator = new JoystickButton(this.padManipulator, 4);
+    this.buttonBManipulator = new JoystickButton(this.padManipulator, 2);
+    this.buttonAManipulator = new JoystickButton(this.padManipulator, 1);
+    this.buttonXManipulator = new JoystickButton(this.padManipulator, 3);
+    this.bumperLManipulator = new JoystickButton(this.padManipulator, 5);
+    this.bumperRManipulator = new JoystickButton(this.padManipulator, 6);
+    this.dpadDownManipulator = this.padManipulator.getPOV() == 180;
+    this.dpadUpManipulator = this.padManipulator.getPOV() == 0;
+    this.dpadLeftManipulator = this.padManipulator.getPOV() == 270;
+    this.dpadRightManipulator = this.padManipulator.getPOV() == 90;
   }
 
-  public boolean xButton(){
-    return pad.getRawButton(3);
-  }
 
-  public boolean aButton(){
-    return pad.getRawButton(1);
-  }
-
-  public boolean bButton(){
-    return pad.getRawButton(2);
-  }
 
   /**
    * Use this method to define your button->command mappings. Buttons can be created by
@@ -128,28 +160,32 @@ public class RobotContainer {
    * edu.wpi.first.wpilibj.Joystick} or {@link XboxController}), and then passing it to a {@link
    * edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
-  private void configureButtonBindings() {
-    this.pad = new Joystick(0);
-    this.padManipulator = new Joystick(1);
+  public void configureButtonBindings() {
+    // this.buttonY = new JoystickButton(this.pad, 4);
+    // this.buttonY.whileHeld(this.runIntakeSystem);
 
-    this.buttonY = new JoystickButton(this.pad, 4);
-    this.buttonY.whileHeld(this.runIntakeSystem);
+    // this.buttonX = new JoystickButton(this.pad, 3);
+    // this.buttonX.whenPressed(this.deployIntakePistons);
 
-    this.buttonX = new JoystickButton(this.pad, 3);
-    this.buttonX.whenPressed(this.deployIntakePistons);
-
-    this.buttonA = new JoystickButton(this.pad, 1);
-    this.buttonA.whenPressed(this.retractIntakePistons);
+    // this.buttonA = new JoystickButton(this.pad, 1);
+    // this.buttonA.whenPressed(this.retractIntakePistons);
     
-    this.buttonB = new JoystickButton(this.pad, 2);
-    this.buttonB.whileHeld(this.internalPush);
+    // this.buttonB = new JoystickButton(this.pad, 2);
+    // this.buttonB.whileHeld(this.internalPush);
 
-    this.xButton  = new JoystickButton(this.pad, 3);
-    this.xButton.toggleWhenPressed(this.climbCommands);
+    // this.buttonXManipulator  = new JoystickButton(this.padManipulator, 3);
+    // this.buttonXManipulator.toggleWhenPressed(this.climbCommands);
+
+    this.buttonYManipulator  = new JoystickButton(this.padManipulator, 4);
+    this.buttonYManipulator.whileHeld(this.autoSetShooterSpeedCommand);
   }
 
   public Joystick getDriverPad(){
     return this.pad;
+  }
+
+  public Joystick getManipulatorPad(){
+    return this.padManipulator;
   }
 
   public void makeItDrive(){
@@ -175,6 +211,79 @@ public class RobotContainer {
 
   public boolean getButtonB() {
     return this.pad.getRawButton(2);
+  }
+
+  public boolean getButtonY() {
+    return this.pad.getRawButton(4);
+  }
+
+  public boolean getButtonX() {
+    return this.pad.getRawButton(3);
+  }
+
+  public boolean getBumperR() {
+    return this.pad.getRawButton(6);
+  }
+
+  public boolean getBumperL() {
+    return this.pad.getRawButton(5);
+  }
+
+  public boolean getDpadUp() {
+    return this.dpadUp;
+  }
+
+  public boolean getDpadDown() {
+    return this.dpadDown;
+  }
+
+  public boolean getDpadRight() {
+    return this.dpadRight;
+  }
+
+  public boolean getDpadLeft() {
+    return this.dpadLeft;
+  }
+
+
+  public boolean getMButtonA() {
+    return this.padManipulator.getRawButton(1);
+  }
+
+  public boolean getMButtonB() {
+    return this.padManipulator.getRawButton(2);
+  }
+
+  public boolean getMButtonY() {
+    return this.padManipulator.getRawButton(4);
+  }
+
+  public boolean getMButtonX() {
+    return this.padManipulator.getRawButton(3);
+  }
+
+  public boolean getMBumperR() {
+    return this.padManipulator.getRawButton(6);
+  }
+
+  public boolean getMBumperL() {
+    return this.padManipulator.getRawButton(5);
+  }
+
+  public boolean getMDpadUp() {
+    return this.dpadUpManipulator;
+  }
+
+  public boolean getMDpadDown() {
+    return this.dpadDownManipulator;
+  }
+
+  public boolean getMDpadRight() {
+    return this.dpadRightManipulator;
+  }
+
+  public boolean getMDpadLeft() {
+    return this.dpadLeftManipulator;
   }
 
   // Getters for subsystems:

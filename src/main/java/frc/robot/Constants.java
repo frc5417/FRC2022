@@ -98,7 +98,7 @@ public final class Constants {
 
     public static final double shooterP = 0.2;
     public static final double shooterI = 0;
-    public static final int shootsetPointVariable = -3100;
+    public static final int shootsetPointConst = -3100;
     public static final int shootMaxRPM = 5700;
 
 }
