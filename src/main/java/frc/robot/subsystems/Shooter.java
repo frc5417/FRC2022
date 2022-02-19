@@ -39,8 +39,8 @@ public class Shooter extends SubsystemBase {
   }
 
   public void setVelocity(double velocity){
-    this.shooter1.setIdleMode(IdleMode.kCoast);
-    this.shooter2.setIdleMode(IdleMode.kCoast);
+    this.shooter1.setIdleMode(IdleMode.kBrake);
+    this.shooter2.setIdleMode(IdleMode.kBrake);
 
     this.shooter1.getPIDController().setReference(velocity, ControlType.kVelocity);
     this.shooter2.getPIDController().setReference(velocity, ControlType.kVelocity);
