@@ -53,6 +53,8 @@ public class RobotContainer {
   private boolean dpadUpManipulator;
   private boolean dpadDownManipulator;
 
+  private Joystick buttonBoard;
+
   // Define commands
   private final AutoAlignTurret autoAlignTurret;
   private final AutoSetShooterSpeed autoSetShooterSpeed;
@@ -78,6 +80,7 @@ public class RobotContainer {
     // init joysticks
     this.pad = new Joystick(0);
     this.padManipulator = new Joystick(1);
+    this.buttonBoard = new Joystick(2);
 
     // init subsystems
     this.climber = new Climber();
@@ -282,6 +285,31 @@ public class RobotContainer {
 
   public boolean getMDpadLeft() {
     return this.dpadLeftManipulator;
+  }
+
+  public boolean buttonB2(){
+      return buttonBoard.getRawButton(2);
+  }
+  public boolean buttonB4(){
+      return buttonBoard.getRawButton(4);
+  }
+  public boolean buttonB6(){
+      return buttonBoard.getRawButton(6);
+  }
+  public boolean buttonB8(){
+      return buttonBoard.getRawButton(8);
+  }
+  public boolean buttonB10(){
+      return buttonBoard.getRawButton(10);
+  }
+  public boolean buttonB12(){
+      return buttonBoard.getRawButton(12);
+  }
+  public boolean buttonB14(){
+      return buttonBoard.getRawButton(14);
+  }
+  public boolean buttonB16(){
+      return buttonBoard.getRawButton(16);
   }
 
   // Getters for subsystems:
