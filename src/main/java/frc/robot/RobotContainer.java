@@ -25,10 +25,12 @@ public class RobotContainer {
   private final Shooter shooterSubsystem;
   private final Limelight limelightSubsystem;
   private final Turret turretSubSystem;
+  private final Drive drive;
 
   // Commands:
   private final AutoAlignTurret autoAlignTurretCommand;
   private final AutoSetShooterSpeed autoSetShooterSpeedCommand;
+  private final TankDrive tankDrive;
 
   // Joysticks:
   private final Joystick pad;
@@ -40,10 +42,12 @@ public class RobotContainer {
     this.shooterSubsystem = new Shooter();
     this.limelightSubsystem = new Limelight();
     this.turretSubSystem = new Turret();
+    this.drive = new Drive();
     
     // Init Commands:
     this.autoAlignTurretCommand = new AutoAlignTurret(this.limelightSubsystem, this.turretSubSystem);
     this.autoSetShooterSpeedCommand = new AutoSetShooterSpeed(this.limelightSubsystem, this.shooterSubsystem);
+    this.tankDrive = new TankDrive(this, this.drive);
 
     // Init Joysticks:
     this.pad = new Joystick(0);
@@ -60,10 +64,47 @@ public class RobotContainer {
    * edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
   private void configureButtonBindings() {
+    this.tankDrive.schedule();
     buttonA.whileHeld(new SequentialCommandGroup(
       this.autoAlignTurretCommand,
       new InstantCommand(() -> System.out.println("aligned!!"))
     ));
+  }
+
+  public Joystick getDriverPad(){
+    return this.pad;
+  }
+
+  public double getDriverLeftJoystick(){
+    return this.pad.getRawAxis(1);
+  }
+
+  public double getDriverRightJoystick(){
+    return this.pad.getRawAxis(5);
+  }
+
+  public boolean getButtonA() {
+    return this.pad.getRawButton(1);
+  }
+
+  public boolean getButtonB() {
+    return this.pad.getRawButton(2);
+  }
+
+  public boolean getButtonY() {
+    return this.pad.getRawButton(4);
+  }
+
+  public boolean getButtonX() {
+    return this.pad.getRawButton(3);
+  }
+
+  public boolean getBumperR() {
+    return this.pad.getRawButton(6);
+  }
+
+  public boolean getBumperL() {
+    return this.pad.getRawButton(5);
   }
 
   public Shooter getShooter() {
