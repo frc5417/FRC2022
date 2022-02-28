@@ -16,26 +16,25 @@ import edu.wpi.first.math.kinematics.DifferentialDriveKinematics;
  */
 public final class Constants {
 
-    public static final double intakeSpeed = .5;
-    public static final double pusherSpeed = .5;
+    public static final double intakeSpeed = 1;
 
-    public final static int driveMasterLeft = 11;
-    public final static int driveMasterRight = 14;
-    public final static int driveSlaveLeft1 = 12;
-    public final static int driveSlaveLeft2 = 13;
-    public final static int driveSlaveRight1 = 15;
-    public final static int driveSlaveRight2 = 16;
+    public final static int driveMasterLeft = 10;
+    public final static int driveMasterRight = 13;
+    public final static int driveSlaveLeft1 = 11;
+    public final static int driveSlaveLeft2 = 12;
+    public final static int driveSlaveRight1 = 14;
+    public final static int driveSlaveRight2 = 15;
     public final static int intake = 21;
-    public final static int intestineBottom = 31;
-    public final static int intestineKicker = 32;
+    public final static int intestineBottom = 22;
+    public final static int intestineKicker = 20;
     public final static int intestineBeamBreak = 1;
-    public final static int shooter1 = 42;
-    public final static int shooter2 = 43;
-    public final static int turret = 51;
-    public final static int climbMasterLeft = 61;
-    public final static int climbMasterRight = 63;
-    public final static int climbSlaveLeft = 62;
-    public final static int climbSlaveRight = 64;
+    public final static int shooter1 = 30;
+    public final static int shooter2 = 31;
+    public final static int turret = 32;
+    public static final int climbLeft1 = 1;
+    public static final int climbLeft2 = 2;
+    public static final int climbRight1 = 3;
+    public static final int climbRight2 = 4;
     public final static int solenoid = 75;
 
     //Drive Constants
@@ -63,10 +62,7 @@ public final class Constants {
 
     public static final double wheelDiameter = 0.1016;
     
-    public static final int climbLeft1 = 41;
-    public static final int climbLeft2 = 42;
-    public static final int climbRight1 = 43;
-    public static final int climbRight2 = 44;
+
 
     public static final int climbBottomLeftLimitSwitch = 0;
     public static final int climbBottomRightLimitSwitch = 1;

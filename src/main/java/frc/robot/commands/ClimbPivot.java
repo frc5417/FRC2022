@@ -20,7 +20,7 @@ public class ClimbPivot extends CommandBase {
 
   public ClimbPivot(Climber climber, RobotContainer container) {
     this.climber = climber;
-    this.active = this.climber.getActiveSolenoid();
+    //this.active = this.climber.getActiveSolenoid();
     this.robotContainer = container;
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(this.climber);

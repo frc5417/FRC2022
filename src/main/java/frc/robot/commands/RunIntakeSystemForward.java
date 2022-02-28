@@ -25,20 +25,13 @@ public class RunIntakeSystemForward extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    this.intake.runIntake(1);
-    if(!this.intake.getIntestineBeamBreak()){
-      this.intake.runIntestine(0);
-    }
-    else{
-      this.intake.runIntestine(1);
-    }
+    this.intake.runIntakeSystem(1);
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    this.intake.runIntake(0);
-    this.intake.runIntestine(0);
+    this.intake.runIntakeSystem(0);
   }
 
   // Returns true when the command should end.

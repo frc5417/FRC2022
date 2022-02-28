@@ -22,7 +22,7 @@ public class ClimbAnchor extends CommandBase {
   public ClimbAnchor(Climber climber, RobotContainer robotContainer) {
     this.climber = climber;
     this.robotContainer = robotContainer;
-    this.anchor = this.climber.getAnchorSolenoid();
+    //this.anchor = this.climber.getAnchorSolenoid();
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(this.climber);
   }

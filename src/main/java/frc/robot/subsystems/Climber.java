@@ -28,12 +28,10 @@ public class Climber extends SubsystemBase {
   private RelativeEncoder climbR1Encoder = climbR1.getEncoder();
   private RelativeEncoder climbR2Encoder = climbR2.getEncoder();
 
+  /*
   private Solenoid passiveSol = new Solenoid(PneumaticsModuleType.CTREPCM, Constants.passiveSolenoid);
   private Solenoid activeSol = new Solenoid(PneumaticsModuleType.CTREPCM, Constants.activeSolenoid);
-
-  public DigitalInput leftBottomLimitSwitch = new DigitalInput(Constants.climbBottomLeftLimitSwitch);
-  public DigitalInput rightBottomLimitSwitch = new DigitalInput(Constants.climbBottomRightLimitSwitch);
-
+*/
   public Climber() {
     climbL2.follow(climbL1);
     climbR2.follow(climbR1);
@@ -65,11 +63,11 @@ public class Climber extends SubsystemBase {
   }
 
   public void setPassiveClamp(boolean deploy){
-    passiveSol.set(deploy);
+    //passiveSol.set(deploy);
   }
 
   public void setActiveClamp(boolean deploy){
-    activeSol.set(deploy);
+    //activeSol.set(deploy);
   }
 
   public void setPosition(double position){
@@ -84,7 +82,7 @@ public class Climber extends SubsystemBase {
   public RelativeEncoder getRightMotorEncoder() {
     return this.climbR1Encoder;
   }
-
+/*
   public Solenoid getAnchorSolenoid() {
     return this.passiveSol;
   }
@@ -92,5 +90,6 @@ public class Climber extends SubsystemBase {
   public Solenoid getActiveSolenoid() {
     return this.activeSol;
   }
+  */
 
 }
