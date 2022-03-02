@@ -95,7 +95,11 @@ public final class Constants {
     public static final double minCommand = 0.1;
     public static final double limeLightErrorAllowed = 5;
     public static final double turretSpeed = 0.2;
-    public static final double maxTurretTurn = 1.0; // change this (revolutions)
+    public static final double maxTurretTurn = 120.0; // degrees
+    public static final double turretWheelCircumference = 39.4;
+    public static final double motorWheelCircumference = 6.5;
+    public static final double turretMotorGearRatio = 1/20;
+    public static final double turretRatio = turretMotorGearRatio * motorWheelCircumference / turretWheelCircumference;
 
     //limelight constants
     public static final double targetHeight = 104.75; //inches
