@@ -202,7 +202,7 @@ public class RobotContainer {
 
     
      //buttonYManipulator.whenHeld( autoSetShooterSpeed);
-     //buttonA.whileHeld( autoAlignTurret);
+     buttonA.whileHeld(autoAlignTurret);
      //buttonYManipulator.whenHeld( shoot);
     
     
