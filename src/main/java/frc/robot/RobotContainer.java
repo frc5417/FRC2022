@@ -8,7 +8,9 @@ import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import edu.wpi.first.wpilibj2.command.StartEndCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.subsystems.*;
 import frc.robot.commands.*;
@@ -21,23 +23,23 @@ import frc.robot.commands.*;
  */
 public class RobotContainer {
   // Define subsystems
-  private final Climber climber;
-  private final Intake intake;
-  private final Drive drive;
-  private final Shooter shooter;
-  private final Limelight limelight;
-  private final Turret turret;
+  private static Climber climber;
+  private static Intake intake;
+  private static Drive drive;
+  private static Shooter shooter;
+  private static Limelight limelight;
+  private static Turret turret;
 
   // Define joysticks & buttons
-  private Joystick pad;
-  private JoystickButton buttonY;
-  private JoystickButton buttonX;
-  private JoystickButton buttonA;
-  private JoystickButton buttonB;
-  private JoystickButton bumperRight;
-  private JoystickButton bumperLeft;
-  private JoystickButton triggerRight;
-  private JoystickButton triggerLeft;
+  private static Joystick pad;
+  private static JoystickButton buttonY;
+  private static JoystickButton buttonX;
+  private static JoystickButton buttonA;
+  private static JoystickButton buttonB;
+  private static JoystickButton bumperRight;
+  private static JoystickButton bumperLeft;
+  private static JoystickButton triggerRight;
+  private static JoystickButton triggerLeft;
   private boolean dpadRight;
   private boolean dpadLeft;
   private boolean dpadUp;
@@ -45,106 +47,106 @@ public class RobotContainer {
 
   
 
-  private Joystick padManipulator;
-  private JoystickButton buttonXManipulator;
-  private JoystickButton buttonYManipulator;
-  private JoystickButton buttonAManipulator;
-  private JoystickButton buttonBManipulator;
-  private JoystickButton bumperRManipulator;
-  private JoystickButton bumperLManipulator;
+  private static Joystick padManipulator;
+  private static JoystickButton buttonXManipulator;
+  private static JoystickButton buttonYManipulator;
+  private static JoystickButton buttonAManipulator;
+  private static JoystickButton buttonBManipulator;
+  private static JoystickButton bumperRManipulator;
+  private static JoystickButton bumperLManipulator;
   private boolean dpadRightManipulator;
   private boolean dpadLeftManipulator;
   private boolean dpadUpManipulator;
   private boolean dpadDownManipulator;
 
-  private Joystick buttonBoard;
-  private JoystickButton buttonB2;
-  private JoystickButton buttonB4;
-  private JoystickButton buttonB6;
-  private JoystickButton buttonB8;
-  private JoystickButton buttonB10;
-  private JoystickButton buttonB12;
-  private JoystickButton buttonB14;
-  private JoystickButton buttonB16;
+  private static Joystick buttonBoard;
+  private static JoystickButton buttonB2;
+  private static JoystickButton buttonB4; 
+  private static JoystickButton buttonB6;
+  private static JoystickButton buttonB8;
+  private static JoystickButton buttonB10;
+  private static JoystickButton buttonB12;
+  private static JoystickButton buttonB14;
+  private static JoystickButton buttonB16;
 
   // Define commands
-  private final AutoAlignTurret autoAlignTurret;
-  private final AutoSetShooterSpeed autoSetShooterSpeed;
-  private final AutoClimbExtend autoClimbExtend;
-  private final AutoClimbExtend autoClimbExtendSlightly;
-  private final AutoClimbRetract autoClimbRetract;
-  private final AutoClimbRetract autoClimbRetractSlightly;
-  private final ClimbAnchor climbAnchor;
-  private final ClimbPivot climbPivot;
-  private final AutoTankDrive autoTankDrive;
-  private final RunIntakeSystemForward runIntakeSystemForward;
-  private final RunIntakeSystemBackward runIntakeSystemBackward;
-  private final DeployIntakePistons deployIntakePistons;
-  private final RetractIntakePistons retractIntakePistons;
-  private final ManualAlignTurret manualAlignTurret;
-  private final Shoot shoot;
-  private final StopClimb stopClimb;
-  private final TankDrive tankDrive;
+  private static AutoAlignTurret autoAlignTurret;
+  private static AutoSetShooterSpeed autoSetShooterSpeed;
+  private static AutoClimbExtend autoClimbExtend;
+  private static AutoClimbExtend autoClimbExtendSlightly;
+  private static AutoClimbRetract autoClimbRetract;
+  private static AutoClimbRetract autoClimbRetractSlightly;
+  private static ClimbAnchor climbAnchor;
+  private static ClimbPivot climbPivot;
+  private static AutoTankDrive autoTankDrive;
+  private static RunIntakeSystemForward runIntakeSystemForward;
+  private static RunIntakeSystemBackward runIntakeSystemBackward;
+  private static DeployIntakePistons deployIntakePistons;
+  private static RetractIntakePistons retractIntakePistons;
+  private static ManualAlignTurret manualAlignTurret;
+  private static Shoot shoot;
+  private static StopClimb stopClimb;
+  private static TankDrive tankDrive;
 
   // Command Groups:
-  private final SequentialCommandGroup climbCommands;
+  //private   SequentialCommandGroup climbCommands;
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
     // init joysticks
-    this.pad = new Joystick(0);
-    this.padManipulator = new Joystick(1);
-    this.buttonBoard = new Joystick(2);
+    pad = new Joystick(0);
+     padManipulator = new Joystick(1);
+     buttonBoard = new Joystick(2);
 
     // init subsystems
-    this.climber = new Climber();
-    this.intake = new Intake();
-    this.drive = new Drive();
-    this.shooter = new Shooter();
-    this.limelight = new Limelight();
-    this.turret = new Turret();
+     climber = new Climber();
+     intake = new Intake();
+     drive = new Drive();
+     shooter = new Shooter();
+     limelight = new Limelight();
+     turret = new Turret();
 
     // init commands
-    this.autoClimbExtend = new AutoClimbExtend(this.climber);
-    this.autoClimbExtendSlightly = new AutoClimbExtend(this.climber, Constants.climberExtendSlightlyPos);
-    this.autoClimbRetract = new AutoClimbRetract(this.climber);
-    this.autoClimbRetractSlightly = new AutoClimbRetract(this.climber, Constants.climberRetractSlightlyPos);
-    this.climbAnchor = new ClimbAnchor(this.climber, this);
-    this.climbPivot = new ClimbPivot(this.climber, this);
-    this.autoTankDrive = new AutoTankDrive(this.drive, this);
-    this.runIntakeSystemForward = new RunIntakeSystemForward(this.intake);
-    this.runIntakeSystemBackward = new RunIntakeSystemBackward(this.intake);
-    this.deployIntakePistons = new DeployIntakePistons(this.intake);
-    this.retractIntakePistons = new RetractIntakePistons(this.intake);
-    this.autoAlignTurret = new AutoAlignTurret(this.limelight, this.turret);
-    this.autoSetShooterSpeed = new AutoSetShooterSpeed(this.limelight, this.shooter, this.intake);
-    this.manualAlignTurret = new ManualAlignTurret(this, this.turret);
-    this.shoot = new Shoot(this.shooter);
-    this.stopClimb = new StopClimb(this.climber);
-    this.tankDrive = new TankDrive(this, this.drive);
-
-    this.climbCommands = new SequentialCommandGroup(
-      this.autoClimbExtend,
-      this.autoTankDrive,
-      this.autoClimbRetract,
-      this.climbAnchor,
-      this.autoClimbExtendSlightly,
-      this.climbPivot,
-      this.autoClimbExtend,
-      this.climbPivot,
-      this.autoClimbRetractSlightly,
-      this.climbAnchor,
-      this.autoClimbRetract,
-      this.climbAnchor,
-      this.autoClimbExtendSlightly,
-      this.climbPivot,
-      this.autoClimbExtend,
-      this.climbPivot,
-      this.autoClimbRetractSlightly,
-      this.climbAnchor,
-      this.autoClimbRetract,
-      this.climbAnchor
-    );
+     autoClimbExtend = new AutoClimbExtend( climber, Constants.climberExtendPos);
+     autoClimbExtendSlightly = new AutoClimbExtend( climber, Constants.climberExtendSlightlyPos);
+     autoClimbRetract = new AutoClimbRetract( climber, Constants.climberRetractPos);
+     autoClimbRetractSlightly = new AutoClimbRetract( climber, Constants.climberRetractSlightlyPos);
+     climbAnchor = new ClimbAnchor( climber, this);
+     climbPivot = new ClimbPivot( climber, this);
+     autoTankDrive = new AutoTankDrive( drive, this);
+     runIntakeSystemForward = new RunIntakeSystemForward( intake);
+     runIntakeSystemBackward = new RunIntakeSystemBackward( intake);
+     deployIntakePistons = new DeployIntakePistons(intake, this);
+     retractIntakePistons = new RetractIntakePistons( intake);
+     autoAlignTurret = new AutoAlignTurret( limelight,  turret);
+     autoSetShooterSpeed = new AutoSetShooterSpeed( limelight,  shooter,  intake);
+     manualAlignTurret = new ManualAlignTurret(this,  turret);
+     shoot = new Shoot( shooter);
+     stopClimb = new StopClimb( climber);
+     tankDrive = new TankDrive(this,  drive);
+/*
+     climbCommands = new SequentialCommandGroup(
+       autoClimbExtend,
+       autoTankDrive,
+       autoClimbRetract,
+       climbAnchor,
+       autoClimbExtendSlightly,
+       climbPivot,
+       autoClimbExtend,
+       climbPivot,
+       autoClimbRetractSlightly,
+       climbAnchor,
+       autoClimbRetract,
+       climbAnchor,
+       autoClimbExtendSlightly,
+       climbPivot,
+       autoClimbExtend,
+       climbPivot,
+       autoClimbRetractSlightly,
+       climbAnchor,
+       autoClimbRetract,
+       climbAnchor
+    );*/
 
     initializeButtons();
     configureButtonBindings();
@@ -154,36 +156,36 @@ public class RobotContainer {
   public void initializeButtons() {
 
 
-    this.buttonY = new JoystickButton(this.pad, 4);
-    this.buttonB = new JoystickButton(this.pad, 2);
-    this.buttonA = new JoystickButton(this.pad, 1);
-    this.buttonX = new JoystickButton(this.pad, 3);
-    this.bumperLeft = new JoystickButton(this.pad, 5);
-    this.bumperRight = new JoystickButton(this.pad, 6);
-    this.dpadDown = this.pad.getPOV() == 180;
-    this.dpadUp = this.pad.getPOV() == 0;
-    this.dpadLeft = this.pad.getPOV() == 270;
-    this.dpadRight = this.pad.getPOV() == 90;
+     buttonY = new JoystickButton( pad, 4);
+     buttonB = new JoystickButton( pad, 2);
+     buttonA = new JoystickButton( pad, 1);
+     buttonX = new JoystickButton( pad, 3);
+     bumperLeft = new JoystickButton( pad, 5);
+     bumperRight = new JoystickButton( pad, 6);
+     dpadDown =  pad.getPOV() == 180;
+     dpadUp =  pad.getPOV() == 0;
+     dpadLeft =  pad.getPOV() == 270;
+     dpadRight =  pad.getPOV() == 90;
 
-    this.buttonYManipulator = new JoystickButton(this.padManipulator, 4);
-    this.buttonBManipulator = new JoystickButton(this.padManipulator, 2);
-    this.buttonAManipulator = new JoystickButton(this.padManipulator, 1);
-    this.buttonXManipulator = new JoystickButton(this.padManipulator, 3);
-    this.bumperLManipulator = new JoystickButton(this.padManipulator, 5);
-    this.bumperRManipulator = new JoystickButton(this.padManipulator, 6);
-    this.dpadDownManipulator = this.padManipulator.getPOV() == 180;
-    this.dpadUpManipulator = this.padManipulator.getPOV() == 0;
-    this.dpadLeftManipulator = this.padManipulator.getPOV() == 270;
-    this.dpadRightManipulator = this.padManipulator.getPOV() == 90;
+     buttonYManipulator = new JoystickButton( padManipulator, 4);
+     buttonBManipulator = new JoystickButton( padManipulator, 2);
+     buttonAManipulator = new JoystickButton( padManipulator, 1);
+     buttonXManipulator = new JoystickButton( padManipulator, 3);
+     bumperLManipulator = new JoystickButton( padManipulator, 5);
+     bumperRManipulator = new JoystickButton( padManipulator, 6);
+     dpadDownManipulator =  padManipulator.getPOV() == 180;
+     dpadUpManipulator =  padManipulator.getPOV() == 0;
+     dpadLeftManipulator =  padManipulator.getPOV() == 270;
+     dpadRightManipulator =  padManipulator.getPOV() == 90;
 
-    this.buttonB2 = new JoystickButton(this.buttonBoard, 2);
-    this.buttonB4 = new JoystickButton(this.buttonBoard, 4);
-    this.buttonB6 = new JoystickButton(this.buttonBoard, 6);
-    this.buttonB8 = new JoystickButton(this.buttonBoard, 8);
-    this.buttonB10 = new JoystickButton(this.buttonBoard, 10);
-    this.buttonB12 = new JoystickButton(this.buttonBoard, 12);
-    this.buttonB14 = new JoystickButton(this.buttonBoard, 14);
-    this.buttonB16 = new JoystickButton(this.buttonBoard, 16);
+     buttonB2 = new JoystickButton( buttonBoard, 2);
+     buttonB4 = new JoystickButton( buttonBoard, 4);
+     buttonB6 = new JoystickButton( buttonBoard, 6);
+     buttonB8 = new JoystickButton( buttonBoard, 8);
+     buttonB10 = new JoystickButton( buttonBoard, 10);
+     buttonB12 = new JoystickButton( buttonBoard, 12);
+     buttonB14 = new JoystickButton( buttonBoard, 14);
+     buttonB16 = new JoystickButton( buttonBoard, 16);
   }
 
 
@@ -195,31 +197,38 @@ public class RobotContainer {
    * edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
   public void configureButtonBindings() {
-    this.tankDrive.schedule();
-    this.manualAlignTurret.schedule();
 
-    this.buttonYManipulator.whileHeld(this.autoSetShooterSpeed);
-    this.buttonA.whileHeld(this.autoAlignTurret);
-    this.buttonBManipulator.toggleWhenPressed(this.deployIntakePistons);
-    this.buttonYManipulator.whileHeld(this.shoot);
-    this.bumperLManipulator.whileHeld(this.runIntakeSystemForward);
-    this.bumperRManipulator.whileHeld(this.runIntakeSystemBackward);
+    // manualAlignTurret.schedule();
 
-    this.buttonB2.whenPressed(this.climbCommands);
-    this.buttonB4.whenPressed(this.stopClimb);
-    this.buttonB10.whenPressed(this.autoClimbExtend);
-    this.buttonB8.whenPressed(this.climbAnchor);
-    this.buttonB12.whenPressed(this.autoClimbRetract);
-    this.buttonB14.whenPressed(this.climbPivot);
+    
+     //buttonYManipulator.whenHeld( autoSetShooterSpeed);
+     //buttonA.whileHeld( autoAlignTurret);
+     //buttonYManipulator.whenHeld( shoot);
+    
+    
+
+     bumperLManipulator.whenHeld(runIntakeSystemForward);
+     bumperRManipulator.whenHeld(runIntakeSystemBackward);
+     buttonBManipulator.whenPressed(deployIntakePistons);
+    
+     //buttonB2.whenPressed( climbCommands);
+     buttonB4.whenPressed( stopClimb);
+     buttonB10.whenPressed( autoClimbExtend);
+     buttonB8.whenPressed( climbAnchor);
+     buttonB12.whenPressed( autoClimbRetract);
+     buttonB14.whenPressed( climbPivot);
+    
+    tankDrive.schedule();
+
 
   }
 
   public Joystick getDriverPad(){
-    return this.pad;
+    return  pad;
   }
 
   public Joystick getManipulatorPad(){
-    return this.padManipulator;
+    return  padManipulator;
   }
 
   /**
@@ -237,116 +246,124 @@ public class RobotContainer {
   }
 
   public double getDriverLeftJoystick(){
-    return this.pad.getRawAxis(1);
+    return  pad.getRawAxis(1);
   }
 
   public double getDriverRightJoystick(){
-    return this.pad.getRawAxis(5);
+    return  pad.getRawAxis(5);
   }
 
   public boolean getButtonA() {
-    return this.pad.getRawButton(1);
+    return  pad.getRawButton(1);
   }
 
   public boolean getButtonB() {
-    return this.pad.getRawButton(2);
+    return  pad.getRawButton(2);
   }
 
   public boolean getButtonY() {
-    return this.pad.getRawButton(4);
+    return  pad.getRawButton(4);
   }
 
   public boolean getButtonX() {
-    return this.pad.getRawButton(3);
+    return  pad.getRawButton(3);
   }
 
   public boolean getBumperR() {
-    return this.pad.getRawButton(6);
+    return  pad.getRawButton(6);
   }
 
   public boolean getBumperL() {
-    return this.pad.getRawButton(5);
+    return  pad.getRawButton(5);
   }
 
   public boolean getDpadUp() {
-    return this.dpadUp;
+    return  dpadUp;
   }
 
   public boolean getDpadDown() {
-    return this.dpadDown;
+    return  dpadDown;
   }
 
   public boolean getDpadRight() {
-    return this.dpadRight;
+    return  dpadRight;
   }
 
   public boolean getDpadLeft() {
-    return this.dpadLeft;
+    return  dpadLeft;
   }
 
 
   public boolean getMButtonA() {
-    return this.padManipulator.getRawButton(1);
+    return  padManipulator.getRawButton(1);
   }
 
   public boolean getMButtonB() {
-    return this.padManipulator.getRawButton(2);
+    return  padManipulator.getRawButton(2);
   }
 
   public boolean getMButtonY() {
-    return this.padManipulator.getRawButton(4);
+    return  padManipulator.getRawButton(4);
   }
 
   public boolean getMButtonX() {
-    return this.padManipulator.getRawButton(3);
+    return  padManipulator.getRawButton(3);
   }
 
   public boolean getMBumperR() {
-    return this.padManipulator.getRawButton(6);
+    return  padManipulator.getRawButton(6);
   }
 
   public boolean getMBumperL() {
-    return this.padManipulator.getRawButton(5);
+    return  padManipulator.getRawButton(5);
   }
 
   public boolean getMDpadUp() {
-    return this.dpadUpManipulator;
+    return  dpadUpManipulator;
   }
 
   public boolean getMDpadDown() {
-    return this.dpadDownManipulator;
+    return  dpadDownManipulator;
   }
 
   public boolean getMDpadRight() {
-    return this.dpadRightManipulator;
+    return  dpadRightManipulator;
   }
 
   public boolean getMDpadLeft() {
-    return this.dpadLeftManipulator;
+    return  dpadLeftManipulator;
   }
 
-  // Getters for subsystems:
-  public Climber getClimber() {
-		return this.climber;
-	}
-
-  public Shooter getShooter() {
-    return this.shooter;
+  public boolean getButtonB2(){
+    return buttonB2.get();
   }
 
-  public Limelight getLimelight() {
-    return this.limelight;
+  public boolean getButtonB4(){
+    return buttonB4.get();
   }
 
-  public Drive getDrive(){
-    return this.drive;
+  public boolean getButtonB6(){
+    return buttonB6.get();
   }
 
-  public Intake getIntake(){
-    return this.intake;
+  public boolean getButtonB8(){
+    return buttonB8.get();
   }
 
-  public Turret getTurret(){
-    return this.turret;
+  public boolean getButtonB10(){
+    return buttonB10.get();
   }
+
+  public boolean getButtonB12(){
+    return buttonB12.get();
+  }
+
+  public boolean getButtonB14(){
+    return buttonB14.get();
+  }
+
+  public boolean getButtonB16(){
+    return buttonB16.get();
+  }
+
 }

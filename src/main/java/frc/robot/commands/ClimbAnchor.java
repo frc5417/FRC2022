@@ -15,14 +15,16 @@ import frc.robot.subsystems.Climber;
 public class ClimbAnchor extends CommandBase {
   private final Climber climber;
   private final RobotContainer robotContainer;
-  private Solenoid anchor;
-  private boolean isEnabled = false;
+  private boolean currentState;
+  private boolean commandState;
 
   /** Creates a new AutoClimb. */
   public ClimbAnchor(Climber climber, RobotContainer robotContainer) {
     this.climber = climber;
     this.robotContainer = robotContainer;
-    this.anchor = this.climber.getAnchorSolenoid();
+    currentState = true;
+    commandState = false;
+    //this.anchor = this.climber.getAnchorSolenoid();
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(this.climber);
   }
@@ -30,16 +32,22 @@ public class ClimbAnchor extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    this.isEnabled = false;
+    if (currentState == true){
+      this.climber.setPassiveClamp(true);
+      currentState = false;
+      commandState = true;
+    }
+    else if (currentState == false){
+      this.climber.setPassiveClamp(false);
+      currentState = true;
+      commandState = true;
+    }
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    if(!this.isEnabled) {
-      this.anchor.toggle();
-      this.isEnabled = true;
-    }
+    climber.setPassiveClamp(true);
   }
 
   // Called once the command ends or is interrupted.
@@ -49,16 +57,10 @@ public class ClimbAnchor extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-
-    return this.robotContainer.getButtonA();
-
-    // Commented for regional competition - want to use limit switches for state or irving
-    // if(this.howLongPushedDownFor > (Constants.howLongClimbHasToBePushedDown / 20)) {
-    //   this.howLongPushedDownFor = 0;
-    //   this.isEnabled = false;
-    //   return true;
-    // }
-    // 
-    // return false;
+    if (!robotContainer.getButtonB8() && commandState){
+      commandState = false;
+      return true;
+    }
+    return false;
   }
 }

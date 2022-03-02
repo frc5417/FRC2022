@@ -48,7 +48,7 @@ private CANSparkMax driveMasterL;
     driveSlaveL2 = new CANSparkMax(Constants.driveSlaveLeft2, MotorType.kBrushless);
     driveMasterR = new CANSparkMax(Constants.driveMasterRight, MotorType.kBrushless);
     driveSlaveR1 = new CANSparkMax(Constants.driveSlaveRight1, MotorType.kBrushless);
-    driveSlaveR1 = new CANSparkMax(Constants.driveSlaveRight2, MotorType.kBrushless);
+    driveSlaveR2 = new CANSparkMax(Constants.driveSlaveRight2, MotorType.kBrushless);
     driveMasterL.setInverted(true);
     driveSlaveL1.setInverted(true);
     driveSlaveL2.setInverted(true);
@@ -70,7 +70,7 @@ private CANSparkMax driveMasterL;
     
     setIdleModes(IdleMode.kCoast);
     setPIDConstants();
-    gyro = new AHRS(Port.kUSB);
+    gyro = new AHRS(Port.kMXP);
     driveOdom  = new DifferentialDriveOdometry(Rotation2d.fromDegrees(getHeading()));
     drive  = new DifferentialDrive(driveMasterL, driveMasterR);
     drive.setSafetyEnabled(false);
@@ -109,8 +109,18 @@ private CANSparkMax driveMasterL;
   }
   
   public void setPower(double leftPower, double rightPower){
-    driveMasterL.set(-leftPower);
-    driveMasterR.set(rightPower);
+    if(Math.abs(Math.pow(leftPower, 3)) > .05){
+      driveMasterL.set(Math.pow(leftPower, 3));
+    }
+    else{
+      driveMasterL.set(0);
+    }
+    if(Math.abs(Math.pow(rightPower, 3)) > .05){
+      driveMasterR.set(Math.pow(rightPower, 3));
+    }
+    else{
+      driveMasterR.set(0);
+    }
   }
 
   public AHRS getGyro () {
