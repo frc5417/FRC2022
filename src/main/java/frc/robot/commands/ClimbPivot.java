@@ -14,14 +14,15 @@ import frc.robot.RobotContainer;
 
 public class ClimbPivot extends CommandBase {
   private final Climber climber;
-  private Solenoid active;
-  private boolean isEnabled = false;
   private RobotContainer robotContainer;
+  private boolean currentState;
+  private boolean commandState;
 
   public ClimbPivot(Climber climber, RobotContainer container) {
     this.climber = climber;
-    //this.active = this.climber.getActiveSolenoid();
     this.robotContainer = container;
+    currentState = true;
+    commandState = false;
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(this.climber);
   }
@@ -29,16 +30,21 @@ public class ClimbPivot extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    this.isEnabled = false;
+    if (currentState == true){
+      this.climber.setActiveClamp(true);
+      currentState = false;
+      commandState = true;
+    }
+    else if (currentState == false){
+      this.climber.setActiveClamp(false);
+      currentState = true;
+      commandState = true;
+    }
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    if(!this.isEnabled) {
-      this.active.toggle();
-      this.isEnabled = true;
-    }
   }
 
   // Called once the command ends or is interrupted.
@@ -48,14 +54,10 @@ public class ClimbPivot extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    //Commented for regional competition - dash want to use limit switches for state or irving
-    /*if(this.howLongPushedDownFor > (Constants.howLongClimbHasToBePushedDown / 20)) {
-      this.howLongPushedDownFor = 0;
-      this.isEnabled = false;
+    if (!robotContainer.getButtonB14() && commandState){
+      commandState = false;
       return true;
     }
     return false;
-    **/
-    return this.robotContainer.getButtonB();
   }
 }

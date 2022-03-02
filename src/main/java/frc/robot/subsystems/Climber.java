@@ -18,29 +18,40 @@ import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 public class Climber extends SubsystemBase {
   /** Creates a new ExampleSubsystem. */
-  private CANSparkMax climbL1 = new CANSparkMax(Constants.climbLeft1, MotorType.kBrushless);
-  private CANSparkMax climbL2 = new CANSparkMax(Constants.climbLeft2, MotorType.kBrushless);
-  private CANSparkMax climbR1 = new CANSparkMax(Constants.climbRight1, MotorType.kBrushless);
-  private CANSparkMax climbR2 = new CANSparkMax(Constants.climbRight2, MotorType.kBrushless);
+  private CANSparkMax climbL1;
+  private CANSparkMax climbL2;
+  private CANSparkMax climbR1;
+  private CANSparkMax climbR2;
 
-  private RelativeEncoder climbL1Encoder = climbL1.getEncoder();
-  private RelativeEncoder climbL2Encoder = climbL2.getEncoder();
-  private RelativeEncoder climbR1Encoder = climbR1.getEncoder();
-  private RelativeEncoder climbR2Encoder = climbR2.getEncoder();
+  
+  private Solenoid bottomClimberR;
+  private Solenoid bottomClimberL;
+  private Solenoid topClimberR;
+  private Solenoid topClimberL;
 
-  /*
-  private Solenoid passiveSol = new Solenoid(PneumaticsModuleType.CTREPCM, Constants.passiveSolenoid);
-  private Solenoid activeSol = new Solenoid(PneumaticsModuleType.CTREPCM, Constants.activeSolenoid);
-*/
-  public Climber() {
+  public Climber() {  
+    climbL1 = new CANSparkMax(Constants.climbLeft1, MotorType.kBrushless);
+    climbL2 = new CANSparkMax(Constants.climbLeft2, MotorType.kBrushless);
+    climbR1 = new CANSparkMax(Constants.climbRight1, MotorType.kBrushless);
+    climbR2 = new CANSparkMax(Constants.climbRight2, MotorType.kBrushless);
+    bottomClimberR = new Solenoid(PneumaticsModuleType.REVPH, Constants.climbR1Solenoid);
+    bottomClimberL = new Solenoid(PneumaticsModuleType.REVPH, Constants.climbL1Solenoid);
+    topClimberR = new Solenoid(PneumaticsModuleType.REVPH, Constants.climbR2Solenoid);
+    topClimberL = new Solenoid(PneumaticsModuleType.REVPH, Constants.climbR1Solenoid);
+
     climbL2.follow(climbL1);
     climbR2.follow(climbR1);
+
+    climbL1.setInverted(true);
+    climbL2.setInverted(true);
 
     climbL1.getPIDController().setP(Constants.climberkP);
     climbR1.getPIDController().setP(Constants.climberkP);
 
-    climbL1Encoder.setPosition(0);
-    climbR1Encoder.setPosition(0);
+    climbL1.getEncoder().setPosition(0);
+    climbR1.getEncoder().setPosition(0);
+    climbL2.getEncoder().setPosition(0);
+    climbR2.getEncoder().setPosition(0);
   }
 
   public void extendUp(){
@@ -63,11 +74,13 @@ public class Climber extends SubsystemBase {
   }
 
   public void setPassiveClamp(boolean deploy){
-    //passiveSol.set(deploy);
+    bottomClimberR.set(deploy);
+    bottomClimberL.set(deploy);
   }
 
   public void setActiveClamp(boolean deploy){
-    //activeSol.set(deploy);
+    topClimberR.set(deploy);
+    topClimberL.set(deploy);
   }
 
   public void setPosition(double position){
@@ -75,13 +88,13 @@ public class Climber extends SubsystemBase {
     climbR1.getPIDController().setReference(position, ControlType.kPosition);
   }
 
-  public RelativeEncoder getLeftMotorEncoder() {
-    return this.climbL1Encoder;
+  public RelativeEncoder getLeftMotorEncoder(){
+    return climbL1.getEncoder();
+  }
+  public RelativeEncoder getRightMotorEncoder(){
+    return climbR1.getEncoder();
   }
 
-  public RelativeEncoder getRightMotorEncoder() {
-    return this.climbR1Encoder;
-  }
 /*
   public Solenoid getAnchorSolenoid() {
     return this.passiveSol;
