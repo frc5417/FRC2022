@@ -45,9 +45,9 @@ public final class Constants {
     public static final double driveGearingRatio = 18;
 
     //valid k-values are from characterization, commented values are from 2021
-    public static final double kSAuto = .126; //.12; 
-    public static final double kVAuto = 7.12; //4.69;
-    public static final double kAAuto = .997; //.179;
+    public static final double kSAuto = .12;
+    public static final double kVAuto = 4.69;
+    public static final double kAAuto = .179;
     public static final double kPAuto = 0.0;
 
     public static final double kCosAuto = 0;
@@ -60,7 +60,7 @@ public final class Constants {
     public static final double maxSpeed = 3; // m/s
     public static final double maxAcceleration =  3;//m/s^2
 
-    public static final double wheelDiameter = 0.1016;
+    public static final double wheelDiameter = 0.1524;
     
 
 
