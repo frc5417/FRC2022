@@ -10,6 +10,7 @@ import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import edu.wpi.first.wpilibj2.command.StartEndCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.subsystems.*;
 import frc.robot.commands.*;
@@ -106,16 +107,16 @@ public class RobotContainer {
      turret = new Turret();
 
     // init commands
-     autoClimbExtend = new AutoClimbExtend( climber);
+     autoClimbExtend = new AutoClimbExtend( climber, Constants.climberExtendPos);
      autoClimbExtendSlightly = new AutoClimbExtend( climber, Constants.climberExtendSlightlyPos);
-     autoClimbRetract = new AutoClimbRetract( climber);
+     autoClimbRetract = new AutoClimbRetract( climber, Constants.climberRetractPos);
      autoClimbRetractSlightly = new AutoClimbRetract( climber, Constants.climberRetractSlightlyPos);
      climbAnchor = new ClimbAnchor( climber, this);
      climbPivot = new ClimbPivot( climber, this);
      autoTankDrive = new AutoTankDrive( drive, this);
      runIntakeSystemForward = new RunIntakeSystemForward( intake);
      runIntakeSystemBackward = new RunIntakeSystemBackward( intake);
-     deployIntakePistons = new DeployIntakePistons( intake);
+     deployIntakePistons = new DeployIntakePistons(intake, this);
      retractIntakePistons = new RetractIntakePistons( intake);
      autoAlignTurret = new AutoAlignTurret( limelight,  turret);
      autoSetShooterSpeed = new AutoSetShooterSpeed( limelight,  shooter,  intake);
@@ -202,23 +203,23 @@ public class RobotContainer {
     
      //buttonYManipulator.whenHeld( autoSetShooterSpeed);
      //buttonA.whileHeld( autoAlignTurret);
-     buttonBManipulator.toggleWhenPressed(deployIntakePistons);
      //buttonYManipulator.whenHeld( shoot);
     
     
 
      bumperLManipulator.whenHeld(runIntakeSystemForward);
      bumperRManipulator.whenHeld(runIntakeSystemBackward);
-
-    /*
-     buttonB2.whenPressed( climbCommands);
+     buttonBManipulator.whenPressed(deployIntakePistons);
+    
+     //buttonB2.whenPressed( climbCommands);
      buttonB4.whenPressed( stopClimb);
      buttonB10.whenPressed( autoClimbExtend);
      buttonB8.whenPressed( climbAnchor);
      buttonB12.whenPressed( autoClimbRetract);
      buttonB14.whenPressed( climbPivot);
-    */
+    
     tankDrive.schedule();
+
 
   }
 
@@ -331,6 +332,38 @@ public class RobotContainer {
 
   public boolean getMDpadLeft() {
     return  dpadLeftManipulator;
+  }
+
+  public boolean getButtonB2(){
+    return buttonB2.get();
+  }
+
+  public boolean getButtonB4(){
+    return buttonB4.get();
+  }
+
+  public boolean getButtonB6(){
+    return buttonB6.get();
+  }
+
+  public boolean getButtonB8(){
+    return buttonB8.get();
+  }
+
+  public boolean getButtonB10(){
+    return buttonB10.get();
+  }
+
+  public boolean getButtonB12(){
+    return buttonB12.get();
+  }
+
+  public boolean getButtonB14(){
+    return buttonB14.get();
+  }
+
+  public boolean getButtonB16(){
+    return buttonB16.get();
   }
 
 }

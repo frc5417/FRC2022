@@ -29,8 +29,8 @@ public class Intake extends SubsystemBase {
     this.rollerBar = new CANSparkMax(Constants.intake, MotorType.kBrushless);
     this.intestinePusher = new CANSparkMax(Constants.intestineBottom, MotorType.kBrushless);
     this.intestineKicker = new CANSparkMax(Constants.intestineKicker, MotorType.kBrushless);
-    this.intakeSolenoidR = new Solenoid(PneumaticsModuleType.REVPH, 2);
-    this.intakeSolenoidL = new Solenoid(PneumaticsModuleType.REVPH, 3);
+    this.intakeSolenoidR = new Solenoid(PneumaticsModuleType.REVPH, Constants.intakeRSolenoid);
+    this.intakeSolenoidL = new Solenoid(PneumaticsModuleType.REVPH, Constants.intakeLSolenoid);
     this.intestineBeamBreak = new DigitalInput(Constants.intestineBeamBreak);
 
     this.rollerBar.setIdleMode(IdleMode.kCoast);

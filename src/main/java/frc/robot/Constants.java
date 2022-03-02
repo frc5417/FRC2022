@@ -69,16 +69,20 @@ public final class Constants {
 
     public static final int howLongClimbHasToBePushedDown = 900; // In ms.
 
-    public static final int climberExtendPos = 0;
+    public static final int climberExtendPos = 25;
     public static final int climberRetractPos = 0;
 
-    public static final int climberExtendSlightlyPos = 0;
-    public static final int climberRetractSlightlyPos = 0;
+    public static final int climberExtendSlightlyPos = 30;
+    public static final int climberRetractSlightlyPos = 20;
 
     public static final double climberkP = 1;
 
-    public static final int passiveSolenoid = 0;
-    public static final int activeSolenoid = 1;
+    public static final int climbL1Solenoid = 0;
+    public static final int climbR1Solenoid = 1;
+    public static final int intakeRSolenoid = 2;
+    public static final int intakeLSolenoid = 3;
+    public static final int climbL2Solenoid = 4;
+    public static final int climbR2Solenoid = 5;
 
     public static final int driveLMaster = 14;
     public static final int driveLSlave = 15;
