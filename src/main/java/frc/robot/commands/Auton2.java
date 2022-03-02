@@ -31,7 +31,7 @@ public class Auton2 extends SequentialCommandGroup{
       Whenever you tell it to turn in an arc, it goes along the arc for half of the distance and then reverses the direction and tries to go back- has an error
       Relative distance- 1.0 unit on PathPlanner is roughly 1 foot
     */
-    Trajectory tragic = PathPlanner.loadPath("TurnTest3", Constants.maxSpeed, Constants.maxAcceleration);
+    Trajectory tragic = PathPlanner.loadPath("StraightPath", Constants.maxSpeed, Constants.maxAcceleration);
 
     drive.resetOdometry(tragic.getInitialPose());
 
