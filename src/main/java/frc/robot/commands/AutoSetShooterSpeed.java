@@ -32,23 +32,26 @@ public class AutoSetShooterSpeed extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    this.setPointVariable = limelight.estimateDistance();
+      
+    setPointVariable = 2500;
 
-    this.shooter.setVelocity(4000);
+    this.shooter.setVelocity(setPointVariable);
+    System.out.println(this.shooter.getShooter1().getEncoder().getVelocity());
 
-    if((shooter.getShooter1().getEncoder().getVelocity() <= 4000+500) && (shooter.getShooter1().getEncoder().getVelocity() >= 4000-500)){
-      this.intake.runIntake(1);
+    if((shooter.getShooter1().getEncoder().getVelocity() <= setPointVariable+250) && (shooter.getShooter1().getEncoder().getVelocity() >= setPointVariable-250)){
       this.intake.runIntestine(1);
     }
     else{
-      this.intake.runIntake(0);
       this.intake.runIntestine(0);
     }
   }
 
   // Called once the command ends or is interrupted.
   @Override
-  public void end(boolean interrupted) {}
+  public void end(boolean interrupted) {
+    this.shooter.setPower(0);
+    this.intake.runIntestine(0);
+  }
 
   // Returns true when the command should end.
   @Override

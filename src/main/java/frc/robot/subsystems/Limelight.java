@@ -15,6 +15,11 @@ public class Limelight extends SubsystemBase {
   private NetworkTable limelight;
   private double tx, ty, ta;
   private boolean tv;
+  private double left_command;
+  private double right_command;
+  private double turret_command;
+  private double steering_adjust;
+  private double distance_adjust;
 
   public Limelight() {
     limelight = NetworkTableInstance.getDefault().getTable("limelight");
@@ -37,11 +42,11 @@ public class Limelight extends SubsystemBase {
   }
 
   public void ledOn(){
-    limelight.getEntry("ledMode").setDouble(3.0);
+    limelight.getEntry("ledMode").setNumber(3);
   }
 
   public void ledOff(){
-    limelight.getEntry("ledMode").setDouble(1.0);
+    limelight.getEntry("ledMode").setNumber(1);
   }
 
   @Override
@@ -52,6 +57,62 @@ public class Limelight extends SubsystemBase {
     ta = limelight.getEntry("ta").getDouble(0.0);
     //System.out.println("tx: " + tx + ", ty: " + ty + ", tv: " + tv);
   }
+  public double setShooterSpeed(){
+    return (getY()*1000);
+  }
+
+  public double[] getSpeeds(){
+
+    // Constants used to calculate motor power for alignment
+    //Double Kp = (((.00222222222222222)*area)-(.021111111111111));
+    Double kP = -(Constants.drivekP);
+    Double min_command = Constants.driveMinCommand;
+    left_command = 0;
+    right_command = 0;
+    turret_command = 0;
+
+
+    // Checks to see if button pressec
+
+
+
+      // Set heading error and the steering adjust
+      Double heading_error = -tx;
+      Double distance_error = -ty;
+       //Double distance_error = estimateDistance() - getIdealDistance();
+      steering_adjust = (kP)*heading_error;
+      distance_adjust = (kP)*distance_error;
+      // Determine power based on the horizontal offset
+      if (tx > 1)
+      {
+        steering_adjust = (kP)*heading_error + min_command;
+      }
+      else if (tx < -1)
+      {
+        steering_adjust = (kP)*heading_error - min_command;
+      }
+      else {
+              steering_adjust = 0.0;
+      }
+      
+      left_command += (steering_adjust + distance_adjust);
+      right_command += (steering_adjust - distance_adjust);
+      double[] wheelSpeeds = new double[2];
+      wheelSpeeds[0] = left_command;
+      wheelSpeeds[1] = right_command;
+
+      // Run motors if the target is seen 
+      if (tv){
+        return wheelSpeeds;
+
+      }
+    //hi again
+    
+      else
+      {
+        return new double[3];
+      }
+    }
 
   public double estimateDistance(){
     return (Constants.targetHeight - Constants.limelightHeight) / (Math.tan(Math.toRadians(Constants.limelightAngle) + Math.toRadians(ty)));

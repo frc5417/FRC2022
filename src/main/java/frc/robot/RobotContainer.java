@@ -84,9 +84,11 @@ public class RobotContainer {
   private static DeployIntakePistons deployIntakePistons;
   private static RetractIntakePistons retractIntakePistons;
   private static ManualAlignTurret manualAlignTurret;
-  private static Shoot shoot;
+  //private static Shoot shoot;
   private static StopClimb stopClimb;
   private static TankDrive tankDrive;
+  private static ManualMoveClimb climbDrive;
+  private static AutoAlignDrive autoAlignDrive;
 
   // Command Groups:
   //private   SequentialCommandGroup climbCommands;
@@ -121,9 +123,11 @@ public class RobotContainer {
      autoAlignTurret = new AutoAlignTurret( limelight,  turret);
      autoSetShooterSpeed = new AutoSetShooterSpeed( limelight,  shooter,  intake);
      manualAlignTurret = new ManualAlignTurret(this,  turret);
-     shoot = new Shoot( shooter);
+     //shoot = new Shoot( shooter);
      stopClimb = new StopClimb( climber);
      tankDrive = new TankDrive(this,  drive);
+     climbDrive = new ManualMoveClimb(climber, this);
+     autoAlignDrive = new AutoAlignDrive(limelight, drive, this);
 /*
      climbCommands = new SequentialCommandGroup(
        autoClimbExtend,
@@ -152,6 +156,9 @@ public class RobotContainer {
     configureButtonBindings();
   }
   
+  public Limelight getLimelight(){
+    return limelight;
+  }
 
   public void initializeButtons() {
 
@@ -197,30 +204,34 @@ public class RobotContainer {
    * edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
   public void configureButtonBindings() {
+    limelight.ledOff();
 
     // manualAlignTurret.schedule();
 
     
-     //buttonYManipulator.whenHeld( autoSetShooterSpeed);
-     //buttonA.whileHeld( autoAlignTurret);
-     //buttonYManipulator.whenHeld( shoot);
-    
-    
+     
+     buttonYManipulator.whenHeld(autoSetShooterSpeed);
+     //buttonA.whenHeld(autoAlignDrive);
 
      bumperLManipulator.whenHeld(runIntakeSystemForward);
      bumperRManipulator.whenHeld(runIntakeSystemBackward);
      buttonBManipulator.whenPressed(deployIntakePistons);
     
      //buttonB2.whenPressed( climbCommands);
-     buttonB4.whenPressed( stopClimb);
+     //buttonB4.whenPressed( stopClimb);
      buttonB10.whenPressed( autoClimbExtend);
-     buttonB8.whenPressed( climbAnchor);
      buttonB12.whenPressed( autoClimbRetract);
-     buttonB14.whenPressed( climbPivot);
+     climber.setActiveClamp(buttonB14.get());
+     climber.setPassiveClamp(buttonB8.get());
+     climber.setPower(getManipulatorPad().getRawAxis(1), getManipulatorPad().getRawAxis(5));
+
+     tankDrive.schedule();
+     
+     
+     
+     //System.out.println("Left Motor 2: " + climber.getLeftMotor2Encoder().getPosition());
+     //System.out.println("Right Motor 2: " + climber.getRightMotor2Encoder().getPosition());
     
-    tankDrive.schedule();
-
-
   }
 
   public Joystick getDriverPad(){
@@ -237,12 +248,12 @@ public class RobotContainer {
    * @return the command to run in autonomous
    */
   public Command getAutonomousCommand() {
+    limelight.ledOff();
     //this runs two auton commands- Auton2 and Auton3 with their ramsete commands
     //return new SequentialCommandGroup(new Auton2(driveSubsystem).getRamseteCommand(), new Auton3(driveSubsystem).getRamseteCommand());
     
     //this just runs Auton2
-    return new SequentialCommandGroup(new Auton2(drive).getRamseteCommand());
-    //add shooting to sequential command
+    return new StupidAuton(drive, shooter, intake, limelight);
   }
 
   public double getDriverLeftJoystick(){

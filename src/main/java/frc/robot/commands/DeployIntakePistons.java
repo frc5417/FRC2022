@@ -30,13 +30,11 @@ public class DeployIntakePistons extends CommandBase {
   public void initialize() {
     if (currentState == true){
       this.intake.deployPistons();
-      System.out.println("Command Engaged");
       currentState = false;
       commandState = true;
     }
     else if (currentState == false){
       this.intake.retractPistons();
-      System.out.println("Command Engaged");
       currentState = true;
       commandState = true;
     }

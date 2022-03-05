@@ -30,16 +30,20 @@ public class ClimbPivot extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
+    /*
     if (currentState == true){
-      this.climber.setActiveClamp(true);
+      this.climber.setActiveClamp(false);
       currentState = false;
       commandState = true;
     }
     else if (currentState == false){
-      this.climber.setActiveClamp(false);
+      this.climber.setActiveClamp(true);
       currentState = true;
       commandState = true;
     }
+    */
+    this.climber.setActiveClamp(false);
+    System.out.println("climb pivot initialized");
   }
 
   // Called every time the scheduler runs while the command is scheduled.
@@ -54,6 +58,7 @@ public class ClimbPivot extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
+    System.out.println("climb pivot is finished");
     if (!robotContainer.getButtonB14() && commandState){
       commandState = false;
       return true;

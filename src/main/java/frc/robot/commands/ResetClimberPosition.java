@@ -5,16 +5,11 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.subsystems.Shooter;
 
-public class Shoot extends CommandBase {
-  private final Shooter shooter;
-
-  /** Creates a new AutoSetShooterSpeed. */
-  public Shoot(Shooter shooter) {
-    this.shooter = shooter;
-
-    addRequirements(shooter);
+public class ResetClimberPosition extends CommandBase {
+  /** Creates a new ResetClimberPosition. */
+  public ResetClimberPosition() {
+    // Use addRequirements() here to declare subsystem dependencies.
   }
 
   // Called when the command is initially scheduled.
@@ -23,9 +18,7 @@ public class Shoot extends CommandBase {
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
-  public void execute() {
-    this.shooter.setVelocity(0.0);
-  }
+  public void execute() {}
 
   // Called once the command ends or is interrupted.
   @Override

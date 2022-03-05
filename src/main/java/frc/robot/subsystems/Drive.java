@@ -41,7 +41,6 @@ private CANSparkMax driveMasterL;
   private DifferentialDriveOdometry driveOdom;
   private AHRS gyro;
 
-
   public Drive() {
     driveMasterL = new CANSparkMax(Constants.driveMasterLeft, MotorType.kBrushless);
     driveSlaveL1 = new CANSparkMax(Constants.driveSlaveLeft1, MotorType.kBrushless);
@@ -112,11 +111,17 @@ private CANSparkMax driveMasterL;
     if(Math.abs(Math.pow(leftPower, 3)) > .05){
       driveMasterL.set(Math.pow(leftPower, 3));
     }
+    else if(Math.abs(Math.pow(leftPower, 3)) > .6){
+      driveMasterL.set(.6);
+    }
     else{
       driveMasterL.set(0);
     }
     if(Math.abs(Math.pow(rightPower, 3)) > .05){
       driveMasterR.set(Math.pow(rightPower, 3));
+    }
+    else if(Math.abs(Math.pow(rightPower, 3)) > .6){
+      driveMasterR.set(.6);
     }
     else{
       driveMasterR.set(0);

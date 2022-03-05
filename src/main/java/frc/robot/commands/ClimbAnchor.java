@@ -22,7 +22,7 @@ public class ClimbAnchor extends CommandBase {
   public ClimbAnchor(Climber climber, RobotContainer robotContainer) {
     this.climber = climber;
     this.robotContainer = robotContainer;
-    currentState = true;
+    currentState = false;
     commandState = false;
     //this.anchor = this.climber.getAnchorSolenoid();
     // Use addRequirements() here to declare subsystem dependencies.
@@ -32,14 +32,14 @@ public class ClimbAnchor extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    if (currentState == true){
+    if (currentState == false){
       this.climber.setPassiveClamp(true);
-      currentState = false;
+      currentState = true;
       commandState = true;
     }
-    else if (currentState == false){
+    else if (currentState == true){
       this.climber.setPassiveClamp(false);
-      currentState = true;
+      currentState = false;
       commandState = true;
     }
   }
@@ -47,7 +47,6 @@ public class ClimbAnchor extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    climber.setPassiveClamp(true);
   }
 
   // Called once the command ends or is interrupted.

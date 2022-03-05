@@ -35,8 +35,8 @@ public class AutoClimbExtend extends CommandBase {
   @Override
   public void initialize() {
     this.isEnabled = false;
-    this.leftEncoder = this.climber.getLeftMotorEncoder();
-    this.rightEncoder = this.climber.getRightMotorEncoder();
+    this.leftEncoder = this.climber.getLeftMotor1Encoder();
+    this.rightEncoder = this.climber.getRightMotor1Encoder();
   }
 
   // Called every time the scheduler runs while the command is scheduled.

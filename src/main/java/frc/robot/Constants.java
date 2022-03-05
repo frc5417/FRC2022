@@ -31,10 +31,10 @@ public final class Constants {
     public final static int shooter1 = 30;
     public final static int shooter2 = 31;
     public final static int turret = 32;
-    public static final int climbLeft1 = 1;
-    public static final int climbLeft2 = 2;
-    public static final int climbRight1 = 3;
-    public static final int climbRight2 = 4;
+    public static final int climbRight1 = 5;
+    public static final int climbRight2 = 2;
+    public static final int climbLeft1 = 3;
+    public static final int climbLeft2 = 4;
     public final static int solenoid = 75;
 
     //Drive Constants
@@ -75,7 +75,7 @@ public final class Constants {
     public static final int climberExtendSlightlyPos = 30;
     public static final int climberRetractSlightlyPos = 20;
 
-    public static final double climberkP = 1;
+    public static final double climberkP = 2;
 
     public static final int climbL1Solenoid = 0;
     public static final int climbR1Solenoid = 1;
@@ -101,9 +101,10 @@ public final class Constants {
     public static final double targetHeight = 104.75; //inches
     public static final double limelightAngle = 28.66; // degrees
     public static final double limelightHeight = 26; //inches
+    public static final double driveMinCommand = .05;
 
     //shooter constants
-    public static final double shooterP = 0.2;
+    public static final double shooterP = .0022;
     public static final double shooterI = 0;
     public static final int shootsetPointConst = -3100;
     public static final int shootMaxRPM = 5700;

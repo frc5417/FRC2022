@@ -5,6 +5,7 @@
 package frc.robot.subsystems;
 
 import frc.robot.Constants;
+import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import edu.wpi.first.wpilibj.Solenoid;
@@ -29,6 +30,9 @@ public class Climber extends SubsystemBase {
   private Solenoid topClimberR;
   private Solenoid topClimberL;
 
+  private boolean activeFlag;
+  private boolean passiveFlag;
+
   public Climber() {  
     climbL1 = new CANSparkMax(Constants.climbLeft1, MotorType.kBrushless);
     climbL2 = new CANSparkMax(Constants.climbLeft2, MotorType.kBrushless);
@@ -36,22 +40,26 @@ public class Climber extends SubsystemBase {
     climbR2 = new CANSparkMax(Constants.climbRight2, MotorType.kBrushless);
     bottomClimberR = new Solenoid(PneumaticsModuleType.REVPH, Constants.climbR1Solenoid);
     bottomClimberL = new Solenoid(PneumaticsModuleType.REVPH, Constants.climbL1Solenoid);
+    bottomClimberL.set(false);
+    bottomClimberR.set(false);
     topClimberR = new Solenoid(PneumaticsModuleType.REVPH, Constants.climbR2Solenoid);
-    topClimberL = new Solenoid(PneumaticsModuleType.REVPH, Constants.climbR1Solenoid);
+    topClimberL = new Solenoid(PneumaticsModuleType.REVPH, Constants.climbL2Solenoid);
 
-    climbL2.follow(climbL1);
-    climbR2.follow(climbR1);
+    passiveFlag = false;
+    activeFlag = false;
+    
+    climbL1.setInverted(false);
+    climbL2.setInverted(false);
+    climbR1.setInverted(false);
+    climbR2.setInverted(false);
 
-    climbL1.setInverted(true);
-    climbL2.setInverted(true);
 
     climbL1.getPIDController().setP(Constants.climberkP);
     climbR1.getPIDController().setP(Constants.climberkP);
+    climbL2.getPIDController().setP(Constants.climberkP);
+    climbR2.getPIDController().setP(Constants.climberkP);
 
-    climbL1.getEncoder().setPosition(0);
-    climbR1.getEncoder().setPosition(0);
-    climbL2.getEncoder().setPosition(0);
-    climbR2.getEncoder().setPosition(0);
+    resetClimberPos();
   }
 
   public void extendUp(){
@@ -73,26 +81,80 @@ public class Climber extends SubsystemBase {
     this.climbR2.set(0);
   }
 
-  public void setPassiveClamp(boolean deploy){
-    bottomClimberR.set(deploy);
-    bottomClimberL.set(deploy);
+  public void setPower(double leftPower, double rightPower) {
+    
+    /*
+    if(climbL1.getEncoder().getPosition() > 0 || climbL2.getEncoder().getPosition() > 0){
+      this.climbL1.getPIDController().setReference(0, ControlType.kPosition);
+      this.climbL2.getPIDController().setReference(0, ControlType.kPosition);
+    }*/
+    if(Math.abs(leftPower) > .1){
+      this.climbL1.set(leftPower*.25);
+      this.climbL2.set(leftPower*.25);
+    }
+    else{
+      this.climbL1.set(0);
+      this.climbL2.set(0);
+    }
+
+    /*if(climbR1.getEncoder().getPosition() < 0 || climbR2.getEncoder().getPosition() < 0){
+      this.climbR1.getPIDController().setReference(0, ControlType.kPosition);
+      this.climbR2.getPIDController().setReference(0, ControlType.kPosition);
+    }*/
+    if(Math.abs(rightPower) > .1){
+      this.climbR1.set(rightPower*.25);
+      this.climbR2.set(rightPower*.25);
+    }
+    else{
+      this.climbR1.set(0);
+      this.climbR2.set(0);
+    }
+
+
   }
 
-  public void setActiveClamp(boolean deploy){
-    topClimberR.set(deploy);
-    topClimberL.set(deploy);
+  public void resetClimberPos(){
+    climbL1.getEncoder().setPosition(0);
+    climbR1.getEncoder().setPosition(0);
+    climbL2.getEncoder().setPosition(0);
+    climbR2.getEncoder().setPosition(0);
+  }
+
+
+  public void setPassiveClamp(boolean isPressed){
+    if(!passiveFlag && isPressed){
+      topClimberR.set(!topClimberR.get());
+      topClimberL.set(!topClimberL.get());
+    }
+    passiveFlag = isPressed;
+  }
+
+  public void setActiveClamp(boolean isPressed){
+    if(!activeFlag && isPressed){
+      bottomClimberR.set(!bottomClimberR.get());
+      bottomClimberL.set(!bottomClimberL.get());
+    }
+    activeFlag = isPressed;
   }
 
   public void setPosition(double position){
     climbL1.getPIDController().setReference(position, ControlType.kPosition);
     climbR1.getPIDController().setReference(position, ControlType.kPosition);
+    climbL2.getPIDController().setReference(position, ControlType.kPosition);
+    climbR2.getPIDController().setReference(position, ControlType.kPosition);
   }
 
-  public RelativeEncoder getLeftMotorEncoder(){
+  public RelativeEncoder getLeftMotor1Encoder(){
     return climbL1.getEncoder();
   }
-  public RelativeEncoder getRightMotorEncoder(){
+  public RelativeEncoder getRightMotor1Encoder(){
     return climbR1.getEncoder();
+  }
+  public RelativeEncoder getLeftMotor2Encoder(){
+    return climbL2.getEncoder();
+  }
+  public RelativeEncoder getRightMotor2Encoder(){
+    return climbR2.getEncoder();
   }
 
 /*

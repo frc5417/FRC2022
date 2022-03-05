@@ -85,13 +85,13 @@ public class Intake extends SubsystemBase {
   }
 
   public void deployPistons(){
-    this.intakeSolenoidR.set(false);
-    this.intakeSolenoidL.set(false);
+    this.intakeSolenoidR.set(true);
+    this.intakeSolenoidL.set(true);
   }
 
   public void retractPistons(){
-    this.intakeSolenoidR.set(true);
-    this.intakeSolenoidL.set(true);
+    this.intakeSolenoidR.set(false);
+    this.intakeSolenoidL.set(false);
   }
 
   public boolean getIntestineBeamBreak(){
