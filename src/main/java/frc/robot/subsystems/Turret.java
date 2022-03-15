@@ -21,6 +21,7 @@ public class Turret extends SubsystemBase {
   public Turret() {
     this.turretMotor = new CANSparkMax(Constants.turret, MotorType.kBrushless);
     this.turretMotor.getEncoder().setPosition(0);
+    this.turretMotor.getEncoder().setPositionConversionFactor(Constants.turretRatio*360);
     this.turretMotor.getPIDController().setP(Constants.kPturn);
     turretMotor.setIdleMode(IdleMode.kBrake);
   }
@@ -36,10 +37,12 @@ public class Turret extends SubsystemBase {
   }
 
   public void setPower(double power) {
-    if(Math.abs(this.turretMotor.getEncoder().getPosition()) < Constants.maxTurretTurn){
-      turretMotor.set(power);
-    }else{
+    double pos = this.turretMotor.getEncoder().getPosition();
+    System.out.println("Turret Position: " + pos + "°");
+    if((pos > Constants.maxTurretTurn && power > 0) || (pos < -Constants.maxTurretTurn && power < 0)){
       turretMotor.set(0);
+    }else{
+      turretMotor.set(power);
     }
   }
 
