@@ -89,7 +89,7 @@ public class RobotContainer {
   private static TankDrive tankDrive;
   private static ManualMoveClimb climbDrive;
   private static AutoAlignDrive autoAlignDrive;
-
+  private static LowSpeedShoot lowSpeedShoot;
   // Command Groups:
   //private   SequentialCommandGroup climbCommands;
 
@@ -122,6 +122,7 @@ public class RobotContainer {
      retractIntakePistons = new RetractIntakePistons( intake);
      autoAlignTurret = new AutoAlignTurret( limelight,  turret);
      autoSetShooterSpeed = new AutoSetShooterSpeed( limelight,  shooter,  intake);
+     lowSpeedShoot = new LowSpeedShoot(shooter, intake);
      manualAlignTurret = new ManualAlignTurret(this,  turret);
      //shoot = new Shoot( shooter);
      stopClimb = new StopClimb( climber);
@@ -211,6 +212,7 @@ public class RobotContainer {
     
      
      buttonYManipulator.whenHeld(autoSetShooterSpeed);
+     //1buttonAManipulator.whenHeld(lowSpeedShoot);
      //buttonA.whenHeld(autoAlignDrive);
 
      bumperLManipulator.whenHeld(runIntakeSystemForward);

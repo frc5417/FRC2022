@@ -6,23 +6,21 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Intake;
-import frc.robot.subsystems.Limelight;
 import frc.robot.subsystems.Shooter;
 
-public class AutoSetShooterSpeed extends CommandBase {
-  private final Limelight limelight;
+public class LowSpeedShoot extends CommandBase {
+  /** Creates a new LowSpeedShoot. */
+
   private final Shooter shooter;
   private final Intake intake;
   private double setPointVariable;
+  public LowSpeedShoot(Shooter shooter, Intake intake) {
 
-  /** Creates a new AutoSetShooterSpeed. */
-  public AutoSetShooterSpeed(Limelight limelight, Shooter shooter, Intake intake) {
-    this.limelight = limelight;
     this.shooter = shooter;
     this.intake = intake;
-    this.setPointVariable = 0.0;
+    this.setPointVariable = 1500;
 
-    addRequirements(limelight, shooter);
+    addRequirements(shooter);
   }
 
   // Called when the command is initially scheduled.
@@ -32,9 +30,6 @@ public class AutoSetShooterSpeed extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-      
-    setPointVariable = 2500;
-
     this.shooter.setVelocity(setPointVariable);
 
     if((shooter.getShooter1().getEncoder().getVelocity() <= setPointVariable+250) && (shooter.getShooter1().getEncoder().getVelocity() >= setPointVariable-250)){
@@ -47,10 +42,7 @@ public class AutoSetShooterSpeed extends CommandBase {
 
   // Called once the command ends or is interrupted.
   @Override
-  public void end(boolean interrupted) {
-    this.shooter.setPower(0);
-    this.intake.runIntestine(0);
-  }
+  public void end(boolean interrupted) {}
 
   // Returns true when the command should end.
   @Override
