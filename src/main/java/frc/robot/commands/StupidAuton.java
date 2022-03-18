@@ -18,13 +18,14 @@ public class StupidAuton extends CommandBase {
   private final Limelight limelight;
   private int count;
   private double[] wheelSpeeds;
+
   public StupidAuton(Drive drive, Shooter shoot, Intake intake, Limelight limelight) {
     this.drive = drive;
     this.shoot = shoot;
     this.intake = intake;
     this.limelight = limelight;
-    addRequirements(drive, shoot, intake, limelight);
     // Use addRequirements() here to declare subsystem dependencies.
+    addRequirements(drive, shoot, intake, limelight);
   }
 
   // Called when the command is initially scheduled.
@@ -37,19 +38,19 @@ public class StupidAuton extends CommandBase {
   @Override
   public void execute() {
     
-    if(count <= 250){
+    if(count <= 250) {
       shoot.setVelocity(2500);
     }
-    else if(count <= 1000){
+    else if(count <= 1000) {
       shoot.setVelocity(2500);
       intake.runIntestine(1);
     }
-    else if(count <= 2000){
+    else if(count <= 2000) {
       drive.setPower(.6, .6);
       shoot.setPower(0);
       intake.runIntestine(0);
     }
-    else{
+    else {
       drive.setPower(0, 0);
       shoot.setPower(0);
       intake.runIntestine(0);

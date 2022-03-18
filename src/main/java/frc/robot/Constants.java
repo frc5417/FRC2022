@@ -37,14 +37,14 @@ public final class Constants {
     public static final int climbLeft2 = 4;
     public final static int solenoid = 75;
 
-    //Drive Constants
+    // Drive Constants
     public static final double drivekP = .0312;
     public static final double drivekI = .000000000001;
 
-    //Auton Constants
+    // Auton Constants
     public static final double driveGearingRatio = 18;
 
-    //valid k-values are from characterization, commented values are from 2021
+    // valid k-values are from characterization, commented values are from 2021
     public static final double kSAuto = .12;
     public static final double kVAuto = 4.69;
     public static final double kAAuto = .179;
@@ -61,8 +61,6 @@ public final class Constants {
     public static final double maxAcceleration =  3;//m/s^2
 
     public static final double wheelDiameter = 0.1524;
-    
-
 
     public static final int climbBottomLeftLimitSwitch = 0;
     public static final int climbBottomRightLimitSwitch = 1;
@@ -77,19 +75,17 @@ public final class Constants {
 
     public static final double climberkP = 2;
 
-    public static final int climbL1Solenoid = 0;
-    public static final int climbR1Solenoid = 1;
+    public static final int climbBottomSolenoid = 0;
     public static final int intakeRSolenoid = 2;
     public static final int intakeLSolenoid = 3;
-    public static final int climbL2Solenoid = 4;
-    public static final int climbR2Solenoid = 5;
+    public static final int climbTopSolenoid = 5;
 
     public static final int driveLMaster = 14;
     public static final int driveLSlave = 15;
     public static final int driveRMaster = 1;
     public static final int driveRSlave = 17;
 
-    //turret constants
+    // turret constants
     public static final double kPturn = 1.0;
     public static final double kPturnCenter = 1.0;
     public static final double minCommand = 0.1;
@@ -101,13 +97,13 @@ public final class Constants {
     public static final double turretMotorGearRatio = 1/20;
     public static final double turretRatio = turretMotorGearRatio * motorWheelCircumference / turretWheelCircumference;
 
-    //limelight constants
+    // limelight constants
     public static final double targetHeight = 104.75; //inches
     public static final double limelightAngle = 28.66; // degrees
     public static final double limelightHeight = 26; //inches
     public static final double driveMinCommand = .05;
 
-    //shooter constants
+    // shooter constants
     public static final double shooterP = .0022;
     public static final double shooterI = 0;
     public static final int shootsetPointConst = -3100;

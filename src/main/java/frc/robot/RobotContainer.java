@@ -44,9 +44,7 @@ public class RobotContainer {
   private boolean dpadLeft;
   private boolean dpadUp;
   private boolean dpadDown;
-
   
-
   private static Joystick padManipulator;
   private static JoystickButton buttonXManipulator;
   private static JoystickButton buttonYManipulator;
@@ -98,7 +96,7 @@ public class RobotContainer {
     // init joysticks
     pad = new Joystick(0);
      padManipulator = new Joystick(1);
-     buttonBoard = new Joystick(2);
+    //  buttonBoard = new Joystick(2);
 
     // init subsystems
      climber = new Climber();
@@ -186,14 +184,14 @@ public class RobotContainer {
      dpadLeftManipulator =  padManipulator.getPOV() == 270;
      dpadRightManipulator =  padManipulator.getPOV() == 90;
 
-     buttonB2 = new JoystickButton( buttonBoard, 2);
-     buttonB4 = new JoystickButton( buttonBoard, 4);
-     buttonB6 = new JoystickButton( buttonBoard, 6);
-     buttonB8 = new JoystickButton( buttonBoard, 8);
-     buttonB10 = new JoystickButton( buttonBoard, 10);
-     buttonB12 = new JoystickButton( buttonBoard, 12);
-     buttonB14 = new JoystickButton( buttonBoard, 14);
-     buttonB16 = new JoystickButton( buttonBoard, 16);
+    //  buttonB2 = new JoystickButton( buttonBoard, 2);
+    //  buttonB4 = new JoystickButton( buttonBoard, 4);
+    //  buttonB6 = new JoystickButton( buttonBoard, 6);
+    //  buttonB8 = new JoystickButton( buttonBoard, 8);
+    //  buttonB10 = new JoystickButton( buttonBoard, 10);
+    //  buttonB12 = new JoystickButton( buttonBoard, 12);
+    //  buttonB14 = new JoystickButton( buttonBoard, 14);
+    //  buttonB16 = new JoystickButton( buttonBoard, 16);
   }
 
 
@@ -208,28 +206,24 @@ public class RobotContainer {
     limelight.ledOff();
 
     // manualAlignTurret.schedule();
-
-    
      
-     buttonYManipulator.whenHeld(autoSetShooterSpeed);
+    //  buttonYManipulator.whenHeld(autoSetShooterSpeed);
      //1buttonAManipulator.whenHeld(lowSpeedShoot);
      //buttonA.whenHeld(autoAlignDrive);
 
-     bumperLManipulator.whenHeld(runIntakeSystemForward);
-     bumperRManipulator.whenHeld(runIntakeSystemBackward);
-     buttonBManipulator.whenPressed(deployIntakePistons);
+    //  bumperLManipulator.whenHeld(runIntakeSystemForward);
+    //  bumperRManipulator.whenHeld(runIntakeSystemBackward);
+    //  buttonBManipulator.whenPressed(deployIntakePistons);
     
      //buttonB2.whenPressed( climbCommands);
      //buttonB4.whenPressed( stopClimb);
-     buttonB10.whenPressed( autoClimbExtend);
-     buttonB12.whenPressed( autoClimbRetract);
-     climber.setActiveClamp(buttonB14.get());
-     climber.setPassiveClamp(buttonB8.get());
+    //  buttonB10.whenPressed( autoClimbExtend);
+    //  buttonB12.whenPressed( autoClimbRetract);
+     climber.setActiveClamp(buttonY.get());
+     climber.setPassiveClamp(buttonA.get());
      climber.setPower(getManipulatorPad().getRawAxis(1), getManipulatorPad().getRawAxis(5));
 
-     tankDrive.schedule();
-     
-     
+    //  tankDrive.schedule();
      
      //System.out.println("Left Motor 2: " + climber.getLeftMotor2Encoder().getPosition());
      //System.out.println("Right Motor 2: " + climber.getRightMotor2Encoder().getPosition());
@@ -267,7 +261,8 @@ public class RobotContainer {
   }
 
   public boolean getButtonA() {
-    return  pad.getRawButton(1);
+    return false;
+    // return  pad.getRawButton(1);
   }
 
   public boolean getButtonB() {
@@ -275,7 +270,8 @@ public class RobotContainer {
   }
 
   public boolean getButtonY() {
-    return  pad.getRawButton(4);
+    return false;
+    // return  pad.getRawButton(4);
   }
 
   public boolean getButtonX() {
@@ -348,35 +344,43 @@ public class RobotContainer {
   }
 
   public boolean getButtonB2(){
-    return buttonB2.get();
+    return false;
+    // return buttonB2.get();
   }
 
   public boolean getButtonB4(){
-    return buttonB4.get();
+    return false;
+    // return buttonB4.get();
   }
 
   public boolean getButtonB6(){
-    return buttonB6.get();
+    return false;
+    // return buttonB6.get();
   }
 
   public boolean getButtonB8(){
-    return buttonB8.get();
+    return false;
+    // return buttonB8.get();
   }
 
   public boolean getButtonB10(){
-    return buttonB10.get();
+    return false;
+    // return buttonB10.get();
   }
 
   public boolean getButtonB12(){
-    return buttonB12.get();
+    return false;
+    // return buttonB12.get();
   }
 
   public boolean getButtonB14(){
-    return buttonB14.get();
+    return false;
+    // return buttonB14.get();
   }
 
   public boolean getButtonB16(){
-    return buttonB16.get();
+    return false;
+    // return buttonB16.get();
   }
 
 }

@@ -13,22 +13,22 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
 public class Shooter extends SubsystemBase {
-  private final CANSparkMax shooter1;
+  private final CANSparkMax shooter1 = null;
   //private final CANSparkMax shooter2;
 
   /** Creates a new Shooter. */
   public Shooter() {
-    this.shooter1 = new CANSparkMax(Constants.shooter1, MotorType.kBrushless);
+    // this.shooter1 = new CANSparkMax(Constants.shooter1, MotorType.kBrushless);
     //this.shooter2 = new CANSparkMax(Constants.shooter2, MotorType.kBrushless);
     //this.shooter2.setInverted(true);
 
-    this.shooter1.getPIDController().setP(Constants.shooterP);
+    // this.shooter1.getPIDController().setP(Constants.shooterP);
     //this.shooter2.getPIDController().setP(Constants.shooterP);
 
-    this.shooter1.getPIDController().setI(Constants.shooterI);
+    // this.shooter1.getPIDController().setI(Constants.shooterI);
     //this.shooter2.getPIDController().setI(Constants.shooterI);
 
-    this.shooter1.setIdleMode(IdleMode.kBrake);
+    // this.shooter1.setIdleMode(IdleMode.kBrake);
     //this.shooter2.setIdleMode(IdleMode.kCoast);
   }
 

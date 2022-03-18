@@ -15,15 +15,15 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class Turret extends SubsystemBase {
 
-  private final CANSparkMax turretMotor;
+  private final CANSparkMax turretMotor = null;
 
   /** Creates a new Turret. */
   public Turret() {
-    this.turretMotor = new CANSparkMax(Constants.turret, MotorType.kBrushless);
-    this.turretMotor.getEncoder().setPosition(0);
-    this.turretMotor.getEncoder().setPositionConversionFactor(Constants.turretRatio*360);
-    this.turretMotor.getPIDController().setP(Constants.kPturn);
-    turretMotor.setIdleMode(IdleMode.kBrake);
+    // this.turretMotor = new CANSparkMax(Constants.turret, MotorType.kBrushless);
+    // this.turretMotor.getEncoder().setPosition(0);
+    // this.turretMotor.getEncoder().setPositionConversionFactor(Constants.turretRatio*360);
+    // this.turretMotor.getPIDController().setP(Constants.kPturn);
+    // turretMotor.setIdleMode(IdleMode.kBrake);
   }
 
   @Override
@@ -39,18 +39,18 @@ public class Turret extends SubsystemBase {
   public void setPower(double power) {
     double pos = this.turretMotor.getEncoder().getPosition();
     System.out.println("Turret Position: " + pos + "°");
-    if((pos > Constants.maxTurretTurn && power > 0) || (pos < -Constants.maxTurretTurn && power < 0)){
+    if((pos > Constants.maxTurretTurn && power > 0) || (pos < -Constants.maxTurretTurn && power < 0)) {
       turretMotor.set(0);
-    }else{
+    } else {
       turretMotor.set(power);
     }
   }
 
   public boolean autoTurretAlign(double x){
     double turretAdjust = 0;
-    if(x > Constants.limeLightErrorAllowed){
+    if(x > Constants.limeLightErrorAllowed) {
       turretAdjust = Constants.kPturn*(-x) + Constants.minCommand;
-    }else{
+    } else {
       return true;
     }
     setPower(turretAdjust);
@@ -58,10 +58,10 @@ public class Turret extends SubsystemBase {
   }
 
   public void manualTurretAlign(boolean right, boolean left){
-    if(right){
+    if(right) {
       setPower(Constants.turretSpeed);
     }
-    else if(left){
+    else if(left) {
       setPower(-Constants.turretSpeed);
     }
     else{

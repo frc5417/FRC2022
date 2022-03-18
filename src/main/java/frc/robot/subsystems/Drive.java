@@ -42,37 +42,37 @@ private CANSparkMax driveMasterL;
   private AHRS gyro;
 
   public Drive() {
-    driveMasterL = new CANSparkMax(Constants.driveMasterLeft, MotorType.kBrushless);
-    driveSlaveL1 = new CANSparkMax(Constants.driveSlaveLeft1, MotorType.kBrushless);
-    driveSlaveL2 = new CANSparkMax(Constants.driveSlaveLeft2, MotorType.kBrushless);
-    driveMasterR = new CANSparkMax(Constants.driveMasterRight, MotorType.kBrushless);
-    driveSlaveR1 = new CANSparkMax(Constants.driveSlaveRight1, MotorType.kBrushless);
-    driveSlaveR2 = new CANSparkMax(Constants.driveSlaveRight2, MotorType.kBrushless);
-    driveMasterL.setInverted(true);
-    driveSlaveL1.setInverted(true);
-    driveSlaveL2.setInverted(true);
-    driveSlaveL1.follow(driveMasterL);
-    driveSlaveL2.follow(driveMasterL);
-    driveSlaveR1.follow(driveMasterR);
-    driveSlaveR2.follow(driveMasterR);
+    // driveMasterL = new CANSparkMax(Constants.driveMasterLeft, MotorType.kBrushless);
+    // driveSlaveL1 = new CANSparkMax(Constants.driveSlaveLeft1, MotorType.kBrushless);
+    // driveSlaveL2 = new CANSparkMax(Constants.driveSlaveLeft2, MotorType.kBrushless);
+    // driveMasterR = new CANSparkMax(Constants.driveMasterRight, MotorType.kBrushless);
+    // driveSlaveR1 = new CANSparkMax(Constants.driveSlaveRight1, MotorType.kBrushless);
+    // driveSlaveR2 = new CANSparkMax(Constants.driveSlaveRight2, MotorType.kBrushless);
+    // driveMasterL.setInverted(true);
+    // driveSlaveL1.setInverted(true);
+    // driveSlaveL2.setInverted(true);
+    // driveSlaveL1.follow(driveMasterL);
+    // driveSlaveL2.follow(driveMasterL);
+    // driveSlaveR1.follow(driveMasterR);
+    // driveSlaveR2.follow(driveMasterR);
 
-    neoEncoderML = driveMasterL.getEncoder();
-    neoEncoderMR = driveMasterR.getEncoder();
-    neoEncoderSL1 = driveSlaveL1.getEncoder();
-    neoEncoderSL1 = driveSlaveL2.getEncoder();
-    neoEncoderSR1 = driveSlaveR1.getEncoder();
-    neoEncoderSR2 = driveSlaveR2.getEncoder();
-    neoEncoderML.setPositionConversionFactor(2*Math.PI*Constants.wheelDiameter / Constants.driveGearingRatio);
-    neoEncoderML.setVelocityConversionFactor(2*Math.PI*Constants.wheelDiameter / Constants.driveGearingRatio);
-    neoEncoderMR.setPositionConversionFactor(2*Math.PI*Constants.wheelDiameter / Constants.driveGearingRatio);
-    neoEncoderMR.setVelocityConversionFactor(2*Math.PI*Constants.wheelDiameter / Constants.driveGearingRatio);
+    // neoEncoderML = driveMasterL.getEncoder();
+    // neoEncoderMR = driveMasterR.getEncoder();
+    // neoEncoderSL1 = driveSlaveL1.getEncoder();
+    // neoEncoderSL1 = driveSlaveL2.getEncoder();
+    // neoEncoderSR1 = driveSlaveR1.getEncoder();
+    // neoEncoderSR2 = driveSlaveR2.getEncoder();
+    // neoEncoderML.setPositionConversionFactor(2*Math.PI*Constants.wheelDiameter / Constants.driveGearingRatio);
+    // neoEncoderML.setVelocityConversionFactor(2*Math.PI*Constants.wheelDiameter / Constants.driveGearingRatio);
+    // neoEncoderMR.setPositionConversionFactor(2*Math.PI*Constants.wheelDiameter / Constants.driveGearingRatio);
+    // neoEncoderMR.setVelocityConversionFactor(2*Math.PI*Constants.wheelDiameter / Constants.driveGearingRatio);
     
-    setIdleModes(IdleMode.kCoast);
-    setPIDConstants();
-    gyro = new AHRS(Port.kMXP);
-    driveOdom  = new DifferentialDriveOdometry(Rotation2d.fromDegrees(getHeading()));
-    drive  = new DifferentialDrive(driveMasterL, driveMasterR);
-    drive.setSafetyEnabled(false);
+    // setIdleModes(IdleMode.kCoast);
+    // setPIDConstants();
+    // gyro = new AHRS(Port.kMXP);
+    // driveOdom  = new DifferentialDriveOdometry(Rotation2d.fromDegrees(getHeading()));
+    // drive  = new DifferentialDrive(driveMasterL, driveMasterR);
+    // drive.setSafetyEnabled(false);
   }
 
   private void setIdleModes(IdleMode mode) {
@@ -101,13 +101,16 @@ private CANSparkMax driveMasterL;
   }
 
   public void setPower(Joystick joystick){
+    /*
     driveMasterL.set(joystick.getRawAxis(1));
     driveMasterR.set(joystick.getRawAxis(5));
     System.out.println("left pos:" + neoEncoderML.getPosition());
     System.out.println("right pos:" + neoEncoderMR.getPosition());
+    */
   }
   
   public void setPower(double leftPower, double rightPower){
+    /*
     if(Math.abs(Math.pow(leftPower, 3)) > .05){
       driveMasterL.set(Math.pow(leftPower, 3));
     }
@@ -126,6 +129,7 @@ private CANSparkMax driveMasterL;
     else{
       driveMasterR.set(0);
     }
+    */
   }
 
   public AHRS getGyro () {
@@ -202,14 +206,16 @@ private CANSparkMax driveMasterL;
   }
   
   public double getHeading() {
-    return Math.IEEEremainder(gyro.getYaw(), 360); //default for navx: clockwise is positive
+    return 0;
+    // return Math.IEEEremainder(gyro.getYaw(), 360); //default for navx: clockwise is positive
   }
 
   public boolean resetOdometry(Pose2d pose) {
-    encoderReset();
-    gyro.zeroYaw();
-    driveOdom.resetPosition(pose, Rotation2d.fromDegrees(getHeading()));
     return true;
+    // encoderReset();
+    // gyro.zeroYaw();
+    // driveOdom.resetPosition(pose, Rotation2d.fromDegrees(getHeading()));
+    // return true;
   }
   
   private void encoderReset() {
@@ -239,6 +245,6 @@ private CANSparkMax driveMasterL;
 
   @Override
   public void periodic() {
-    driveOdom.update(Rotation2d.fromDegrees(getHeading()), neoEncoderML.getPosition(), neoEncoderMR.getPosition());
+    // driveOdom.update(Rotation2d.fromDegrees(getHeading()), neoEncoderML.getPosition(), neoEncoderMR.getPosition());
   }
 }

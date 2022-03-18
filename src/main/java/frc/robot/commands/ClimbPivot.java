@@ -4,11 +4,7 @@
 
 package frc.robot.commands;
 
-import com.revrobotics.RelativeEncoder;
-
-import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.Constants;
 import frc.robot.subsystems.Climber;
 import frc.robot.RobotContainer;
 
@@ -58,8 +54,8 @@ public class ClimbPivot extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    System.out.println("climb pivot is finished");
     if (!robotContainer.getButtonB14() && commandState){
+      System.out.println("climb pivot is finished");
       commandState = false;
       return true;
     }
