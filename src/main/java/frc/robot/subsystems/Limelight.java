@@ -83,20 +83,22 @@ public class Limelight extends SubsystemBase {
       steering_adjust = (kP)*heading_error;
       distance_adjust = (kP)*distance_error;
       // Determine power based on the horizontal offset
-      if (tx > 1)
+      if (tx > 0.0)
       {
         steering_adjust = (kP)*heading_error + min_command;
       }
-      else if (tx < -1)
+      else if (tx < 0.0)
       {
         steering_adjust = (kP)*heading_error - min_command;
       }
-      else {
+      /*else {
               steering_adjust = 0.0;
-      }
+      }*/
       
-      left_command += (steering_adjust + distance_adjust);
-      right_command += (steering_adjust - distance_adjust);
+      //left_command += (steering_adjust + distance_adjust);
+      //right_command += (steering_adjust - distance_adjust);
+      left_command += (-steering_adjust);
+      right_command += (steering_adjust);
       double[] wheelSpeeds = new double[2];
       wheelSpeeds[0] = left_command;
       wheelSpeeds[1] = right_command;

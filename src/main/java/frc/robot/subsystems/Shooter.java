@@ -14,22 +14,17 @@ import frc.robot.Constants;
 
 public class Shooter extends SubsystemBase {
   private final CANSparkMax shooter1;
-  //private final CANSparkMax shooter2;
 
   /** Creates a new Shooter. */
   public Shooter() {
     this.shooter1 = new CANSparkMax(Constants.shooter1, MotorType.kBrushless);
-    //this.shooter2 = new CANSparkMax(Constants.shooter2, MotorType.kBrushless);
-    //this.shooter2.setInverted(true);
 
     this.shooter1.getPIDController().setP(Constants.shooterP);
-    //this.shooter2.getPIDController().setP(Constants.shooterP);
 
     this.shooter1.getPIDController().setI(Constants.shooterI);
-    //this.shooter2.getPIDController().setI(Constants.shooterI);
-
+    
+    this.shooter1.getPIDController().setFF(Constants.shooterFF);
     this.shooter1.setIdleMode(IdleMode.kBrake);
-    //this.shooter2.setIdleMode(IdleMode.kCoast);
   }
 
   @Override
@@ -42,21 +37,13 @@ public class Shooter extends SubsystemBase {
   }
   public void setPower(double power){
     this.shooter1.set(power);
-    //this.shooter2.set(power);
   }
   public void setVelocity(double velocity){
 
     this.shooter1.getPIDController().setReference(velocity, ControlType.kVelocity);
-    //this.shooter2.getPIDController().setReference(velocity, ControlType.kVelocity);
   }
 
   public CANSparkMax getShooter1(){
     return shooter1;
   }
-
-  /*
-  public CANSparkMax getShooter2(){
-    return shooter2;
-  }
-  */
 }

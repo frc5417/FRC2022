@@ -29,7 +29,6 @@ public final class Constants {
     public final static int intestineKicker = 20;
     public final static int intestineBeamBreak = 1;
     public final static int shooter1 = 30;
-    public final static int shooter2 = 31;
     public final static int turret = 32;
     public static final int climbRight1 = 5;
     public static final int climbRight2 = 2;
@@ -38,8 +37,8 @@ public final class Constants {
     public final static int solenoid = 75;
 
     //Drive Constants
-    public static final double drivekP = .0312;
-    public static final double drivekI = .000000000001;
+    public static final double drivekP = 0.025; //used to be 0.0312
+    public static final double drivekI = 0.000000000001;
 
     //Auton Constants
     public static final double driveGearingRatio = 18;
@@ -105,11 +104,12 @@ public final class Constants {
     public static final double targetHeight = 104.75; //inches
     public static final double limelightAngle = 28.66; // degrees
     public static final double limelightHeight = 26; //inches
-    public static final double driveMinCommand = .05;
+    public static final double driveMinCommand = 0.1;
 
     //shooter constants
-    public static final double shooterP = .0022;
-    public static final double shooterI = 0;
+    public static final double shooterP = .0005;
+    public static final double shooterI = 0.0;
+    public static final double shooterFF = 0.00018;
     public static final int shootsetPointConst = -3100;
     public static final int shootMaxRPM = 5700;
 

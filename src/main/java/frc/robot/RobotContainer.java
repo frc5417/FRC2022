@@ -205,7 +205,7 @@ public class RobotContainer {
    * edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
   public void configureButtonBindings() {
-    limelight.ledOff();
+    limelight.ledOn();
 
     // manualAlignTurret.schedule();
 
@@ -213,7 +213,7 @@ public class RobotContainer {
      
      buttonYManipulator.whenHeld(autoSetShooterSpeed);
      //1buttonAManipulator.whenHeld(lowSpeedShoot);
-     //buttonA.whenHeld(autoAlignDrive);
+     buttonA.whileHeld(autoAlignDrive);
 
      bumperLManipulator.whenHeld(runIntakeSystemForward);
      bumperRManipulator.whenHeld(runIntakeSystemBackward);
