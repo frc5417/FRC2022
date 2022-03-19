@@ -12,6 +12,7 @@ import com.revrobotics.CANSparkMax;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.CANSparkMax.ControlType;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
+import com.revrobotics.CANSparkMax.IdleMode;
 
 public class Climber extends SubsystemBase {
   /** Creates a new ExampleSubsystem. */
@@ -31,6 +32,11 @@ public class Climber extends SubsystemBase {
     climbL2 = new CANSparkMax(Constants.climbLeft2, MotorType.kBrushless);
     climbR1 = new CANSparkMax(Constants.climbRight1, MotorType.kBrushless);
     climbR2 = new CANSparkMax(Constants.climbRight2, MotorType.kBrushless);
+
+    climbL1.setIdleMode(IdleMode.kBrake);
+    climbL2.setIdleMode(IdleMode.kBrake);
+    climbR1.setIdleMode(IdleMode.kBrake);
+    climbR2.setIdleMode(IdleMode.kBrake);
 
     bottomClimber = new Solenoid(PneumaticsModuleType.CTREPCM, Constants.climbBottomSolenoid);
     bottomClimber.set(false);
@@ -78,8 +84,8 @@ public class Climber extends SubsystemBase {
     // }
 
     if(Math.abs(leftPower) > .1){
-      this.climbL1.set(leftPower*.25);
-      this.climbL2.set(leftPower*.25);
+      this.climbL1.set(-leftPower*.25);
+      this.climbL2.set(-leftPower*.25);
     }
     else{
       this.climbL1.set(0);
