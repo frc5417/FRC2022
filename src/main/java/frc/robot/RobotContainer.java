@@ -219,9 +219,9 @@ public class RobotContainer {
      //buttonB4.whenPressed( stopClimb);
     //  buttonB10.whenPressed( autoClimbExtend);
     //  buttonB12.whenPressed( autoClimbRetract);
-     climber.setActiveClamp(buttonY.get());
-     climber.setPassiveClamp(buttonA.get());
-     climber.setPower(getManipulatorPad().getRawAxis(1), getManipulatorPad().getRawAxis(5));
+    climber.setActiveClamp(buttonY.get());
+    climber.setPassiveClamp(buttonA.get());
+    climber.setPower(pad.getRawAxis(1), pad.getRawAxis(5));
 
     //  tankDrive.schedule();
      
@@ -270,8 +270,7 @@ public class RobotContainer {
   }
 
   public boolean getButtonY() {
-    return false;
-    // return  pad.getRawButton(4);
+    return  pad.getRawButton(4);
   }
 
   public boolean getButtonX() {

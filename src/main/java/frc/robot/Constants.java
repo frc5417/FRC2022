@@ -32,9 +32,9 @@ public final class Constants {
     public final static int shooter2 = 31;
     public final static int turret = 32;
     public static final int climbRight1 = 5;
-    public static final int climbRight2 = 2;
+    public static final int climbRight2 = 4;
     public static final int climbLeft1 = 3;
-    public static final int climbLeft2 = 4;
+    public static final int climbLeft2 = 2;
     public final static int solenoid = 75;
 
     // Drive Constants
