@@ -83,9 +83,15 @@ public class Climber extends SubsystemBase {
     //   this.climbL2.getPIDController().setReference(0, ControlType.kPosition);
     // }
 
-    if(Math.abs(leftPower) > .1){
-      this.climbL1.set(-leftPower*.25);
-      this.climbL2.set(-leftPower*.25);
+    System.out.println("climbL1: "+climbL1.getEncoder().getPosition());
+    System.out.println("climbR1: "+climbR1.getEncoder().getPosition());
+
+    leftPower = -leftPower;
+
+    if(Math.abs(leftPower) > .1 && (leftPower < 0 || climbL1.getEncoder().getPosition() > -68)){
+      this.climbL1.set(leftPower*.25);
+      this.climbL2.set(leftPower*.25);
+      
     }
     else{
       this.climbL1.set(0);
@@ -97,9 +103,9 @@ public class Climber extends SubsystemBase {
       this.climbR2.getPIDController().setReference(0, ControlType.kPosition);
     }*/
     
-    if(Math.abs(rightPower) > .1){
+    if(Math.abs(rightPower) > .1 && (rightPower < 0 || climbR1.getEncoder().getPosition() > -68)){
       this.climbR1.set(rightPower*.25);
-      this.climbR2.set(rightPower*.25);
+      this.climbR2.set(rightPower*.25);    
     }
     else{
       this.climbR1.set(0);
@@ -116,7 +122,6 @@ public class Climber extends SubsystemBase {
 
 
   public void setPassiveClamp(boolean isPressed){
-
     if(!passiveFlag && isPressed){
       topClimber.set(!topClimber.get());
     }

@@ -99,7 +99,7 @@ public class RobotContainer {
     //  buttonBoard = new Joystick(2);
 
     // init subsystems
-     climber = new Climber();
+     climber = new Climber();     
      intake = new Intake();
      drive = new Drive();
      shooter = new Shooter();
@@ -380,6 +380,10 @@ public class RobotContainer {
   public boolean getButtonB16(){
     return false;
     // return buttonB16.get();
+  }
+
+  public Climber getClimberSubsystem() {
+    return climber;
   }
 
 }

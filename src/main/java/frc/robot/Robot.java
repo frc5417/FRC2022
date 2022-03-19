@@ -67,7 +67,7 @@ public class Robot extends TimedRobot {
 
   @Override
   public void teleopInit() {
-
+    robotContainer.getClimberSubsystem().resetClimberPos();
   }
 
   /** This function is called periodically during operator control. */
