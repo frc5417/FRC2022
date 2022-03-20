@@ -26,20 +26,17 @@ public class AutoAlignDrive extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    /*limelight.ledOn();
+    limelight.ledOn();
     speeds = limelight.getSpeeds();
-    drive.setPower(speeds[0], speeds[1]);*/
+    drive.setPower(speeds[0], speeds[1]);
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    if(robotContainer.getButtonA()){
-      limelight.ledOn();
-      speeds = limelight.getSpeeds();
-      drive.setPower(speeds[0], speeds[1]);
-    }
-
+    /*limelight.ledOn();
+    speeds = limelight.getSpeeds();
+    drive.setPower(speeds[0], speeds[1]);*/
   }
 
   // Called once the command ends or is interrupted.

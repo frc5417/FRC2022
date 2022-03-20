@@ -32,9 +32,6 @@ public class Shooter extends SubsystemBase {
     // This method will be called once per scheduler run
   }
 
-  public void setAutoVelocity() {
-    this.setVelocity(Constants.shootsetPointConst*Constants.shootMaxRPM);
-  }
   public void setPower(double power){
     this.shooter1.set(power);
   }

@@ -213,7 +213,7 @@ public class RobotContainer {
      
      buttonYManipulator.whenHeld(autoSetShooterSpeed);
      //1buttonAManipulator.whenHeld(lowSpeedShoot);
-     buttonA.whenHeld(autoAlignDrive);
+     buttonA.whileHeld(autoAlignDrive);
 
      bumperLManipulator.whenHeld(runIntakeSystemForward);
      bumperRManipulator.whenHeld(runIntakeSystemBackward);
