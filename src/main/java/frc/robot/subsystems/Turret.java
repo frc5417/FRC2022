@@ -15,15 +15,15 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class Turret extends SubsystemBase {
 
-  private final CANSparkMax turretMotor = null;
+  private final CANSparkMax turretMotor;
 
   /** Creates a new Turret. */
   public Turret() {
-    // this.turretMotor = new CANSparkMax(Constants.turret, MotorType.kBrushless);
-    // this.turretMotor.getEncoder().setPosition(0);
-    // this.turretMotor.getEncoder().setPositionConversionFactor(Constants.turretRatio*360);
-    // this.turretMotor.getPIDController().setP(Constants.kPturn);
-    // turretMotor.setIdleMode(IdleMode.kBrake);
+    this.turretMotor = new CANSparkMax(Constants.turret, MotorType.kBrushless);
+    this.turretMotor.getEncoder().setPosition(0);
+    this.turretMotor.getEncoder().setPositionConversionFactor(Constants.turretRatio*360);
+    this.turretMotor.getPIDController().setP(Constants.kPturn);
+    turretMotor.setIdleMode(IdleMode.kBrake);
   }
 
   @Override

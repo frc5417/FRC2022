@@ -95,60 +95,60 @@ public class RobotContainer {
   public RobotContainer() {
     // init joysticks
     pad = new Joystick(0);
-     padManipulator = new Joystick(1);
-    //  buttonBoard = new Joystick(2);
+    padManipulator = new Joystick(1);
+    buttonBoard = new Joystick(2);
 
     // init subsystems
-     climber = new Climber();     
-     intake = new Intake();
-     drive = new Drive();
-     shooter = new Shooter();
-     limelight = new Limelight();
-     turret = new Turret();
+    climber = new Climber();     
+    intake = new Intake();
+    drive = new Drive();
+    shooter = new Shooter();
+    limelight = new Limelight();
+    turret = new Turret();
 
     // init commands
-     autoClimbExtend = new AutoClimbExtend( climber, Constants.climberExtendPos);
-     autoClimbExtendSlightly = new AutoClimbExtend( climber, Constants.climberExtendSlightlyPos);
-     autoClimbRetract = new AutoClimbRetract( climber, Constants.climberRetractPos);
-     autoClimbRetractSlightly = new AutoClimbRetract( climber, Constants.climberRetractSlightlyPos);
-     climbAnchor = new ClimbAnchor( climber, this);
-     climbPivot = new ClimbPivot( climber, this);
-     autoTankDrive = new AutoTankDrive(drive);
-     runIntakeSystemForward = new RunIntakeSystemForward( intake);
-     runIntakeSystemBackward = new RunIntakeSystemBackward( intake);
-     deployIntakePistons = new DeployIntakePistons(intake, this);
-     retractIntakePistons = new RetractIntakePistons( intake);
-     autoAlignTurret = new AutoAlignTurret( limelight,  turret);
-     autoSetShooterSpeed = new AutoSetShooterSpeed( limelight,  shooter,  intake);
-     lowSpeedShoot = new LowSpeedShoot(shooter, intake);
-     manualAlignTurret = new ManualAlignTurret(this,  turret);
-     //shoot = new Shoot( shooter);
-     stopClimb = new StopClimb( climber);
-     tankDrive = new TankDrive(this,  drive);
-     climbDrive = new ManualMoveClimb(climber, this);
-     autoAlignDrive = new AutoAlignDrive(limelight, drive, this);
-/*
-     climbCommands = new SequentialCommandGroup(
-       autoClimbExtend,
-       autoTankDrive,
-       autoClimbRetract,
-       climbAnchor,
-       autoClimbExtendSlightly,
-       climbPivot,
-       autoClimbExtend,
-       climbPivot,
-       autoClimbRetractSlightly,
-       climbAnchor,
-       autoClimbRetract,
-       climbAnchor,
-       autoClimbExtendSlightly,
-       climbPivot,
-       autoClimbExtend,
-       climbPivot,
-       autoClimbRetractSlightly,
-       climbAnchor,
-       autoClimbRetract,
-       climbAnchor
+    autoClimbExtend = new AutoClimbExtend( climber, Constants.climberExtendPos);
+    autoClimbExtendSlightly = new AutoClimbExtend( climber, Constants.climberExtendSlightlyPos);
+    autoClimbRetract = new AutoClimbRetract( climber, Constants.climberRetractPos);
+    autoClimbRetractSlightly = new AutoClimbRetract( climber, Constants.climberRetractSlightlyPos);
+    climbAnchor = new ClimbAnchor( climber, this);
+    climbPivot = new ClimbPivot( climber, this);
+    autoTankDrive = new AutoTankDrive(drive);
+    runIntakeSystemForward = new RunIntakeSystemForward( intake);
+    runIntakeSystemBackward = new RunIntakeSystemBackward( intake);
+    deployIntakePistons = new DeployIntakePistons(intake, this);
+    retractIntakePistons = new RetractIntakePistons( intake);
+    autoAlignTurret = new AutoAlignTurret( limelight,  turret);
+    autoSetShooterSpeed = new AutoSetShooterSpeed( limelight,  shooter,  intake);
+    lowSpeedShoot = new LowSpeedShoot(shooter, intake);
+    manualAlignTurret = new ManualAlignTurret(this,  turret);
+    //shoot = new Shoot( shooter);
+    stopClimb = new StopClimb( climber);
+    tankDrive = new TankDrive(this,  drive);
+    climbDrive = new ManualMoveClimb(climber, this);
+    autoAlignDrive = new AutoAlignDrive(limelight, drive, this);
+    /*
+    climbCommands = new SequentialCommandGroup(
+      autoClimbExtend,
+      autoTankDrive,
+      autoClimbRetract,
+      climbAnchor,
+      autoClimbExtendSlightly,
+      climbPivot,
+      autoClimbExtend,
+      climbPivot,
+      autoClimbRetractSlightly,
+      climbAnchor,
+      autoClimbRetract,
+      climbAnchor,
+      autoClimbExtendSlightly,
+      climbPivot,
+      autoClimbExtend,
+      climbPivot,
+      autoClimbRetractSlightly,
+      climbAnchor,
+      autoClimbRetract,
+      climbAnchor
     );*/
 
     initializeButtons();
@@ -160,38 +160,42 @@ public class RobotContainer {
   }
 
   public void initializeButtons() {
+    buttonY = new JoystickButton( pad, 4);
+    buttonB = new JoystickButton( pad, 2);
+    buttonA = new JoystickButton( pad, 1);
+    buttonX = new JoystickButton( pad, 3);
+    bumperLeft = new JoystickButton( pad, 5);
+    bumperRight = new JoystickButton( pad, 6);
 
+    buttonYManipulator = new JoystickButton( padManipulator, 4);
+    buttonBManipulator = new JoystickButton( padManipulator, 2);
+    buttonAManipulator = new JoystickButton( padManipulator, 1);
+    buttonXManipulator = new JoystickButton( padManipulator, 3);
+    bumperLManipulator = new JoystickButton( padManipulator, 5);
+    bumperRManipulator = new JoystickButton( padManipulator, 6);
 
-     buttonY = new JoystickButton( pad, 4);
-     buttonB = new JoystickButton( pad, 2);
-     buttonA = new JoystickButton( pad, 1);
-     buttonX = new JoystickButton( pad, 3);
-     bumperLeft = new JoystickButton( pad, 5);
-     bumperRight = new JoystickButton( pad, 6);
-     dpadDown =  pad.getPOV() == 180;
-     dpadUp =  pad.getPOV() == 0;
-     dpadLeft =  pad.getPOV() == 270;
-     dpadRight =  pad.getPOV() == 90;
+    buttonB2 = new JoystickButton( buttonBoard, 2);
+    buttonB4 = new JoystickButton( buttonBoard, 4);
+    buttonB6 = new JoystickButton( buttonBoard, 6);
+    buttonB8 = new JoystickButton( buttonBoard, 8);
+    buttonB10 = new JoystickButton( buttonBoard, 10);
+    buttonB12 = new JoystickButton( buttonBoard, 12);
+    buttonB14 = new JoystickButton( buttonBoard, 14);
+    buttonB16 = new JoystickButton( buttonBoard, 16);
+     
+    buttonB10.whenPressed(autoClimbExtend);
+    buttonB12.whenPressed(autoClimbRetract);
+    // buttonB2.whenPressed(climbCommands);
+    // buttonB4.whenPressed(stopClimb);
 
-     buttonYManipulator = new JoystickButton( padManipulator, 4);
-     buttonBManipulator = new JoystickButton( padManipulator, 2);
-     buttonAManipulator = new JoystickButton( padManipulator, 1);
-     buttonXManipulator = new JoystickButton( padManipulator, 3);
-     bumperLManipulator = new JoystickButton( padManipulator, 5);
-     bumperRManipulator = new JoystickButton( padManipulator, 6);
-     dpadDownManipulator =  padManipulator.getPOV() == 180;
-     dpadUpManipulator =  padManipulator.getPOV() == 0;
-     dpadLeftManipulator =  padManipulator.getPOV() == 270;
-     dpadRightManipulator =  padManipulator.getPOV() == 90;
+    bumperLManipulator.whenHeld(runIntakeSystemForward);
+    bumperRManipulator.whenHeld(runIntakeSystemBackward);
+    buttonBManipulator.whenPressed(deployIntakePistons);
 
-    //  buttonB2 = new JoystickButton( buttonBoard, 2);
-    //  buttonB4 = new JoystickButton( buttonBoard, 4);
-    //  buttonB6 = new JoystickButton( buttonBoard, 6);
-    //  buttonB8 = new JoystickButton( buttonBoard, 8);
-    //  buttonB10 = new JoystickButton( buttonBoard, 10);
-    //  buttonB12 = new JoystickButton( buttonBoard, 12);
-    //  buttonB14 = new JoystickButton( buttonBoard, 14);
-    //  buttonB16 = new JoystickButton( buttonBoard, 16);
+    buttonA.whenHeld(autoAlignDrive);
+
+    buttonYManipulator.whenHeld(autoSetShooterSpeed);
+    buttonAManipulator.whenHeld(lowSpeedShoot);
   }
 
 
@@ -203,31 +207,29 @@ public class RobotContainer {
    * edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
   public void configureButtonBindings() {
-    limelight.ledOff();
+    dpadDown = pad.getPOV() == 180;
+    dpadUp = pad.getPOV() == 0;
+    dpadLeft = pad.getPOV() == 270;
+    dpadRight = pad.getPOV() == 90;
+
+    dpadDownManipulator = padManipulator.getPOV() == 180;
+    dpadUpManipulator = padManipulator.getPOV() == 0;
+    dpadLeftManipulator = padManipulator.getPOV() == 270;
+    dpadRightManipulator = padManipulator.getPOV() == 90;
+
+    limelight.ledOn();
 
     // manualAlignTurret.schedule();
-     
-    //  buttonYManipulator.whenHeld(autoSetShooterSpeed);
-     //1buttonAManipulator.whenHeld(lowSpeedShoot);
-     //buttonA.whenHeld(autoAlignDrive);
-
-    //  bumperLManipulator.whenHeld(runIntakeSystemForward);
-    //  bumperRManipulator.whenHeld(runIntakeSystemBackward);
-    //  buttonBManipulator.whenPressed(deployIntakePistons);
     
-    // buttonB2.whenPressed( climbCommands);
-    // buttonB4.whenPressed( stopClimb);
-    // buttonB10.whenPressed( autoClimbExtend);
-    // buttonB12.whenPressed( autoClimbRetract);
-    climber.setActiveClamp(buttonY.get());
-    climber.setPassiveClamp(buttonA.get());
-    climber.setPower(pad.getRawAxis(1), pad.getRawAxis(5));
+    climber.setActiveClamp(buttonBManipulator.get());
+    climber.setPassiveClamp(buttonXManipulator.get());
+    climber.setPower(padManipulator.getRawAxis(1), padManipulator.getRawAxis(5));
 
-    //  tankDrive.schedule();
+    tankDrive.schedule();
      
-     //System.out.println("Left Motor 2: " + climber.getLeftMotor2Encoder().getPosition());
-     //System.out.println("Right Motor 2: " + climber.getRightMotor2Encoder().getPosition());
-    
+    //System.out.println("Left Motor 2: " + climber.getLeftMotor2Encoder().getPosition());
+    //System.out.println("Right Motor 2: " + climber.getRightMotor2Encoder().getPosition());
+  
   }
 
   public Joystick getDriverPad(){
@@ -261,8 +263,7 @@ public class RobotContainer {
   }
 
   public boolean getButtonA() {
-    return false;
-    // return  pad.getRawButton(1);
+    return  pad.getRawButton(1);
   }
 
   public boolean getButtonB() {
@@ -343,43 +344,35 @@ public class RobotContainer {
   }
 
   public boolean getButtonB2(){
-    return false;
-    // return buttonB2.get();
+    return buttonB2.get();
   }
 
   public boolean getButtonB4(){
-    return false;
-    // return buttonB4.get();
+    return buttonB4.get();
   }
 
   public boolean getButtonB6(){
-    return false;
-    // return buttonB6.get();
+    return buttonB6.get();
   }
 
   public boolean getButtonB8(){
-    return false;
-    // return buttonB8.get();
+    return buttonB8.get();
   }
 
   public boolean getButtonB10(){
-    return false;
-    // return buttonB10.get();
+    return buttonB10.get();
   }
 
   public boolean getButtonB12(){
-    return false;
-    // return buttonB12.get();
+    return buttonB12.get();
   }
 
   public boolean getButtonB14(){
-    return false;
-    // return buttonB14.get();
+    return buttonB14.get();
   }
 
   public boolean getButtonB16(){
-    return false;
-    // return buttonB16.get();
+    return buttonB16.get();
   }
 
   public Climber getClimberSubsystem() {

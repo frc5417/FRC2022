@@ -17,27 +17,27 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
  
 public class Intake extends SubsystemBase {
 
-  private final CANSparkMax rollerBar = null;
-  private final CANSparkMax intestinePusher = null;
-  private final CANSparkMax intestineKicker = null;
-  private final Solenoid intakeSolenoidR = null;
-  private final Solenoid intakeSolenoidL = null;
-  private final DigitalInput intestineBeamBreak = null;
+  private final CANSparkMax rollerBar;
+  private final CANSparkMax intestinePusher;
+  private final CANSparkMax intestineKicker;
+  private final Solenoid intakeSolenoidR;
+  private final Solenoid intakeSolenoidL;
+  private final DigitalInput intestineBeamBreak;
 
   /** Creates a new Intake. */
   public Intake() {
-    // this.rollerBar = new CANSparkMax(Constants.intake, MotorType.kBrushless);
-    // this.intestinePusher = new CANSparkMax(Constants.intestineBottom, MotorType.kBrushless);
-    // this.intestineKicker = new CANSparkMax(Constants.intestineKicker, MotorType.kBrushless);
-    // this.intakeSolenoidR = new Solenoid(PneumaticsModuleType.REVPH, Constants.intakeRSolenoid);
-    // this.intakeSolenoidL = new Solenoid(PneumaticsModuleType.REVPH, Constants.intakeLSolenoid);
-    // this.intestineBeamBreak = new DigitalInput(Constants.intestineBeamBreak);
+    this.rollerBar = new CANSparkMax(Constants.intake, MotorType.kBrushless);
+    this.intestinePusher = new CANSparkMax(Constants.intestineBottom, MotorType.kBrushless);
+    this.intestineKicker = new CANSparkMax(Constants.intestineKicker, MotorType.kBrushless);
+    this.intakeSolenoidR = new Solenoid(PneumaticsModuleType.REVPH, Constants.intakeRSolenoid);
+    this.intakeSolenoidL = new Solenoid(PneumaticsModuleType.REVPH, Constants.intakeLSolenoid);
+    this.intestineBeamBreak = new DigitalInput(Constants.intestineBeamBreak);
 
-    // this.rollerBar.setIdleMode(IdleMode.kCoast);
-    // this.intestinePusher.setIdleMode(IdleMode.kCoast);
-    // this.intestineKicker.setIdleMode(IdleMode.kCoast);
+    this.rollerBar.setIdleMode(IdleMode.kCoast);
+    this.intestinePusher.setIdleMode(IdleMode.kCoast);
+    this.intestineKicker.setIdleMode(IdleMode.kCoast);
 
-    // retractPistons();
+    retractPistons();
   }
 
   // State controls the intake direction and power
