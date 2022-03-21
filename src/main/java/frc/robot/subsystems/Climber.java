@@ -79,18 +79,18 @@ public class Climber extends SubsystemBase {
   public void setPower(double leftPower, double rightPower) {
     leftPower = -leftPower;
 
-    if(Math.abs(leftPower) > .1 && (leftPower < 0 || climbL1.getEncoder().getPosition() > -68)) {
-      this.climbL1.set(leftPower*.25);
-      this.climbL2.set(leftPower*.25);
+    if(Math.abs(leftPower) > .1 /*&& (leftPower < 0 || climbL1.getEncoder().getPosition() > -68)*/) {
+      this.climbL1.set(leftPower*.5);
+      this.climbL2.set(leftPower*.5);
       
     } else{ 
       this.climbL1.set(0);
       this.climbL2.set(0);
     }
     
-    if(Math.abs(rightPower) > .1 && (rightPower < 0 || climbR1.getEncoder().getPosition() > -68)) {
-      this.climbR1.set(rightPower*.25);
-      this.climbR2.set(rightPower*.25);    
+    if(Math.abs(rightPower) > .1 /*&& (rightPower < 0 || climbR1.getEncoder().getPosition() > -68)*/) {
+      this.climbR1.set(rightPower*.5);
+      this.climbR2.set(rightPower*.5);    
     } else {
       this.climbR1.set(0);
       this.climbR2.set(0);
