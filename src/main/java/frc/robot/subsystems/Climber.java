@@ -15,7 +15,6 @@ import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import com.revrobotics.CANSparkMax.IdleMode;
 
 public class Climber extends SubsystemBase {
-  /** Creates a new ExampleSubsystem. */
   private CANSparkMax climbL1;
   private CANSparkMax climbL2;
   private CANSparkMax climbR1;
@@ -78,36 +77,21 @@ public class Climber extends SubsystemBase {
   }
 
   public void setPower(double leftPower, double rightPower) {
-    // if(climbL1.getEncoder().getPosition() > 0 || climbL2.getEncoder().getPosition() > 0){
-    //   this.climbL1.getPIDController().setReference(0, ControlType.kPosition);
-    //   this.climbL2.getPIDController().setReference(0, ControlType.kPosition);
-    // }
-
-    System.out.println("climbL1: "+climbL1.getEncoder().getPosition());
-    System.out.println("climbR1: "+climbR1.getEncoder().getPosition());
-
     leftPower = -leftPower;
 
-    if(Math.abs(leftPower) > .1 && (leftPower < 0 || climbL1.getEncoder().getPosition() > -68)){
+    if(Math.abs(leftPower) > .1 && (leftPower < 0 || climbL1.getEncoder().getPosition() > -68)) {
       this.climbL1.set(leftPower*.25);
       this.climbL2.set(leftPower*.25);
       
-    }
-    else{
+    } else{ 
       this.climbL1.set(0);
       this.climbL2.set(0);
     }
     
-    /*if(climbR1.getEncoder().getPosition() < 0 || climbR2.getEncoder().getPosition() < 0){
-      this.climbR1.getPIDController().setReference(0, ControlType.kPosition);
-      this.climbR2.getPIDController().setReference(0, ControlType.kPosition);
-    }*/
-    
-    if(Math.abs(rightPower) > .1 && (rightPower < 0 || climbR1.getEncoder().getPosition() > -68)){
+    if(Math.abs(rightPower) > .1 && (rightPower < 0 || climbR1.getEncoder().getPosition() > -68)) {
       this.climbR1.set(rightPower*.25);
       this.climbR2.set(rightPower*.25);    
-    }
-    else{
+    } else {
       this.climbR1.set(0);
       this.climbR2.set(0);
     }
@@ -119,7 +103,6 @@ public class Climber extends SubsystemBase {
     climbL2.getEncoder().setPosition(0);
     climbR2.getEncoder().setPosition(0);
   }
-
 
   public void setPassiveClamp(boolean isPressed){
     if(!passiveFlag && isPressed){
