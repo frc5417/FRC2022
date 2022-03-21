@@ -113,7 +113,7 @@ public class RobotContainer {
      autoClimbRetractSlightly = new AutoClimbRetract( climber, Constants.climberRetractSlightlyPos);
      climbAnchor = new ClimbAnchor( climber, this);
      climbPivot = new ClimbPivot( climber, this);
-     autoTankDrive = new AutoTankDrive( drive, this);
+     autoTankDrive = new AutoTankDrive(drive);
      runIntakeSystemForward = new RunIntakeSystemForward( intake);
      runIntakeSystemBackward = new RunIntakeSystemBackward( intake);
      deployIntakePistons = new DeployIntakePistons(intake, this);
@@ -215,10 +215,10 @@ public class RobotContainer {
     //  bumperRManipulator.whenHeld(runIntakeSystemBackward);
     //  buttonBManipulator.whenPressed(deployIntakePistons);
     
-     //buttonB2.whenPressed( climbCommands);
-     //buttonB4.whenPressed( stopClimb);
-    //  buttonB10.whenPressed( autoClimbExtend);
-    //  buttonB12.whenPressed( autoClimbRetract);
+    // buttonB2.whenPressed( climbCommands);
+    // buttonB4.whenPressed( stopClimb);
+    // buttonB10.whenPressed( autoClimbExtend);
+    // buttonB12.whenPressed( autoClimbRetract);
     climber.setActiveClamp(buttonY.get());
     climber.setPassiveClamp(buttonA.get());
     climber.setPower(pad.getRawAxis(1), pad.getRawAxis(5));

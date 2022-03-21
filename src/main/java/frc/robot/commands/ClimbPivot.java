@@ -26,7 +26,6 @@ public class ClimbPivot extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    /*
     if (currentState == true){
       this.climber.setActiveClamp(false);
       currentState = false;
@@ -37,8 +36,6 @@ public class ClimbPivot extends CommandBase {
       currentState = true;
       commandState = true;
     }
-    */
-    this.climber.setActiveClamp(false);
     System.out.println("climb pivot initialized");
   }
 

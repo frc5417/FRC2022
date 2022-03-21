@@ -4,11 +4,7 @@
 
 package frc.robot.commands;
 
-import com.revrobotics.RelativeEncoder;
-
-import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.Constants;
 import frc.robot.RobotContainer;
 import frc.robot.subsystems.Climber;
 
@@ -18,13 +14,12 @@ public class ClimbAnchor extends CommandBase {
   private boolean currentState;
   private boolean commandState;
 
-  /** Creates a new AutoClimb. */
+  /** Creates a new ClimbAnchor. */
   public ClimbAnchor(Climber climber, RobotContainer robotContainer) {
     this.climber = climber;
     this.robotContainer = robotContainer;
     currentState = false;
     commandState = false;
-    //this.anchor = this.climber.getAnchorSolenoid();
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(this.climber);
   }
