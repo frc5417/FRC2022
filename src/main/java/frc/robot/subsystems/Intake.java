@@ -26,7 +26,7 @@ public class Intake extends SubsystemBase {
 
   /** Creates a new Intake. */
   public Intake() {
-    this.rollerBar = new CANSparkMax(Constants.intake, MotorType.kBrushless);
+    this.rollerBar = new CANSparkMax(Constants.intake, MotorType.kBrushed);
     this.intestinePusher = new CANSparkMax(Constants.intestineBottom, MotorType.kBrushless);
     this.intestineKicker = new CANSparkMax(Constants.intestineKicker, MotorType.kBrushless);
     this.intakeSolenoidR = new Solenoid(PneumaticsModuleType.REVPH, Constants.intakeRSolenoid);

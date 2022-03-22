@@ -51,11 +51,11 @@ public class ClimbPivot extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    if (!robotContainer.getButtonB14() && commandState){
+    /*if (!robotContainer.getButtonB14() && commandState){
       System.out.println("climb pivot is finished");
       commandState = false;
       return true;
-    }
+    }*/
     return false;
   }
 }

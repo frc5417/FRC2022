@@ -20,8 +20,10 @@ public class Climber extends SubsystemBase {
   private CANSparkMax climbR1;
   private CANSparkMax climbR2;
 
-  private Solenoid bottomClimber;
-  private Solenoid topClimber;
+  private Solenoid bottomClimberL;
+  private Solenoid bottomClimberR;
+  private Solenoid topClimberL;
+  private Solenoid topClimberR;
 
   private boolean activeFlag;
   private boolean passiveFlag;
@@ -37,10 +39,15 @@ public class Climber extends SubsystemBase {
     climbR1.setIdleMode(IdleMode.kBrake);
     climbR2.setIdleMode(IdleMode.kBrake);
 
-    bottomClimber = new Solenoid(PneumaticsModuleType.CTREPCM, Constants.climbBottomSolenoid);
-    bottomClimber.set(false);
-    topClimber = new Solenoid(PneumaticsModuleType.CTREPCM, Constants.climbTopSolenoid);
+    bottomClimberL = new Solenoid(PneumaticsModuleType.REVPH, Constants.climbBottomLSolenoid);
+    bottomClimberR = new Solenoid(PneumaticsModuleType.REVPH, Constants.climbBottomRSolenoid);
+    bottomClimberL.set(true);
+    bottomClimberR.set(true);
 
+    topClimberL = new Solenoid(PneumaticsModuleType.REVPH, Constants.climbTopLSolenoid);
+    topClimberR = new Solenoid(PneumaticsModuleType.REVPH, Constants.climbTopRSolenoid);
+    topClimberL.set(false);
+    topClimberR.set(false);
     passiveFlag = false;
     activeFlag = false;
     
@@ -106,14 +113,18 @@ public class Climber extends SubsystemBase {
 
   public void setPassiveClamp(boolean isPressed){
     if(!passiveFlag && isPressed){
-      topClimber.set(!topClimber.get());
+      topClimberL.set(!topClimberL.get());
+      topClimberR.set(!topClimberR.get());
+      System.out.println("passiveclamp");
     }
     passiveFlag = isPressed;
   }
 
   public void setActiveClamp(boolean isPressed){
     if(!activeFlag && isPressed){
-      bottomClimber.set(!bottomClimber.get());
+      bottomClimberL.set(!bottomClimberL.get());
+      bottomClimberR.set(!bottomClimberR.get());
+      System.out.println("active clamp");
     }
     activeFlag = isPressed;
   }

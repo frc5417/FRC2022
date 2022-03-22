@@ -51,10 +51,10 @@ public class ClimbAnchor extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    if (!robotContainer.getButtonB8() && commandState){
+    /*if (!robotContainer.getButtonB8() && commandState){
       commandState = false;
       return true;
-    }
+    }*/
     return false;
   }
 }

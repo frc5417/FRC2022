@@ -96,7 +96,7 @@ public class RobotContainer {
     // init joysticks
     pad = new Joystick(0);
     padManipulator = new Joystick(1);
-    buttonBoard = new Joystick(2);
+    //buttonBoard = new Joystick(2);
 
     // init subsystems
     climber = new Climber();     
@@ -174,17 +174,17 @@ public class RobotContainer {
     bumperLManipulator = new JoystickButton( padManipulator, 5);
     bumperRManipulator = new JoystickButton( padManipulator, 6);
 
-    buttonB2 = new JoystickButton( buttonBoard, 2);
+    /*buttonB2 = new JoystickButton( buttonBoard, 2);
     buttonB4 = new JoystickButton( buttonBoard, 4);
     buttonB6 = new JoystickButton( buttonBoard, 6);
     buttonB8 = new JoystickButton( buttonBoard, 8);
     buttonB10 = new JoystickButton( buttonBoard, 10);
     buttonB12 = new JoystickButton( buttonBoard, 12);
     buttonB14 = new JoystickButton( buttonBoard, 14);
-    buttonB16 = new JoystickButton( buttonBoard, 16);
+    buttonB16 = new JoystickButton( buttonBoard, 16);*/
      
-    buttonB10.whenPressed(autoClimbExtend);
-    buttonB12.whenPressed(autoClimbRetract);
+    /*buttonB10.whenPressed(autoClimbExtend);
+    buttonB12.whenPressed(autoClimbRetract);*/
     // buttonB2.whenPressed(climbCommands);
     // buttonB4.whenPressed(stopClimb);
 
@@ -195,7 +195,7 @@ public class RobotContainer {
     buttonA.whenHeld(autoAlignDrive);
 
     buttonYManipulator.whenHeld(autoSetShooterSpeed);
-    buttonAManipulator.whenHeld(lowSpeedShoot);
+    //buttonAManipulator.whenHeld(lowSpeedShoot);
   }
 
 
@@ -221,7 +221,7 @@ public class RobotContainer {
 
     // manualAlignTurret.schedule();
     
-    climber.setActiveClamp(buttonBManipulator.get());
+    climber.setActiveClamp(buttonAManipulator.get());
     climber.setPassiveClamp(buttonXManipulator.get());
     climber.setPower(padManipulator.getRawAxis(1), padManipulator.getRawAxis(5));
 
@@ -343,7 +343,7 @@ public class RobotContainer {
     return  dpadLeftManipulator;
   }
 
-  public boolean getButtonB2(){
+  /*public boolean getButtonB2(){
     return buttonB2.get();
   }
 
@@ -373,7 +373,7 @@ public class RobotContainer {
 
   public boolean getButtonB16(){
     return buttonB16.get();
-  }
+  }*/
 
   public Climber getClimberSubsystem() {
     return climber;

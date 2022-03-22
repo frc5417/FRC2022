@@ -31,9 +31,9 @@ public final class Constants {
     public final static int shooter1 = 30;
     public final static int turret = 32;
     public static final int climbRight1 = 5;
-    public static final int climbRight2 = 4;
+    public static final int climbRight2 = 2;
     public static final int climbLeft1 = 3;
-    public static final int climbLeft2 = 2;
+    public static final int climbLeft2 = 4;
     public final static int solenoid = 75;
 
     //Drive Constants
@@ -74,10 +74,12 @@ public final class Constants {
 
     public static final double climberkP = 2;
 
-    public static final int climbBottomSolenoid = 0;
+    public static final int climbBottomLSolenoid = 0;
+    public static final int climbBottomRSolenoid = 1;
     public static final int intakeRSolenoid = 2;
     public static final int intakeLSolenoid = 3;
-    public static final int climbTopSolenoid = 5;
+    public static final int climbTopLSolenoid = 4;
+    public static final int climbTopRSolenoid = 5;
 
     public static final int driveLMaster = 14;
     public static final int driveLSlave = 15;
