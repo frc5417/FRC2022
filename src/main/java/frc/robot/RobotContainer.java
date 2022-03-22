@@ -192,7 +192,8 @@ public class RobotContainer {
     bumperRManipulator.whenHeld(runIntakeSystemBackward);
     buttonBManipulator.whenPressed(deployIntakePistons);
 
-    buttonA.whenHeld(autoAlignDrive);
+    buttonA.whileHeld(autoAlignDrive);
+    buttonA.whenPressed(new InstantCommand(() -> limelight.ledOn())).whenReleased(new InstantCommand(() -> limelight.ledOff()));
 
     buttonYManipulator.whenHeld(autoSetShooterSpeed);
     //buttonAManipulator.whenHeld(lowSpeedShoot);
@@ -216,10 +217,6 @@ public class RobotContainer {
     dpadUpManipulator = padManipulator.getPOV() == 0;
     dpadLeftManipulator = padManipulator.getPOV() == 270;
     dpadRightManipulator = padManipulator.getPOV() == 90;
-
-    limelight.ledOn();
-
-    // manualAlignTurret.schedule();
     
     climber.setActiveClamp(buttonAManipulator.get());
     climber.setPassiveClamp(buttonXManipulator.get());

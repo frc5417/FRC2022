@@ -26,7 +26,6 @@ public class AutoAlignDrive extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    limelight.ledOn();
     speeds = limelight.getSpeeds();
     drive.setPower(speeds[0], speeds[1]);
   }

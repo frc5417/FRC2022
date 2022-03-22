@@ -67,7 +67,7 @@ private CANSparkMax driveMasterL;
     neoEncoderMR.setPositionConversionFactor(2*Math.PI*Constants.wheelDiameter / Constants.driveGearingRatio);
     neoEncoderMR.setVelocityConversionFactor(2*Math.PI*Constants.wheelDiameter / Constants.driveGearingRatio);
     
-    setIdleModes(IdleMode.kCoast);
+    setIdleModes(IdleMode.kBrake);
     setPIDConstants();
     gyro = new AHRS(Port.kMXP);
     driveOdom  = new DifferentialDriveOdometry(Rotation2d.fromDegrees(getHeading()));
@@ -108,19 +108,20 @@ private CANSparkMax driveMasterL;
   }
   
   public void setPower(double leftPower, double rightPower){
-    if(Math.abs(Math.pow(leftPower, 3)) > .05) {
-      driveMasterL.set(Math.pow(leftPower, 3));
+
+    if(Math.abs(leftPower) > .2) {
+      driveMasterL.set(leftPower);
     }
-    else if(Math.abs(Math.pow(leftPower, 3)) > .6) {
+    else if(Math.abs(leftPower) > .6) {
       driveMasterL.set(.6);
     }
     else {
       driveMasterL.set(0);
     }
-    if(Math.abs(Math.pow(rightPower, 3)) > .05) {
-      driveMasterR.set(Math.pow(rightPower, 3));
+    if(Math.abs(rightPower) > .2) {
+      driveMasterR.set(rightPower);
     }
-    else if(Math.abs(Math.pow(rightPower, 3)) > .6){
+    else if(Math.abs(rightPower) > .6){
       driveMasterR.set(.6);
     }
     else {
