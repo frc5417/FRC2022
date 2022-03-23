@@ -67,6 +67,7 @@ public class Limelight extends SubsystemBase {
     // Constants used to calculate motor power for alignment
     // Double Kp = (((.00222222222222222)*area)-(.021111111111111));
     Double kP = -(Constants.drivekP);
+    Double kPDistance = -.0045;
     Double min_command = Constants.driveMinCommand;
     left_command = 0;
     right_command = 0;
@@ -82,18 +83,20 @@ public class Limelight extends SubsystemBase {
     steering_adjust = (kP)*heading_error;
     distance_adjust = (kP)*distance_error;
     // Determine power based on the horizontal offset
-    if (tx > 3.0) {
+    if (tx > 1.0) {
       steering_adjust = (kP)*heading_error + min_command;
-    } else if (tx < -3.0) {
+    } else if (tx < -1.0) {
       steering_adjust = (kP)*heading_error - min_command;
     } /*else {
       steering_adjust = 0.0;
     }*/
+
+    distance_adjust = kPDistance * distance_error;
     
-    // left_command += (steering_adjust + distance_adjust);
-    // right_command += (steering_adjust - distance_adjust);
-    left_command += (-steering_adjust);
-    right_command += (steering_adjust);
+    left_command += (distance_adjust - steering_adjust);
+    right_command += (steering_adjust + distance_adjust);
+    //left_command += (-steering_adjust);
+    //right_command += (steering_adjust);
     double[] wheelSpeeds = new double[2];
     wheelSpeeds[0] = left_command;
     wheelSpeeds[1] = right_command;

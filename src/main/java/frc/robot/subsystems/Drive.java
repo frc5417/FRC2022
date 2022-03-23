@@ -67,7 +67,7 @@ private CANSparkMax driveMasterL;
     neoEncoderMR.setPositionConversionFactor(2*Math.PI*Constants.wheelDiameter / Constants.driveGearingRatio);
     neoEncoderMR.setVelocityConversionFactor(2*Math.PI*Constants.wheelDiameter / Constants.driveGearingRatio);
     
-    setIdleModes(IdleMode.kBrake);
+    setIdleModes(IdleMode.kCoast);
     setPIDConstants();
     gyro = new AHRS(Port.kMXP);
     driveOdom  = new DifferentialDriveOdometry(Rotation2d.fromDegrees(getHeading()));
