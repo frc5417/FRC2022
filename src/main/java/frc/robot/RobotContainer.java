@@ -254,8 +254,12 @@ public class RobotContainer {
     //this runs two auton commands- Auton2 and Auton3 with their ramsete commands
     //return new SequentialCommandGroup(new Auton2(driveSubsystem).getRamseteCommand(), new Auton3(driveSubsystem).getRamseteCommand());
     
-    //this just runs Auton2
+    //this runs 2 ball auton
     return new StupidAuton(drive, shooter, intake, limelight);
+    //this runs 3 ball auton
+    //return new StupidAuton3(drive, shooter, intake, limelight);
+    //this runs 4 ball auton
+    //return new StupidAuton4(drive, shooter, intake, limelight);
   }
 
   public double getDriverLeftJoystick(){
