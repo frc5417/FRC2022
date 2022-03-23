@@ -41,6 +41,7 @@ public class Shooter extends SubsystemBase {
   public void setVelocity(double velocity){
 
     this.shooter1.getPIDController().setReference(velocity, ControlType.kVelocity);
+    System.out.println(this.shooter1.getEncoder().getVelocity());
   }
 
   public CANSparkMax getShooter1(){

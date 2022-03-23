@@ -37,7 +37,7 @@ public final class Constants {
     public final static int solenoid = 75;
 
     //Drive Constants
-    public static final double drivekP = 0.025; //used to be 0.0312
+    public static final double drivekP = 0.020; //used to be 0.0312
     public static final double drivekI = 0.000000000001;
 
     // Auton Constants
@@ -89,7 +89,7 @@ public final class Constants {
     // turret constants
     public static final double kPturn = 1.0;
     public static final double kPturnCenter = 1.0;
-    public static final double minCommand = 0.1;
+    public static final double minCommand = 0.09;
     public static final double limeLightErrorAllowed = 5;
     public static final double turretSpeed = 0.2;
     public static final double maxTurretTurn = 120.0; // degrees

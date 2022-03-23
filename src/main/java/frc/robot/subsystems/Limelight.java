@@ -82,9 +82,9 @@ public class Limelight extends SubsystemBase {
     steering_adjust = (kP)*heading_error;
     distance_adjust = (kP)*distance_error;
     // Determine power based on the horizontal offset
-    if (tx > 1.0) {
+    if (tx > 3.0) {
       steering_adjust = (kP)*heading_error + min_command;
-    } else if (tx < -1.0) {
+    } else if (tx < -3.0) {
       steering_adjust = (kP)*heading_error - min_command;
     } /*else {
       steering_adjust = 0.0;
@@ -103,7 +103,7 @@ public class Limelight extends SubsystemBase {
       return wheelSpeeds;
 
     } else {
-      return new double[3];
+      return new double[2];
     }
   }
 
