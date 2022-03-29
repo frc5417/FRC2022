@@ -119,7 +119,7 @@ public class RobotContainer {
     deployIntakePistons = new DeployIntakePistons(intake, this);
     retractIntakePistons = new RetractIntakePistons( intake);
     autoAlignTurret = new AutoAlignTurret( limelight,  turret);
-    autoSetShooterSpeed = new AutoSetShooterSpeed( limelight,  shooter,  intake);
+    autoSetShooterSpeed = new AutoSetShooterSpeed(shooter,  intake);
     lowSpeedShoot = new LowSpeedShoot(shooter, intake);
     manualAlignTurret = new ManualAlignTurret(this,  turret);
     //shoot = new Shoot( shooter);
@@ -127,29 +127,6 @@ public class RobotContainer {
     tankDrive = new TankDrive(this,  drive);
     climbDrive = new ManualMoveClimb(climber, this);
     autoAlignDrive = new AutoAlignDrive(limelight, drive, this);
-    /*
-    climbCommands = new SequentialCommandGroup(
-      autoClimbExtend,
-      autoTankDrive,
-      autoClimbRetract,
-      climbAnchor,
-      autoClimbExtendSlightly,
-      climbPivot,
-      autoClimbExtend,
-      climbPivot,
-      autoClimbRetractSlightly,
-      climbAnchor,
-      autoClimbRetract,
-      climbAnchor,
-      autoClimbExtendSlightly,
-      climbPivot,
-      autoClimbExtend,
-      climbPivot,
-      autoClimbRetractSlightly,
-      climbAnchor,
-      autoClimbRetract,
-      climbAnchor
-    );*/
 
     initializeButtons();
     configureButtonBindings();
@@ -173,20 +150,6 @@ public class RobotContainer {
     buttonXManipulator = new JoystickButton( padManipulator, 3);
     bumperLManipulator = new JoystickButton( padManipulator, 5);
     bumperRManipulator = new JoystickButton( padManipulator, 6);
-
-    /*buttonB2 = new JoystickButton( buttonBoard, 2);
-    buttonB4 = new JoystickButton( buttonBoard, 4);
-    buttonB6 = new JoystickButton( buttonBoard, 6);
-    buttonB8 = new JoystickButton( buttonBoard, 8);
-    buttonB10 = new JoystickButton( buttonBoard, 10);
-    buttonB12 = new JoystickButton( buttonBoard, 12);
-    buttonB14 = new JoystickButton( buttonBoard, 14);
-    buttonB16 = new JoystickButton( buttonBoard, 16);*/
-     
-    /*buttonB10.whenPressed(autoClimbExtend);
-    buttonB12.whenPressed(autoClimbRetract);*/
-    // buttonB2.whenPressed(climbCommands);
-    // buttonB4.whenPressed(stopClimb);
 
     bumperLManipulator.whenHeld(runIntakeSystemForward);
     bumperRManipulator.whenHeld(runIntakeSystemBackward);
@@ -223,10 +186,7 @@ public class RobotContainer {
     climber.setPower(padManipulator.getRawAxis(1), padManipulator.getRawAxis(5));
 
     tankDrive.schedule();
-     
-    //System.out.println("Left Motor 2: " + climber.getLeftMotor2Encoder().getPosition());
-    //System.out.println("Right Motor 2: " + climber.getRightMotor2Encoder().getPosition());
-  
+
   }
 
   public Joystick getDriverPad(){
@@ -339,38 +299,6 @@ public class RobotContainer {
   public boolean getMDpadLeft() {
     return  dpadLeftManipulator;
   }
-
-  /*public boolean getButtonB2(){
-    return buttonB2.get();
-  }
-
-  public boolean getButtonB4(){
-    return buttonB4.get();
-  }
-
-  public boolean getButtonB6(){
-    return buttonB6.get();
-  }
-
-  public boolean getButtonB8(){
-    return buttonB8.get();
-  }
-
-  public boolean getButtonB10(){
-    return buttonB10.get();
-  }
-
-  public boolean getButtonB12(){
-    return buttonB12.get();
-  }
-
-  public boolean getButtonB14(){
-    return buttonB14.get();
-  }
-
-  public boolean getButtonB16(){
-    return buttonB16.get();
-  }*/
 
   public Climber getClimberSubsystem() {
     return climber;

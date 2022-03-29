@@ -37,16 +37,17 @@ public class StupidAuton extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
+
     
     if(count <= 250) {
-      shoot.setVelocity(2500);
-    }
-    else if(count <= 1000) {
-      shoot.setVelocity(2500);
-      intake.runIntestine(1);
+      shoot.setVelocity(2200);
     }
     else if(count <= 2000) {
-      drive.setPower(.6, .6);
+      shoot.setVelocity(2200);
+      intake.runIntestine(1);
+    }
+    else if(count <= 2750) {                                                                                                                                    
+      drive.setPower(.3, .3);
       shoot.setPower(0);
       intake.runIntestine(0);
     }
@@ -72,7 +73,7 @@ public class StupidAuton extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    if (count > 8750){
+    if (count > 3000){
       return true;
     }
     return false;
