@@ -18,14 +18,13 @@ public class StupidAuton2 extends CommandBase {
   private final Limelight limelight;
   private int count;
   private double[] wheelSpeeds;
-
   public StupidAuton2(Drive drive, Shooter shoot, Intake intake, Limelight limelight) {
     this.drive = drive;
     this.shoot = shoot;
     this.intake = intake;
     this.limelight = limelight;
-    // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(drive, shoot, intake, limelight);
+    // Use addRequirements() here to declare subsystem dependencies.
   }
 
   // Called when the command is initially scheduled.
@@ -37,21 +36,27 @@ public class StupidAuton2 extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-
-    
-    if(count <= 250) {
-      shoot.setVelocity(2200);
+    //prepare to shoot first ball
+    if(count <= 250){
+      shoot.setVelocity(2500);
     }
-    else if(count <= 2000) {
-      shoot.setVelocity(2200);
+    //shoot first ball, start intake
+    else if(count <= 1000){
+      shoot.setVelocity(2500);
       intake.runIntestine(1);
     }
-    else if(count <= 2750) {                                                                                                                                    
-      drive.setPower(.3, .3);
-      shoot.setPower(0);
-      intake.runIntestine(0);
+    //drive forwards to second ball
+    else if(count <= 2000){
+      drive.setPower(.6, .6);
     }
-    else {
+    //stop intake, shoot second ball
+    else if(count <= 3000) {
+      intake.runIntestine(0);
+      drive.setPower(0.0, 0.0);
+      shoot.setVelocity(2500);  
+    }
+    //stop robot
+    else{
       drive.setPower(0, 0);
       shoot.setPower(0);
       intake.runIntestine(0);
@@ -73,7 +78,7 @@ public class StupidAuton2 extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    if (count > 3000){
+    if (count > 8750){
       return true;
     }
     return false;
