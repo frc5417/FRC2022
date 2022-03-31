@@ -10,7 +10,7 @@ import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Limelight;
 import frc.robot.subsystems.Shooter;
 
-public class StupidAuton3 extends CommandBase {
+public class StupidAuton2 extends CommandBase {
   /** Creates a new StupidAuton. */
   private final Drive drive;
   private final Shooter shoot;
@@ -18,7 +18,7 @@ public class StupidAuton3 extends CommandBase {
   private final Limelight limelight;
   private int count;
   private double[] wheelSpeeds;
-  public StupidAuton3(Drive drive, Shooter shoot, Intake intake, Limelight limelight) {
+  public StupidAuton2(Drive drive, Shooter shoot, Intake intake, Limelight limelight) {
     this.drive = drive;
     this.shoot = shoot;
     this.intake = intake;
@@ -55,40 +55,7 @@ public class StupidAuton3 extends CommandBase {
       drive.setPower(0.0, 0.0);
       shoot.setVelocity(2500);  
     }
-    //go backwards
-    else if(count <= 5000) {
-      shoot.setVelocity(0);
-      drive.setPower(-0.6, -0.6);
-    }
-    //Turn 90 deg. right
-    else if(count <= 6000) {
-      shoot.setVelocity(0);
-      drive.setPower(0.6, -0.6);
-    }
-    // Go forward, intake 1 ball
-    else if(count <= 8500) {
-      intake.runIntestine(1);
-      drive.setPower(0.6, 0.6);
-    } 
-    // Pause 500 milsec
-    else if(count <= 9000) {
-      intake.runIntestine(0);
-      drive.setPower(0.0, 0.0);
-    }
-    // Go backward
-    else if(count <= 10500) {
-      drive.setPower(-0.6, -0.6);
-    }
-    // Turn left at 65 deg 
-    else if(count <= 11220) {
-      drive.setPower(-0.6, 0.6);
-    }
-    // Stop and shoot
-    else if(count <= 12220) {
-      drive.setPower(0.0, 0.0);
-      shoot.setVelocity(2500);
-    }
-    // Stops robot
+    //stop robot
     else{
       drive.setPower(0, 0);
       shoot.setPower(0);
