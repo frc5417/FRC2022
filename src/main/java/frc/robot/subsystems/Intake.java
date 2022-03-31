@@ -22,7 +22,6 @@ public class Intake extends SubsystemBase {
   private final CANSparkMax intestineKicker;
   private final Solenoid intakeSolenoidR;
   private final Solenoid intakeSolenoidL;
-  private final DigitalInput intestineBeamBreak;
 
   /** Creates a new Intake. */
   public Intake() {
@@ -31,11 +30,10 @@ public class Intake extends SubsystemBase {
     this.intestineKicker = new CANSparkMax(Constants.intestineKicker, MotorType.kBrushless);
     this.intakeSolenoidR = new Solenoid(PneumaticsModuleType.REVPH, Constants.intakeRSolenoid);
     this.intakeSolenoidL = new Solenoid(PneumaticsModuleType.REVPH, Constants.intakeLSolenoid);
-    this.intestineBeamBreak = new DigitalInput(Constants.intestineBeamBreak);
 
     this.rollerBar.setIdleMode(IdleMode.kCoast);
     this.intestinePusher.setIdleMode(IdleMode.kCoast);
-    this.intestineKicker.setIdleMode(IdleMode.kCoast);
+    this.intestineKicker.setIdleMode(IdleMode.kBrake);
 
     retractPistons();
   }
@@ -60,7 +58,7 @@ public class Intake extends SubsystemBase {
       this.intestineKicker.set(0);
     }
     else if(state == 1){
-      this.intestinePusher.set(Constants.intakeSpeed);
+      this.intestinePusher.set(Constants.intakeSpeed/2);
       this.intestineKicker.set(-Constants.intakeSpeed);
     }
     else if(state == 2){
@@ -93,9 +91,4 @@ public class Intake extends SubsystemBase {
     this.intakeSolenoidR.set(false);
     this.intakeSolenoidL.set(false);
   }
-
-  public boolean getIntestineBeamBreak(){
-    return this.intestineBeamBreak.get();
-  }
-
 }

@@ -47,7 +47,7 @@ public class Limelight extends SubsystemBase {
   }
 
   public void ledOff(){
-    limelight.getEntry("ledMode").setNumber(1);
+    limelight.getEntry("ledMode").setNumber(3);//should be one, change before pushing to remote
   }
 
   @Override
@@ -93,8 +93,8 @@ public class Limelight extends SubsystemBase {
 
     //distance_adjust = kPDistance * distance_error;
     distance_adjust = 0;
-    left_command += (distance_adjust - steering_adjust);
-    right_command += (steering_adjust + distance_adjust);
+    left_command += (distance_adjust + steering_adjust);
+    right_command += (steering_adjust - distance_adjust);
     //left_command += (-steering_adjust);
     //right_command += (steering_adjust);
     double[] wheelSpeeds = new double[2];

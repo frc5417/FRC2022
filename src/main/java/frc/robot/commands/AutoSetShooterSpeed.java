@@ -30,7 +30,7 @@ public class AutoSetShooterSpeed extends CommandBase {
   @Override
   public void execute() {
       
-    setPointVariable = 2350;
+    setPointVariable = 4000;
 
     this.shooter.setVelocity(setPointVariable);
     //System.out.print("Power: ");

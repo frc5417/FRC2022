@@ -5,6 +5,7 @@
 package frc.robot.subsystems;
 
 import frc.robot.Constants;
+import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -25,6 +26,9 @@ public class Climber extends SubsystemBase {
   private Solenoid topClimberL;
   private Solenoid topClimberR;
 
+  private DigitalInput limitSwitchR;
+  private DigitalInput limitSwitchL;
+
   private boolean activeFlag;
   private boolean passiveFlag;
   
@@ -43,6 +47,9 @@ public class Climber extends SubsystemBase {
     bottomClimberR = new Solenoid(PneumaticsModuleType.REVPH, Constants.climbBottomRSolenoid);
     bottomClimberL.set(true);
     bottomClimberR.set(true);
+
+    limitSwitchR = new DigitalInput(0);
+    limitSwitchL = new DigitalInput(1);
 
     topClimberL = new Solenoid(PneumaticsModuleType.REVPH, Constants.climbTopLSolenoid);
     topClimberR = new Solenoid(PneumaticsModuleType.REVPH, Constants.climbTopRSolenoid);
@@ -89,15 +96,27 @@ public class Climber extends SubsystemBase {
     if(Math.abs(leftPower) > .3 /*&& (leftPower < 0 || climbL1.getEncoder().getPosition() > -68)*/) {
       this.climbL1.set(-leftPower*.5);
       this.climbL2.set(-leftPower*.5);
+      if(limitSwitchL.get() == false){
+        if(-leftPower < 0){
+          this.climbL1.set(0);
+          this.climbL2.set(0);
+        }
+      }
       
-    } else{ 
+    } else { 
       this.climbL1.set(0);
       this.climbL2.set(0);
     }
     
     if(Math.abs(rightPower) > .3 /*&& (rightPower < 0 || climbR1.getEncoder().getPosition() > -68)*/) {
       this.climbR1.set(rightPower*.5);
-      this.climbR2.set(rightPower*.5);    
+      this.climbR2.set(rightPower*.5); 
+      if(limitSwitchR.get() == false){
+        if(rightPower < 0){
+          this.climbR1.set(0);
+          this.climbR2.set(0);
+        }
+      }   
     } else {
       this.climbR1.set(0);
       this.climbR2.set(0);
