@@ -45,11 +45,11 @@ public class Climber extends SubsystemBase {
 
     bottomClimberL = new Solenoid(PneumaticsModuleType.REVPH, Constants.climbBottomLSolenoid);
     bottomClimberR = new Solenoid(PneumaticsModuleType.REVPH, Constants.climbBottomRSolenoid);
-    bottomClimberL.set(true);
-    bottomClimberR.set(true);
+    bottomClimberL.set(false);
+    bottomClimberR.set(false);
 
-    limitSwitchR = new DigitalInput(0);
-    limitSwitchL = new DigitalInput(1);
+    limitSwitchR = new DigitalInput(1);
+    limitSwitchL = new DigitalInput(0);
 
     topClimberL = new Solenoid(PneumaticsModuleType.REVPH, Constants.climbTopLSolenoid);
     topClimberR = new Solenoid(PneumaticsModuleType.REVPH, Constants.climbTopRSolenoid);
@@ -58,10 +58,10 @@ public class Climber extends SubsystemBase {
     passiveFlag = false;
     activeFlag = false;
     
-    climbL1.setInverted(false);
-    climbL2.setInverted(false);
-    climbR1.setInverted(false);
-    climbR2.setInverted(false);
+    climbL1.setInverted(true);
+    climbL2.setInverted(true);
+    climbR1.setInverted(true);
+    climbR2.setInverted(true);
 
     climbL1.getPIDController().setP(Constants.climberkP);
     climbR1.getPIDController().setP(Constants.climberkP);
