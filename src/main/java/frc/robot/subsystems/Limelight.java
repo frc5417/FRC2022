@@ -56,10 +56,8 @@ public class Limelight extends SubsystemBase {
     ty = limelight.getEntry("ty").getDouble(0.0);
     tv = (limelight.getEntry("tv").getDouble(0.0) != 0);
     ta = limelight.getEntry("ta").getDouble(0.0);
+    Constants.shootsetPointVar = (int)(-476.224*Math.tanh(.159 * ty + .775) + 3908.33);
     //System.out.println("tx: " + tx + ", ty: " + ty + ", tv: " + tv);
-  }
-  public double setShooterSpeed(){
-    return (getY()*1000);
   }
 
   public double[] getSpeeds(){

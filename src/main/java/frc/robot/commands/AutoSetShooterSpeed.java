@@ -7,6 +7,7 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Shooter;
+import frc.robot.Constants;
 
 public class AutoSetShooterSpeed extends CommandBase {
   private final Shooter shooter;
@@ -30,8 +31,8 @@ public class AutoSetShooterSpeed extends CommandBase {
   @Override
   public void execute() {
       
-    setPointVariable = 4250;
-
+    setPointVariable = Constants.shootsetPointVar;
+    System.out.println("Target Speed: " + setPointVariable);
     this.shooter.setVelocity(setPointVariable);
     //System.out.print("Power: ");
     //System.out.println(shooter.getShooter1().getEncoder().getVelocity());
