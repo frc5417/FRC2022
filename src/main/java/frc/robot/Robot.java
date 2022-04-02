@@ -68,6 +68,7 @@ public class Robot extends TimedRobot {
 
   @Override
   public void teleopInit() {
+    robotContainer.getClimberSubsystem().ActiveClampOut();
     robotContainer.getClimberSubsystem().resetClimberPos();
   }
 

@@ -45,11 +45,11 @@ public class Climber extends SubsystemBase {
 
     bottomClimberL = new Solenoid(PneumaticsModuleType.REVPH, Constants.climbBottomLSolenoid);
     bottomClimberR = new Solenoid(PneumaticsModuleType.REVPH, Constants.climbBottomRSolenoid);
-    bottomClimberL.set(false);
-    bottomClimberR.set(false);
+    bottomClimberL.set(true);
+    bottomClimberR.set(true);
 
-    limitSwitchR = new DigitalInput(1);
-    limitSwitchL = new DigitalInput(0);
+    limitSwitchR = new DigitalInput(0);
+    limitSwitchL = new DigitalInput(1);
 
     topClimberL = new Solenoid(PneumaticsModuleType.REVPH, Constants.climbTopLSolenoid);
     topClimberR = new Solenoid(PneumaticsModuleType.REVPH, Constants.climbTopRSolenoid);
@@ -58,8 +58,8 @@ public class Climber extends SubsystemBase {
     passiveFlag = false;
     activeFlag = false;
     
-    climbL1.setInverted(true);
-    climbL2.setInverted(true);
+    climbL1.setInverted(false);
+    climbL2.setInverted(false);
     climbR1.setInverted(true);
     climbR2.setInverted(true);
 
@@ -93,35 +93,32 @@ public class Climber extends SubsystemBase {
   public void setPower(double leftPower, double rightPower) {
     //leftPower = -leftPower;
 
-    if(Math.abs(leftPower) > .3 /*&& (leftPower < 0 || climbL1.getEncoder().getPosition() > -68)*/) {
-      this.climbL1.set(-leftPower*.5);
-      this.climbL2.set(-leftPower*.5);
-      if(limitSwitchL.get() == false){
-        if(-leftPower < 0){
-          this.climbL1.set(0);
-          this.climbL2.set(0);
-        }
-      }
-      
-    } else { 
+  if(Math.abs(leftPower) > .3) {
+    if(limitSwitchL.get() == true && leftPower > 0){ // logic looks wrong but it's right bc joystick inputs are reversed
       this.climbL1.set(0);
       this.climbL2.set(0);
+    } else{
+      this.climbL1.set(leftPower*.5);
+      this.climbL2.set(leftPower*.5); 
     }
-    
-    if(Math.abs(rightPower) > .3 /*&& (rightPower < 0 || climbR1.getEncoder().getPosition() > -68)*/) {
-      this.climbR1.set(rightPower*.5);
-      this.climbR2.set(rightPower*.5); 
-      if(limitSwitchR.get() == false){
-        if(rightPower < 0){
-          this.climbR1.set(0);
-          this.climbR2.set(0);
-        }
-      }   
-    } else {
+  } else {
+    this.climbL1.set(0);
+    this.climbL2.set(0);
+  } 
+
+  if(Math.abs(rightPower) > .3) {
+    if(limitSwitchR.get() == true && rightPower > 0){
       this.climbR1.set(0);
       this.climbR2.set(0);
+    } else{
+      this.climbR1.set(rightPower*.5);
+      this.climbR2.set(rightPower*.5); 
     }
+  } else {
+    this.climbR1.set(0);
+    this.climbR2.set(0);
   }
+}
 
   public void resetClimberPos(){
     climbL1.getEncoder().setPosition(0);
@@ -134,7 +131,6 @@ public class Climber extends SubsystemBase {
     if(!passiveFlag && isPressed){
       topClimberL.set(!topClimberL.get());
       topClimberR.set(!topClimberR.get());
-      System.out.println("passiveclamp");
     }
     passiveFlag = isPressed;
   }
@@ -143,9 +139,13 @@ public class Climber extends SubsystemBase {
     if(!activeFlag && isPressed){
       bottomClimberL.set(!bottomClimberL.get());
       bottomClimberR.set(!bottomClimberR.get());
-      System.out.println("active clamp");
     }
     activeFlag = isPressed;
+  }
+
+  public void ActiveClampOut(){
+    topClimberL.set(true);
+    topClimberR.set(true);
   }
 
   public void setPosition(double position){
