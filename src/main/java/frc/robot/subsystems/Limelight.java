@@ -20,6 +20,7 @@ public class Limelight extends SubsystemBase {
   private double turret_command;
   private double steering_adjust;
   private double distance_adjust;
+  private double accumulated_heading_error = 0;
 
   public Limelight() {
     limelight = NetworkTableInstance.getDefault().getTable("limelight");
@@ -65,6 +66,7 @@ public class Limelight extends SubsystemBase {
     // Constants used to calculate motor power for alignment
     // Double Kp = (((.00222222222222222)*area)-(.021111111111111));
     Double kP = -(Constants.drivekP);
+    Double kI = Constants.drivekI;
     Double kPDistance = -.0045;
     Double min_command = Constants.driveMinCommand;
     left_command = 0;
@@ -76,25 +78,30 @@ public class Limelight extends SubsystemBase {
 
     // Set heading error and the steering adjust
     Double heading_error = -tx;
+
     Double distance_error = -ty;
     // Double distance_error = estimateDistance() - getIdealDistance();
     steering_adjust = (kP)*heading_error;
     distance_adjust = (kP)*distance_error;
     // Determine power based on the horizontal offset
     if (tx > 1.0) {
-      steering_adjust = (kP)*heading_error + min_command;
+      steering_adjust = (kP)*heading_error + (kI)*accumulated_heading_error + min_command;
     } else if (tx < -1.0) {
-      steering_adjust = (kP)*heading_error - min_command;
-    } /*else {
-      steering_adjust = 0.0;
-    }*/
-
+      steering_adjust = (kP)*heading_error + (kI)*accumulated_heading_error - min_command;
+    }
+    
+    if (Math.abs(accumulated_heading_error) >= 100){
+      accumulated_heading_error = Math.ceil(accumulated_heading_error);
+    }
+    else{ 
+      accumulated_heading_error += heading_error;
+    }
     //distance_adjust = kPDistance * distance_error;
     distance_adjust = 0;
-    left_command += (distance_adjust + steering_adjust);
-    right_command += (steering_adjust - distance_adjust);
-    //left_command += (-steering_adjust);
-    //right_command += (steering_adjust);
+    // left_command += (distance_adjust + steering_adjust);
+    // right_command += (steering_adjust - distance_adjust);
+    left_command += (-steering_adjust);
+    right_command += (steering_adjust);
     double[] wheelSpeeds = new double[2];
     wheelSpeeds[0] = left_command;
     wheelSpeeds[1] = right_command;

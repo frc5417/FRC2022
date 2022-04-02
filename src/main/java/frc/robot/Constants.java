@@ -38,7 +38,7 @@ public final class Constants {
 
     //Drive Constants
     public static final double drivekP = 0.020; //used to be 0.0312
-    public static final double drivekI = 0.000000000001;
+    public static final double drivekI = drivekP/100;//0.000000000001;
 
     // Auton Constants
     public static final double driveGearingRatio = 18;
@@ -102,7 +102,7 @@ public final class Constants {
     public static final double targetHeight = 104.75; //inches
     public static final double limelightAngle = 28.66; // degrees
     public static final double limelightHeight = 26; //inches
-    public static final double driveMinCommand = 0.1;
+    public static final double driveMinCommand = 0.15;
 
     //shooter constants
     public static final double shooterP = .0005;
