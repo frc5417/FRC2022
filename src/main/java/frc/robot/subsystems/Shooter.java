@@ -23,6 +23,8 @@ public class Shooter extends SubsystemBase {
 
     this.shooter1.getPIDController().setI(Constants.shooterI);
     
+    this.shooter1.getPIDController().setD(Constants.shooterD);
+
     this.shooter1.getPIDController().setFF(Constants.shooterFF);
     this.shooter1.setIdleMode(IdleMode.kBrake);
   }

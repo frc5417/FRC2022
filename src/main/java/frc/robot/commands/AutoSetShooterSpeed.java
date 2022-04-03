@@ -13,19 +13,24 @@ public class AutoSetShooterSpeed extends CommandBase {
   private final Shooter shooter;
   private final Intake intake;
   private double setPointVariable;
+  private double[] pastSpeeds;
+  private final int numberSpeeds = 50;
+  private int counter = 0;
 
   /** Creates a new AutoSetShooterSpeed. */
   public AutoSetShooterSpeed(Shooter shooter, Intake intake) {
     this.shooter = shooter;
     this.intake = intake;
     this.setPointVariable = 0.0;
-
+    pastSpeeds = new double[numberSpeeds];
     addRequirements(shooter);
   }
 
   // Called when the command is initially scheduled.
   @Override
-  public void initialize() {}
+  public void initialize() {
+
+  }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
@@ -36,13 +41,18 @@ public class AutoSetShooterSpeed extends CommandBase {
     this.shooter.setVelocity(setPointVariable);
     //System.out.print("Power: ");
     //System.out.println(shooter.getShooter1().getEncoder().getVelocity());
-    
-    if((shooter.getShooter1().getEncoder().getVelocity() <= setPointVariable+100) && (shooter.getShooter1().getEncoder().getVelocity() >= setPointVariable-100)){
+    pastSpeeds[counter % numberSpeeds] = shooter.getShooter1().getEncoder().getVelocity();
+    double avg = 0;
+    for(int i = 0; i < numberSpeeds; i++) avg += pastSpeeds[i];
+    avg /= numberSpeeds;
+    System.out.println("Running average: " + avg);
+    if((avg <= setPointVariable+100) && (avg >= setPointVariable-100)){
       this.intake.runIntestine(1);
     }
     else{
       this.intake.runIntestine(0);
     }
+    counter++;
   }
 
   // Called once the command ends or is interrupted.
@@ -50,6 +60,7 @@ public class AutoSetShooterSpeed extends CommandBase {
   public void end(boolean interrupted) {
     this.shooter.setPower(0);
     this.intake.runIntestine(0);
+    for(int i = 0; i < numberSpeeds; i++) pastSpeeds[i] = 0;
   }
 
   // Returns true when the command should end.

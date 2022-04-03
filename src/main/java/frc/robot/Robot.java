@@ -57,6 +57,8 @@ public class Robot extends TimedRobot {
   /** This autonomous runs the autonomous command selected by your {@link RobotContainer} class. */
   @Override
   public void autonomousInit() {
+    robotContainer.getClimberSubsystem().ActiveClampOut();
+    robotContainer.getLimelight().ledOn();
     robotContainer.getAutonomousCommand().schedule();
   }
 
@@ -69,6 +71,7 @@ public class Robot extends TimedRobot {
   @Override
   public void teleopInit() {
     robotContainer.getClimberSubsystem().ActiveClampOut();
+    robotContainer.getLimelight().ledOff();
     robotContainer.getClimberSubsystem().resetClimberPos();
   }
 

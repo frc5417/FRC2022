@@ -48,7 +48,7 @@ public class Limelight extends SubsystemBase {
   }
 
   public void ledOff(){
-    limelight.getEntry("ledMode").setNumber(3);//should be one, change before pushing to remote
+    limelight.getEntry("ledMode").setNumber(1);//should be one, change before pushing to remote
   }
 
   @Override
@@ -57,7 +57,7 @@ public class Limelight extends SubsystemBase {
     ty = limelight.getEntry("ty").getDouble(0.0);
     tv = (limelight.getEntry("tv").getDouble(0.0) != 0);
     ta = limelight.getEntry("ta").getDouble(0.0);
-    Constants.shootsetPointVar = (int)(-476.224*Math.tanh(.159 * ty + .775) + 3908.33);
+    Constants.shootsetPointVar = (int)(Math.pow(Math.E, -0.125245 * ty + 5.93303) + 2718.9); //3750; //(int)(-476.224*Math.tanh(.159 * ty + .775) + 3008.3);
     //System.out.println("tx: " + tx + ", ty: " + ty + ", tv: " + tv);
   }
 

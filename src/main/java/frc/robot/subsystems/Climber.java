@@ -62,7 +62,7 @@ public class Climber extends SubsystemBase {
     climbL2.setInverted(false);
     climbR1.setInverted(true);
     climbR2.setInverted(true);
-
+    
     climbL1.getPIDController().setP(Constants.climberkP);
     climbR1.getPIDController().setP(Constants.climberkP);
     climbL2.getPIDController().setP(Constants.climberkP);
@@ -94,7 +94,7 @@ public class Climber extends SubsystemBase {
     //leftPower = -leftPower;
 
   if(Math.abs(leftPower) > .3) {
-    if(limitSwitchL.get() == true && leftPower > 0){ // logic looks wrong but it's right bc joystick inputs are reversed
+    if(limitSwitchL.get() == false && leftPower > 0){ // logic looks wrong but it's right bc joystick inputs are reversed
       this.climbL1.set(0);
       this.climbL2.set(0);
     } else{
@@ -107,7 +107,7 @@ public class Climber extends SubsystemBase {
   } 
 
   if(Math.abs(rightPower) > .3) {
-    if(limitSwitchR.get() == true && rightPower > 0){
+    if(limitSwitchR.get() == false && rightPower > 0){
       this.climbR1.set(0);
       this.climbR2.set(0);
     } else{

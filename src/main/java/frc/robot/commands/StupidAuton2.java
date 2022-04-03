@@ -5,6 +5,8 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.RobotContainer;
+import frc.robot.commands.AutoAlignDrive;
 import frc.robot.subsystems.Drive;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Limelight;
@@ -16,13 +18,16 @@ public class StupidAuton2 extends CommandBase {
   private final Shooter shoot;
   private final Intake intake;
   private final Limelight limelight;
+  private final AutoAlignDrive autoAlign;
+  private final AutoSetShooterSpeed autoSpeed;
   private int count;
-  private double[] wheelSpeeds;
   public StupidAuton2(Drive drive, Shooter shoot, Intake intake, Limelight limelight) {
     this.drive = drive;
     this.shoot = shoot;
     this.intake = intake;
     this.limelight = limelight;
+    autoAlign = new AutoAlignDrive(limelight, drive);
+    autoSpeed = new AutoSetShooterSpeed(shoot, intake);
     addRequirements(drive, shoot, intake, limelight);
     // Use addRequirements() here to declare subsystem dependencies.
   }
@@ -31,35 +36,32 @@ public class StupidAuton2 extends CommandBase {
   @Override
   public void initialize() {
     count = 0;
+    limelight.ledOn();
+    intake.deployPistons();
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    //prepare to shoot first ball
-    if(count <= 250){
-      shoot.setVelocity(2500);
+    // drive forwards to second ball????
+    if(count <= 500){
+      drive.rawMotorPower(0, 0);
     }
-    //shoot first ball, start intake
-    else if(count <= 1000){
-      shoot.setVelocity(2500);
-      intake.runIntestine(1);
+    else if(count <= 1750){
+      drive.rawMotorPower(-.3, -.3);
+      intake.runIntakeSystem(1);
     }
-    //drive forwards to second ball
     else if(count <= 2000){
-      drive.setPower(.6, .6);
+      drive.rawMotorPower(0, 0);
     }
-    //stop intake, shoot second ball
-    else if(count <= 3000) {
-      intake.runIntestine(0);
-      drive.setPower(0.0, 0.0);
-      shoot.setVelocity(2500);  
+    // align for second ball
+    else if(count <= 3000){
+      autoAlign.initialize();
     }
-    //stop robot
-    else{
+    // shoot second ball
+    else if(count <= 9000){
       drive.setPower(0, 0);
-      shoot.setPower(0);
-      intake.runIntestine(0);
+      autoSpeed.execute();
     }
     count+=20;
 
@@ -71,14 +73,15 @@ public class StupidAuton2 extends CommandBase {
   public void end(boolean interrupted) {
     drive.setPower(0, 0);
     shoot.setPower(0);
-    intake.runIntestine(0);            
+    intake.runIntestine(0); 
+    intake.runIntakeSystem(0);           
     
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    if (count > 8750){
+    if (count > 9500){
       return true;
     }
     return false;

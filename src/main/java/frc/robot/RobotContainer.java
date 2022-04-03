@@ -126,7 +126,7 @@ public class RobotContainer {
     stopClimb = new StopClimb( climber);
     tankDrive = new TankDrive(this,  drive);
     climbDrive = new ManualMoveClimb(climber, this);
-    autoAlignDrive = new AutoAlignDrive(limelight, drive, this);
+    autoAlignDrive = new AutoAlignDrive(limelight, drive);
 
     initializeButtons();
     configureButtonBindings();
@@ -159,6 +159,7 @@ public class RobotContainer {
     buttonA.whenPressed(new InstantCommand(() -> limelight.ledOn())).whenReleased(new InstantCommand(() -> limelight.ledOff()));
 
     buttonYManipulator.whenHeld(autoSetShooterSpeed);
+    buttonYManipulator.whenPressed(new InstantCommand(() -> limelight.ledOn())).whenReleased(new InstantCommand(() -> limelight.ledOff()));
     //buttonAManipulator.whenHeld(lowSpeedShoot);
   }
 
@@ -207,8 +208,7 @@ public class RobotContainer {
     //this runs two auton commands- Auton2 and Auton3 with their ramsete commands
     //return new SequentialCommandGroup(new Auton2(driveSubsystem).getRamseteCommand(), new Auton3(driveSubsystem).getRamseteCommand());
     
-    //this just runs Auton2
-    return new StupidAuton(drive, shooter, intake, limelight);
+    return new StupidAuton2(drive, shooter, intake, limelight);
   }
 
   public double getDriverLeftJoystick(){

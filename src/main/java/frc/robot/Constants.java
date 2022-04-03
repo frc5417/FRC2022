@@ -37,8 +37,14 @@ public final class Constants {
     public final static int solenoid = 75;
 
     //Drive Constants
-    public static final double drivekP = 0.020; //used to be 0.0312
-    public static final double drivekI = drivekP/100;//0.000000000001;
+    public static final double drivekP = 0.0115; //.005
+    public static final double drivekI = 0.000025;//0.000000000001;
+    
+    // limelight constants
+    public static final double targetHeight = 104.75; //inches
+    public static final double limelightAngle = 28.66; // degrees
+    public static final double limelightHeight = 26; //inches
+    public static final double driveMinCommand = 0.05; //.15
 
     // Auton Constants
     public static final double driveGearingRatio = 18;
@@ -98,15 +104,10 @@ public final class Constants {
     public static final double turretMotorGearRatio = 1/20;
     public static final double turretRatio = turretMotorGearRatio * motorWheelCircumference / turretWheelCircumference;
 
-    // limelight constants
-    public static final double targetHeight = 104.75; //inches
-    public static final double limelightAngle = 28.66; // degrees
-    public static final double limelightHeight = 26; //inches
-    public static final double driveMinCommand = 0.15;
-
     //shooter constants
-    public static final double shooterP = .0005;
+    public static final double shooterP = .0010;
     public static final double shooterI = 0.0;
+    public static final double shooterD = .00005;
     public static final double shooterFF = 0.00018;
     public static final double shootsetPointConst = -3100;
     public static int shootsetPointVar = 4000;

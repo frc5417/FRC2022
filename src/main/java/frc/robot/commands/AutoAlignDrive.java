@@ -13,13 +13,11 @@ public class AutoAlignDrive extends CommandBase {
   /** Creates a new AutoAlignDrive. */
   private final Limelight limelight;
   private final Drive drive;
-  private final RobotContainer robotContainer;
   private double[] speeds;
-  public AutoAlignDrive(Limelight limelight, Drive drive, RobotContainer robotContainer) {
+  public AutoAlignDrive(Limelight limelight, Drive drive) {
     // Use addRequirements() here to declare subsystem dependencies.
     this.limelight = limelight;
     this.drive = drive;
-    this.robotContainer = robotContainer;
     addRequirements(limelight, drive);
   }
 
@@ -27,7 +25,7 @@ public class AutoAlignDrive extends CommandBase {
   @Override
   public void initialize() {
     speeds = limelight.getSpeeds();
-    drive.setPower(speeds[0], speeds[1]);
+    drive.rawMotorPower(speeds[0], speeds[1]);
   }
 
   // Called every time the scheduler runs while the command is scheduled.
