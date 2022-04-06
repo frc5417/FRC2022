@@ -35,7 +35,7 @@ public class AutoSetShooterSpeed extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-      
+    
     setPointVariable = Constants.shootsetPointVar;
     System.out.println("Target Speed: " + setPointVariable);
     this.shooter.setVelocity(setPointVariable);

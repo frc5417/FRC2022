@@ -156,10 +156,14 @@ public class RobotContainer {
     buttonBManipulator.whenPressed(deployIntakePistons);
 
     buttonA.whileHeld(autoAlignDrive);
-    buttonA.whenPressed(new InstantCommand(() -> limelight.ledOn())).whenReleased(new InstantCommand(() -> limelight.ledOff()));
+    buttonA.whileHeld(new InstantCommand(() -> limelight.ledOn())).whenReleased(new InstantCommand(() -> limelight.ledOff()));
+    //buttonA.whenPressed(new InstantCommand(() -> limelight.ledOn())).whenReleased(new InstantCommand(() -> limelight.ledOff()));
+
 
     buttonYManipulator.whenHeld(autoSetShooterSpeed);
-    buttonYManipulator.whenPressed(new InstantCommand(() -> limelight.ledOn())).whenReleased(new InstantCommand(() -> limelight.ledOff()));
+    buttonYManipulator.whileHeld(new InstantCommand(() -> limelight.ledOn())).whenReleased(new InstantCommand(() -> limelight.ledOff()));
+    //buttonYManipulator.whenPressed(new InstantCommand(() -> limelight.ledOn())).whenReleased(new InstantCommand(() -> limelight.ledOff()));
+    
     //buttonAManipulator.whenHeld(lowSpeedShoot);
   }
 
