@@ -16,7 +16,7 @@ import edu.wpi.first.math.kinematics.DifferentialDriveKinematics;
  */
 public final class Constants {
 
-    public static final double intakeSpeed = 1;
+    public static final double intakeSpeed = 0.75;
 
     public final static int driveMasterLeft = 10;
     public final static int driveMasterRight = 13;
@@ -110,7 +110,7 @@ public final class Constants {
     public static final double shooterD = .00005;
     public static final double shooterFF = 0.00018;
     public static final double shootsetPointConst = -3100;
-    public static int shootsetPointVar = 4000;
+    public static int shootsetPointVar = 3000 ;
     public static final int shootMaxRPM = 5700;
 
 }
