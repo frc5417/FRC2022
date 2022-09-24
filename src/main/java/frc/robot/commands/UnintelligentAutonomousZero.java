@@ -12,7 +12,7 @@ import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Limelight;
 import frc.robot.subsystems.Shooter;
 
-public class StupidAuton2 extends CommandBase {
+public class UnintelligentAutonomousZero extends CommandBase {
   /** Creates a new StupidAuton. */
   private final Drive drive;
   private final Shooter shoot;
@@ -21,7 +21,7 @@ public class StupidAuton2 extends CommandBase {
   private final AutoAlignDrive autoAlign;
   private final AutoSetShooterSpeed autoSpeed;
   private int count;
-  public StupidAuton2(Drive drive, Shooter shoot, Intake intake, Limelight limelight) {
+  public UnintelligentAutonomousZero(Drive drive, Shooter shoot, Intake intake, Limelight limelight) {
     this.drive = drive;
     this.shoot = shoot;
     this.intake = intake;
@@ -43,25 +43,40 @@ public class StupidAuton2 extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    // drive forwards to second ball????
-    if(count <= 500){
-      drive.rawMotorPower(0, 0);
+    // START ROBOT BACKWARDS (INTAKE FACING OUTWARDS, SHOOTER TOWARDS TARGET)
+    // shoot first
+    if(count <= 3000){
+      autoSpeed.execute();
     }
-    else if(count <= 1750){
-      drive.rawMotorPower(-.3, -.3);
+    // go backwards and intake
+    else if(count <= 3000+1000){
+      drive.rawMotorPower(.3, .3);
       intake.runIntakeSystem(1);
     }
-    else if(count <= 2000){
+    // stop driving
+    else if(count <= 3000+1250+500){
       drive.rawMotorPower(0, 0);
     }
-    // align for second ball
-    else if(count <= 3000){
-      autoAlign.initialize();
+    // drive up
+    else if(count <= 3000+1250+500+1500){
+      drive.rawMotorPower(-.3, -.3);
+      intake.runIntakeSystem(0);
     }
-    // shoot second ball
-    else if(count <= 9000){
-      drive.setPower(0, 0);
+    // stop driving
+    else if(count <= 3000+1250+500+1500+500){
+      drive.rawMotorPower(0, 0);
+    }
+    // shoot again
+    else if(count <= 3000+1250+500+1500+500+3000){
       autoSpeed.execute();
+    }
+    // go outside of tarmac
+    else if(count <= 3000+1250+500+1500+500+3000+1500){
+      drive.rawMotorPower(.3, .3);
+    }
+    // stop motor
+    else if(count <= 3000+1250+500+1500+500+3000+1500+500){
+      drive.rawMotorPower(0, 0);
     }
     count+=20;
 
